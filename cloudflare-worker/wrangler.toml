@@ -4,4 +4,4 @@ compatibility_date = "2024-01-01"
 
 [[r2_buckets]]
 binding = "OZMEVA_VIDEOS"
-bucket_name = "eklipses-videos"
+bucket_name = "ozmeva-videos"
