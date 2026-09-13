@@ -195,6 +195,96 @@ function groupWordsIntoCaptions(words, maxWords = CAPTION_MAX_WORDS, pauseThresh
   }));
 }
 
+// ═══════════════════════════════════════════════════════════════════════════════
+// EXCHANGE ALIGNMENT — use Whisper timestamps for exchange line captions
+// ═══════════════════════════════════════════════════════════════════════════════
+
+// Reduce to lowercase letters only — handles punctuation and contractions.
+function normAlpha(s) {
+  return s.toLowerCase().replace(/[^a-z]/g, '');
+}
+
+// Levenshtein edit distance; returns 999 when string lengths diverge too much.
+function editDist(a, b) {
+  if (Math.abs(a.length - b.length) > 8) return 999;
+  const prev = Array.from({ length: b.length + 1 }, (_, j) => j);
+  const curr = new Array(b.length + 1);
+  for (let i = 1; i <= a.length; i++) {
+    curr[0] = i;
+    for (let j = 1; j <= b.length; j++) {
+      curr[j] = a[i - 1] === b[j - 1]
+        ? prev[j - 1]
+        : 1 + Math.min(prev[j], curr[j - 1], prev[j - 1]);
+    }
+    for (let j = 0; j <= b.length; j++) prev[j] = curr[j];
+  }
+  return curr[b.length];
+}
+
+// Scan `words` (Whisper word array) from `searchFrom` for a window that matches
+// `lineText`. Window length varies ±2 to handle Whisper splitting contractions
+// differently than the manifest. Returns { start, end, nextCursor } or null.
+function findLineInWhisper(words, lineText, searchFrom) {
+  const lineKey       = normAlpha(lineText);
+  if (!lineKey) return null;
+  const lineWordCount = lineText.trim().split(/\s+/).length;
+  const firstNorm     = normAlpha(lineText.trim().split(/\s+/)[0]);
+
+  for (let i = searchFrom; i < words.length; i++) {
+    if (normAlpha(words[i].word) !== firstNorm) continue;
+
+    for (let len = Math.max(1, lineWordCount - 2);
+         len <= lineWordCount + 3 && i + len <= words.length; len++) {
+      const win     = words.slice(i, i + len);
+      const winKey  = win.map(w => normAlpha(w.word)).join('');
+      const maxDist = Math.max(2, Math.floor(lineKey.length * 0.08));
+      if (editDist(winKey, lineKey) <= maxDist) {
+        return { start: win[0].start, end: win[win.length - 1].end, nextCursor: i + len };
+      }
+    }
+  }
+  return null;
+}
+
+// Build exchange captions using Whisper's actual word timestamps instead of the
+// manifest's hand-written t/end estimates. Falls back to manifest timing when no
+// confident match is found. Preserves voice labels for speaker colouring.
+//
+// Temporal sanity check: a match more than 5s from the manifest estimate is
+// treated as a false positive (same word/phrase appearing later in the audio)
+// and rejected. Cursor is NOT advanced on rejection so subsequent lines remain
+// findable from the correct position.
+function buildExchangeCaptions(words, exch) {
+  const candidates = words.filter(w => w.start >= exch.offsetSec - 1.0);
+  let cursor = 0;
+  const caps = [];
+  let fallbacks = 0;
+
+  for (const line of exch.lines) {
+    const match = findLineInWhisper(candidates, line.text, cursor);
+    const manifestExpected = exch.offsetSec + line.t;
+    const valid = match && Math.abs(match.start - manifestExpected) <= 5.0;
+
+    if (valid) {
+      for (const chunk of chunkSegment(line.text, match.start, match.end)) {
+        caps.push({ ...chunk, voice: line.voice });
+      }
+      cursor = match.nextCursor;
+    } else {
+      fallbacks++;
+      for (const chunk of chunkSegment(line.text, manifestExpected, exch.offsetSec + line.end)) {
+        caps.push({ ...chunk, voice: line.voice });
+      }
+      // Do not advance cursor — let next line still search from its current position.
+    }
+  }
+
+  if (fallbacks > 0) {
+    console.warn(`    ⚠  ${fallbacks}/${exch.lines.length} exchange line(s) used manifest timing (Whisper match failed)`);
+  }
+  return caps;
+}
+
 // Split a pre-written exchange line (known text, no Whisper) proportionally.
 // Used only for exchange dialogue where we have the transcript but not word timestamps.
 function chunkSegment(text, start, end, maxWords = CAPTION_MAX_WORDS) {
@@ -241,6 +331,19 @@ function whisperWords(audioPath, groqKey) {
   if (data.error) throw new Error('Whisper API error: ' + JSON.stringify(data.error));
   const words = data.words || [];
   console.log(`    → ${words.length} words`);
+  return words;
+}
+
+// Cache Whisper word results to JSON so re-runs don't re-call the API.
+function whisperWordsCached(audioPath, groqKey, tmp, sliceNum) {
+  const cachePath = path.join(tmp, `whisper_s${sliceNum}.json`);
+  if (fs.existsSync(cachePath)) {
+    const words = JSON.parse(fs.readFileSync(cachePath, 'utf8'));
+    console.log(`  Whisper: (cached) ${path.basename(audioPath)} — ${words.length} words`);
+    return words;
+  }
+  const words = whisperWords(audioPath, groqKey);
+  fs.writeFileSync(cachePath, JSON.stringify(words), 'utf8');
   return words;
 }
 
@@ -310,14 +413,15 @@ function buildCaptions(words, sliceConfig) {
 
   if (!exch) return narrCaps;
 
-  const exchCaps = [];
-  for (const line of exch.lines) {
-    for (const chunk of chunkSegment(line.text, exch.offsetSec + line.t, exch.offsetSec + line.end)) {
-      exchCaps.push({ ...chunk, voice: line.voice });
-    }
-  }
+  const exchCaps = buildExchangeCaptions(words, exch);
 
-  return [...narrCaps, ...exchCaps].sort((a, b) => a.start - b.start);
+  // Suppress narration chunks that overlap with exchange captions — prevents
+  // ghost Whisper words from appearing alongside the Whisper-aligned exchange dialogue.
+  const filteredNarrCaps = narrCaps.filter(nc =>
+    !exchCaps.some(ec => nc.start < ec.end && nc.end > ec.start)
+  );
+
+  return [...filteredNarrCaps, ...exchCaps].sort((a, b) => a.start - b.start);
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -380,6 +484,13 @@ function main() {
   const LESSON = require(path.resolve(manifestPath));
   const { obsFile, lessonNum, totalSlices, outputDir, slices } = LESSON;
 
+  // --only-slices N,M  — re-render specific slices without reprocessing all.
+  const onlyArg  = process.argv.indexOf('--only-slices');
+  const onlyNums = onlyArg >= 0 && process.argv[onlyArg + 1]
+    ? new Set(process.argv[onlyArg + 1].split(',').map(Number))
+    : null;
+  const slicesForRun = onlyNums ? slices.filter(s => onlyNums.has(s.num)) : slices;
+
   // Apply manifest-level visual overrides (crop, drawbox, caption position).
   // If absent the locked Lesson 1 defaults above remain in effect.
   if (LESSON.crop)                  CROP             = LESSON.crop;
@@ -399,12 +510,12 @@ function main() {
   const tag = (n) => `lesson${lessonNum}-slice${String(n).padStart(2,'0')}-of${String(totalSlices).padStart(2,'0')}`;
 
   console.log(`\n${'═'.repeat(72)}`);
-  console.log(`Lesson ${lessonNum} — ${slices.length} slices  →  ${outputDir}`);
+  console.log(`Lesson ${lessonNum} — ${slicesForRun.length}${onlyNums ? ` of ${slices.length}` : ''} slices  →  ${outputDir}`);
   console.log(`${'═'.repeat(72)}\n`);
 
   // ── Step 1: Extract lesson audio for Whisper ─────────────────────────────
   console.log('── Step 1: Extracting lesson audio');
-  for (const s of slices) {
+  for (const s of slicesForRun) {
     const mp3 = path.join(tmp, `lesson_s${s.num}.mp3`);
     if (!fs.existsSync(mp3)) {
       extractLessonAudio(obsFile, s.obsStart, s.dur, mp3);
@@ -416,15 +527,15 @@ function main() {
   // ── Step 2: Whisper word-level transcription ──────────────────────────────
   console.log('\n── Step 2: Whisper transcription');
   const wordMap = {};
-  for (const s of slices) {
+  for (const s of slicesForRun) {
     const mp3 = path.join(tmp, `lesson_s${s.num}.mp3`);
-    wordMap[s.num] = whisperWords(mp3, env.groqKey);
+    wordMap[s.num] = whisperWordsCached(mp3, env.groqKey, tmp, s.num);
   }
 
   // ── Step 3: Build captions ────────────────────────────────────────────────
   console.log('\n── Step 3: Building captions');
   const captionMap = {};
-  for (const s of slices) {
+  for (const s of slicesForRun) {
     captionMap[s.num] = buildCaptions(wordMap[s.num], s);
     const c = captionMap[s.num];
     const rCount = c.filter(x => !x.voice).length;
@@ -436,7 +547,7 @@ function main() {
   // ── Step 4: Generate cliffhanger TTS ─────────────────────────────────────
   console.log('\n── Step 4: Cliffhanger TTS (Fish Audio)');
   const clifDurMap = {};
-  for (const s of slices) {
+  for (const s of slicesForRun) {
     const mp3 = path.join(tmp, `cliffhanger_s${s.num}.mp3`);
     if (!fs.existsSync(mp3)) {
       clifDurMap[s.num] = generateCliffhanger(s.cliffhanger, mp3, env.fishKey);
@@ -451,7 +562,7 @@ function main() {
 
   // ── Step 5: Write ASS files ───────────────────────────────────────────────
   console.log('\n── Step 5: Writing ASS files');
-  for (const s of slices) {
+  for (const s of slicesForRun) {
     const n = s.num;
     const clifDur = clifDurMap[n];
 
@@ -473,7 +584,7 @@ function main() {
 
   // ── Step 6: Render ────────────────────────────────────────────────────────
   console.log('\n── Step 6: Rendering');
-  for (const s of slices) {
+  for (const s of slicesForRun) {
     const outFile = path.join(outputDir, `${tag(s.num)}.mp4`).replace(/\\/g, '/');
     console.log(`\n  Slice ${s.num}: OBS t=${s.obsStart.toFixed(3)}s, dur=${s.dur.toFixed(3)}s, cliff=${clifDurMap[s.num].toFixed(2)}s`);
 
@@ -492,7 +603,7 @@ function main() {
   }
 
   console.log(`\n${'═'.repeat(72)}`);
-  console.log(`Done. ${slices.length} slices written to ${outputDir}`);
+  console.log(`Done. ${slicesForRun.length} slices written to ${outputDir}`);
   console.log(`${'═'.repeat(72)}\n`);
 }
 
