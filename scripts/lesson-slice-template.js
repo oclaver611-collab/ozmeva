@@ -27,7 +27,7 @@ const os   = require('os');
 // x=445 keeps Ryan's orb fully visible on the left and Sofia's face fully in-frame
 // on the right. Earlier attempt at x=490 clipped Sofia's right edge.
 // y=18 trims the OS window chrome at the top.
-const CROP = { x: 445, y: 18, w: 390, h: 693 };
+let CROP = { x: 445, y: 18, w: 390, h: 693 };
 
 // Output resolution: standard portrait short-form video.
 const OUTPUT_W = 1080;
@@ -42,14 +42,14 @@ const BG_COLOR  = '#15171C'; // CSS-style for reference
 // y=1125 was chosen after pixel-scanning the raw OBS source: Sofia's "Sofia"
 // name tag text ends at y=1111, so y=1125 gives a 14px margin before the dark
 // box begins. Earlier value of y=1110 clipped the bottom 2 rows of her name.
-const DRAWBOX_Y = 1125;
-const DRAWBOX_H = OUTPUT_H - DRAWBOX_Y; // 795
+let DRAWBOX_Y = 1125;
+let DRAWBOX_H = OUTPUT_H - DRAWBOX_Y; // 795
 
 // Caption positioning: ASS Alignment=8 (top-anchor), MarginV places the top
 // of the first caption line this many pixels from the top of the frame.
 // 1182 was derived as: DRAWBOX_Y + 80px desired gap − 23px libass internal offset.
 // The 80px gap keeps captions visually separate from the content above the dark box.
-const CAPTION_MARGIN_V    = 1182;
+let CAPTION_MARGIN_V    = 1182;
 const CAPTION_FONT_SIZE   = 86;
 const CAPTION_MAX_WORDS   = 6;    // max words per caption chunk
 const CAPTION_PAUSE_BREAK = 0.45; // seconds of silence that forces a new chunk
@@ -130,7 +130,7 @@ Style: OutroFollow,Arial Black,60,&H00FFFFFF,&H000000FF,&H00000000,&H00000000,-1
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text`;
 }
 
-const ASS_HEADER = makeAssHeader();
+let ASS_HEADER; // set in main() after manifest overrides are applied
 
 function voiceToStyle(voice) {
   if (voice === 'alex')  return 'AlexCaption';
@@ -379,6 +379,14 @@ function main() {
 
   const LESSON = require(path.resolve(manifestPath));
   const { obsFile, lessonNum, totalSlices, outputDir, slices } = LESSON;
+
+  // Apply manifest-level visual overrides (crop, drawbox, caption position).
+  // If absent the locked Lesson 1 defaults above remain in effect.
+  if (LESSON.crop)                  CROP             = LESSON.crop;
+  if (LESSON.drawboxY     != null)  DRAWBOX_Y        = LESSON.drawboxY;
+  if (LESSON.captionMarginV != null) CAPTION_MARGIN_V = LESSON.captionMarginV;
+  DRAWBOX_H  = OUTPUT_H - DRAWBOX_Y;
+  ASS_HEADER = makeAssHeader();
 
   if (!fs.existsSync(obsFile)) throw new Error(`OBS file not found: ${obsFile}`);
   fs.mkdirSync(outputDir, { recursive: true });
