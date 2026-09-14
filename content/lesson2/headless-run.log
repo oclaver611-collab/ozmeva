@@ -1,0 +1,447 @@
+
+══════════════════════════════════════════════════
+  Ozmeva Headless Lesson 2 Recording — Experiment
+══════════════════════════════════════════════════
+
+═══ Step 0: Download audio files ═══
+
+  manifest.json: cached
+  61 unique audio files
+
+
+  Expected audio duration: 558.0s
+
+═══ Step 1: Skipped (using cached recording) ═══
+  Video: page@d71ae473766db9bc0b771ba946050bd4.webm
+  t0 offset: 0.76s
+  Lesson duration: 565.2s
+
+═══ Step 2: Build audio track ═══
+
+ffmpeg version 2025-07-23-git-829680f96a-full_build-www.gyan.dev Copyright (c) 2000-2025 the FFmpeg developers
+  built with gcc 15.1.0 (Rev6, Built by MSYS2 project)
+  configuration: --enable-gpl --enable-version3 --enable-static --disable-w32threads --disable-autodetect --enable-fontconfig --enable-iconv --enable-gnutls --enable-lcms2 --enable-libxml2 --enable-gmp --enable-bzlib --enable-lzma --enable-libsnappy --enable-zlib --enable-librist --enable-libsrt --enable-libssh --enable-libzmq --enable-avisynth --enable-libbluray --enable-libcaca --enable-libdvdnav --enable-libdvdread --enable-sdl2 --enable-libaribb24 --enable-libaribcaption --enable-libdav1d --enable-libdavs2 --enable-libopenjpeg --enable-libquirc --enable-libuavs3d --enable-libxevd --enable-libzvbi --enable-liboapv --enable-libqrencode --enable-librav1e --enable-libsvtav1 --enable-libvvenc --enable-libwebp --enable-libx264 --enable-libx265 --enable-libxavs2 --enable-libxeve --enable-libxvid --enable-libaom --enable-libjxl --enable-libvpx --enable-mediafoundation --enable-libass --enable-frei0r --enable-libfreetype --enable-libfribidi --enable-libharfbuzz --enable-liblensfun --enable-libvidstab --enable-libvmaf --enable-libzimg --enable-amf --enable-cuda-llvm --enable-cuvid --enable-dxva2 --enable-d3d11va --enable-d3d12va --enable-ffnvcodec --enable-libvpl --enable-nvdec --enable-nvenc --enable-vaapi --enable-libshaderc --enable-vulkan --enable-libplacebo --enable-opencl --enable-libcdio --enable-openal --enable-libgme --enable-libmodplug --enable-libopenmpt --enable-libopencore-amrwb --enable-libmp3lame --enable-libshine --enable-libtheora --enable-libtwolame --enable-libvo-amrwbenc --enable-libcodec2 --enable-libilbc --enable-libgsm --enable-liblc3 --enable-libopencore-amrnb --enable-libopus --enable-libspeex --enable-libvorbis --enable-ladspa --enable-libbs2b --enable-libflite --enable-libmysofa --enable-librubberband --enable-libsoxr --enable-chromaprint
+  libavutil      60.  6.100 / 60.  6.100
+  libavcodec     62.  8.100 / 62.  8.100
+  libavformat    62.  1.103 / 62.  1.103
+  libavdevice    62.  0.100 / 62.  0.100
+  libavfilter    11.  3.100 / 11.  3.100
+  libswscale      9.  0.100 /  9.  0.100
+  libswresample   6.  0.100 /  6.  0.100
+[out @ 00000228634fee00] The "sample_fmts" option is deprecated: set the supported sample formats
+[out @ 00000228634fee00] The "all_channel_counts" option is deprecated: accept all channel counts
+Input #0, lavfi, from 'anullsrc=channel_layout=mono:sample_rate=44100':
+  Duration: N/A, start: 0.000000, bitrate: 352 kb/s
+  Stream #0:0: Audio: pcm_u8, 44100 Hz, mono, u8, 352 kb/s
+Stream mapping:
+  Stream #0:0 -> #0:0 (pcm_u8 (native) -> mp3 (libmp3lame))
+Press [q] to stop, [?] for help
+Output #0, mp3, to 'D:\BUSINESS\executables\love\eklipses\EK7\lesson2_audio\_sil_700ms.mp3':
+  Metadata:
+    TSSE            : Lavf62.1.103
+  Stream #0:0: Audio: mp3, 44100 Hz, mono, s16p
+    Metadata:
+      encoder         : Lavc62.8.100 libmp3lame
+[out#0/mp3 @ 0000022863507080] video:0KiB audio:3KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: 7.760989%
+size=       3KiB time=00:00:00.70 bitrate=  35.9kbits/s speed=63.2x elapsed=0:00:00.01    
+  Generated _sil_700ms.mp3
+ffmpeg version 2025-07-23-git-829680f96a-full_build-www.gyan.dev Copyright (c) 2000-2025 the FFmpeg developers
+  built with gcc 15.1.0 (Rev6, Built by MSYS2 project)
+  configuration: --enable-gpl --enable-version3 --enable-static --disable-w32threads --disable-autodetect --enable-fontconfig --enable-iconv --enable-gnutls --enable-lcms2 --enable-libxml2 --enable-gmp --enable-bzlib --enable-lzma --enable-libsnappy --enable-zlib --enable-librist --enable-libsrt --enable-libssh --enable-libzmq --enable-avisynth --enable-libbluray --enable-libcaca --enable-libdvdnav --enable-libdvdread --enable-sdl2 --enable-libaribb24 --enable-libaribcaption --enable-libdav1d --enable-libdavs2 --enable-libopenjpeg --enable-libquirc --enable-libuavs3d --enable-libxevd --enable-libzvbi --enable-liboapv --enable-libqrencode --enable-librav1e --enable-libsvtav1 --enable-libvvenc --enable-libwebp --enable-libx264 --enable-libx265 --enable-libxavs2 --enable-libxeve --enable-libxvid --enable-libaom --enable-libjxl --enable-libvpx --enable-mediafoundation --enable-libass --enable-frei0r --enable-libfreetype --enable-libfribidi --enable-libharfbuzz --enable-liblensfun --enable-libvidstab --enable-libvmaf --enable-libzimg --enable-amf --enable-cuda-llvm --enable-cuvid --enable-dxva2 --enable-d3d11va --enable-d3d12va --enable-ffnvcodec --enable-libvpl --enable-nvdec --enable-nvenc --enable-vaapi --enable-libshaderc --enable-vulkan --enable-libplacebo --enable-opencl --enable-libcdio --enable-openal --enable-libgme --enable-libmodplug --enable-libopenmpt --enable-libopencore-amrwb --enable-libmp3lame --enable-libshine --enable-libtheora --enable-libtwolame --enable-libvo-amrwbenc --enable-libcodec2 --enable-libilbc --enable-libgsm --enable-liblc3 --enable-libopencore-amrnb --enable-libopus --enable-libspeex --enable-libvorbis --enable-ladspa --enable-libbs2b --enable-libflite --enable-libmysofa --enable-librubberband --enable-libsoxr --enable-chromaprint
+  libavutil      60.  6.100 / 60.  6.100
+  libavcodec     62.  8.100 / 62.  8.100
+  libavformat    62.  1.103 / 62.  1.103
+  libavdevice    62.  0.100 / 62.  0.100
+  libavfilter    11.  3.100 / 11.  3.100
+  libswscale      9.  0.100 /  9.  0.100
+  libswresample   6.  0.100 /  6.  0.100
+[out @ 000002f1fc16ee00] The "sample_fmts" option is deprecated: set the supported sample formats
+[out @ 000002f1fc16ee00] The "all_channel_counts" option is deprecated: accept all channel counts
+Input #0, lavfi, from 'anullsrc=channel_layout=mono:sample_rate=44100':
+  Duration: N/A, start: 0.000000, bitrate: 352 kb/s
+  Stream #0:0: Audio: pcm_u8, 44100 Hz, mono, u8, 352 kb/s
+Stream mapping:
+  Stream #0:0 -> #0:0 (pcm_u8 (native) -> mp3 (libmp3lame))
+Press [q] to stop, [?] for help
+Output #0, mp3, to 'D:\BUSINESS\executables\love\eklipses\EK7\lesson2_audio\_sil_800ms.mp3':
+  Metadata:
+    TSSE            : Lavf62.1.103
+  Stream #0:0: Audio: mp3, 44100 Hz, mono, s16p
+    Metadata:
+      encoder         : Lavc62.8.100 libmp3lame
+[out#0/mp3 @ 000002f1fc177080] video:0KiB audio:3KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: 6.790865%
+size=       3KiB time=00:00:00.80 bitrate=  35.5kbits/s speed= 139x elapsed=0:00:00.00    
+  Generated _sil_800ms.mp3
+ffmpeg version 2025-07-23-git-829680f96a-full_build-www.gyan.dev Copyright (c) 2000-2025 the FFmpeg developers
+  built with gcc 15.1.0 (Rev6, Built by MSYS2 project)
+  configuration: --enable-gpl --enable-version3 --enable-static --disable-w32threads --disable-autodetect --enable-fontconfig --enable-iconv --enable-gnutls --enable-lcms2 --enable-libxml2 --enable-gmp --enable-bzlib --enable-lzma --enable-libsnappy --enable-zlib --enable-librist --enable-libsrt --enable-libssh --enable-libzmq --enable-avisynth --enable-libbluray --enable-libcaca --enable-libdvdnav --enable-libdvdread --enable-sdl2 --enable-libaribb24 --enable-libaribcaption --enable-libdav1d --enable-libdavs2 --enable-libopenjpeg --enable-libquirc --enable-libuavs3d --enable-libxevd --enable-libzvbi --enable-liboapv --enable-libqrencode --enable-librav1e --enable-libsvtav1 --enable-libvvenc --enable-libwebp --enable-libx264 --enable-libx265 --enable-libxavs2 --enable-libxeve --enable-libxvid --enable-libaom --enable-libjxl --enable-libvpx --enable-mediafoundation --enable-libass --enable-frei0r --enable-libfreetype --enable-libfribidi --enable-libharfbuzz --enable-liblensfun --enable-libvidstab --enable-libvmaf --enable-libzimg --enable-amf --enable-cuda-llvm --enable-cuvid --enable-dxva2 --enable-d3d11va --enable-d3d12va --enable-ffnvcodec --enable-libvpl --enable-nvdec --enable-nvenc --enable-vaapi --enable-libshaderc --enable-vulkan --enable-libplacebo --enable-opencl --enable-libcdio --enable-openal --enable-libgme --enable-libmodplug --enable-libopenmpt --enable-libopencore-amrwb --enable-libmp3lame --enable-libshine --enable-libtheora --enable-libtwolame --enable-libvo-amrwbenc --enable-libcodec2 --enable-libilbc --enable-libgsm --enable-liblc3 --enable-libopencore-amrnb --enable-libopus --enable-libspeex --enable-libvorbis --enable-ladspa --enable-libbs2b --enable-libflite --enable-libmysofa --enable-librubberband --enable-libsoxr --enable-chromaprint
+  libavutil      60.  6.100 / 60.  6.100
+  libavcodec     62.  8.100 / 62.  8.100
+  libavformat    62.  1.103 / 62.  1.103
+  libavdevice    62.  0.100 / 62.  0.100
+  libavfilter    11.  3.100 / 11.  3.100
+  libswscale      9.  0.100 /  9.  0.100
+  libswresample   6.  0.100 /  6.  0.100
+[mp3 @ 000001a65195fb40] Estimating duration from bitrate, this may be inaccurate
+Input #0, concat, from 'D:\BUSINESS\executables\love\eklipses\EK7\content\lesson2\headless\audio_concat.txt':
+  Duration: N/A, start: 0.000000, bitrate: 128 kb/s
+  Stream #0:0: Audio: mp3 (mp3float), 44100 Hz, mono, fltp, 128 kb/s
+Stream mapping:
+  Stream #0:0 -> #0:0 (mp3 (mp3float) -> aac (native))
+Press [q] to stop, [?] for help
+Output #0, ipod, to 'D:\BUSINESS\executables\love\eklipses\EK7\content\lesson2\headless\audio_track.m4a':
+  Metadata:
+    encoder         : Lavf62.1.103
+  Stream #0:0: Audio: aac (LC) (mp4a / 0x6134706D), 44100 Hz, mono, fltp, 128 kb/s
+    Metadata:
+      encoder         : Lavc62.8.100 aac
+size=     256KiB time=00:00:19.59 bitrate= 107.0kbits/s speed=37.5x elapsed=0:00:00.52    size=     512KiB time=00:00:39.82 bitrate= 105.3kbits/s speed=38.9x elapsed=0:00:01.02    [mp3 @ 000001a65197f580] Estimating duration from bitrate, this may be inaccurate
+size=     768KiB time=00:01:01.95 bitrate= 101.6kbits/s speed=40.3x elapsed=0:00:01.53    [mp3 @ 000001a65197f580] Estimating duration from bitrate, this may be inaccurate
+size=    1280KiB time=00:01:23.28 bitrate= 125.9kbits/s speed=40.5x elapsed=0:00:02.05    [mp3 @ 000001a65197f580] Estimating duration from bitrate, this may be inaccurate
+[af#0:0 @ 000001a65374a900] Reconfiguring filter graph because audio parameters changed to 24000 Hz, mono, fltp
+[af#0:0 @ 000001a65374a900] Reconfiguring filter graph because audio parameters changed to 44100 Hz, mono, fltp
+[mp3 @ 000001a6519f74c0] Estimating duration from bitrate, this may be inaccurate
+size=    1536KiB time=00:01:44.61 bitrate= 120.3kbits/s speed=40.7x elapsed=0:00:02.57    [mp3 @ 000001a6519f74c0] Estimating duration from bitrate, this may be inaccurate
+[af#0:0 @ 000001a65374a900] Reconfiguring filter graph because audio parameters changed to 24000 Hz, mono, fltp
+[af#0:0 @ 000001a65374a900] Reconfiguring filter graph because audio parameters changed to 44100 Hz, mono, fltp
+[mp3 @ 000001a6519f74c0] Estimating duration from bitrate, this may be inaccurate
+    Last message repeated 1 times
+[af#0:0 @ 000001a65374a900] Reconfiguring filter graph because audio parameters changed to 24000 Hz, mono, fltp
+[af#0:0 @ 000001a65374a900] Reconfiguring filter graph because audio parameters changed to 44100 Hz, mono, fltp
+[mp3 @ 000001a6519f74c0] Estimating duration from bitrate, this may be inaccurate
+    Last message repeated 1 times
+[af#0:0 @ 000001a65374a900] Reconfiguring filter graph because audio parameters changed to 24000 Hz, mono, fltp
+[af#0:0 @ 000001a65374a900] Reconfiguring filter graph because audio parameters changed to 44100 Hz, mono, fltp
+[mp3 @ 000001a6519f74c0] Estimating duration from bitrate, this may be inaccurate
+    Last message repeated 1 times
+[af#0:0 @ 000001a65374a900] Reconfiguring filter graph because audio parameters changed to 24000 Hz, mono, fltp
+[af#0:0 @ 000001a65374a900] Reconfiguring filter graph because audio parameters changed to 44100 Hz, mono, fltp
+[mp3 @ 000001a6519f2680] Estimating duration from bitrate, this may be inaccurate
+    Last message repeated 1 times
+size=    1792KiB time=00:02:11.89 bitrate= 111.3kbits/s speed=42.7x elapsed=0:00:03.09    size=    2304KiB time=00:02:32.32 bitrate= 123.9kbits/s speed=42.2x elapsed=0:00:03.60    size=    2560KiB time=00:02:53.78 bitrate= 120.7kbits/s speed=42.1x elapsed=0:00:04.12    [mp3 @ 000001a6519f74c0] Estimating duration from bitrate, this may be inaccurate
+    Last message repeated 1 times
+[af#0:0 @ 000001a65374a900] Reconfiguring filter graph because audio parameters changed to 24000 Hz, mono, fltp
+[af#0:0 @ 000001a65374a900] Reconfiguring filter graph because audio parameters changed to 44100 Hz, mono, fltp
+[mp3 @ 000001a6519f74c0] Estimating duration from bitrate, this may be inaccurate
+    Last message repeated 1 times
+[af#0:0 @ 000001a65374a900] Reconfiguring filter graph because audio parameters changed to 24000 Hz, mono, fltp
+[af#0:0 @ 000001a65374a900] Reconfiguring filter graph because audio parameters changed to 44100 Hz, mono, fltp
+[mp3 @ 000001a6519f74c0] Estimating duration from bitrate, this may be inaccurate
+    Last message repeated 1 times
+[af#0:0 @ 000001a65374a900] Reconfiguring filter graph because audio parameters changed to 24000 Hz, mono, fltp
+[af#0:0 @ 000001a65374a900] Reconfiguring filter graph because audio parameters changed to 44100 Hz, mono, fltp
+[mp3 @ 000001a6519f74c0] Estimating duration from bitrate, this may be inaccurate
+    Last message repeated 1 times
+[af#0:0 @ 000001a65374a900] Reconfiguring filter graph because audio parameters changed to 24000 Hz, mono, fltp
+size=    2816KiB time=00:03:21.11 bitrate= 114.7kbits/s speed=43.3x elapsed=0:00:04.64    [af#0:0 @ 000001a65374a900] Reconfiguring filter graph because audio parameters changed to 44100 Hz, mono, fltp
+[mp3 @ 000001a6519f74c0] Estimating duration from bitrate, this may be inaccurate
+    Last message repeated 1 times
+size=    3328KiB time=00:03:42.42 bitrate= 122.6kbits/s speed=43.1x elapsed=0:00:05.16    size=    3584KiB time=00:04:01.86 bitrate= 121.4kbits/s speed=42.6x elapsed=0:00:05.67    [mp3 @ 000001a6519f74c0] Estimating duration from bitrate, this may be inaccurate
+    Last message repeated 1 times
+[af#0:0 @ 000001a65374a900] Reconfiguring filter graph because audio parameters changed to 24000 Hz, mono, fltp
+[af#0:0 @ 000001a65374a900] Reconfiguring filter graph because audio parameters changed to 44100 Hz, mono, fltp
+[mp3 @ 000001a6519f74c0] Estimating duration from bitrate, this may be inaccurate
+    Last message repeated 1 times
+[af#0:0 @ 000001a65374a900] Reconfiguring filter graph because audio parameters changed to 24000 Hz, mono, fltp
+[af#0:0 @ 000001a65374a900] Reconfiguring filter graph because audio parameters changed to 44100 Hz, mono, fltp
+[mp3 @ 000001a6519f74c0] Estimating duration from bitrate, this may be inaccurate
+    Last message repeated 1 times
+[af#0:0 @ 000001a65374a900] Reconfiguring filter graph because audio parameters changed to 24000 Hz, mono, fltp
+[af#0:0 @ 000001a65374a900] Reconfiguring filter graph because audio parameters changed to 44100 Hz, mono, fltp
+size=    3840KiB time=00:04:26.90 bitrate= 117.9kbits/s speed=43.2x elapsed=0:00:06.17    [mp3 @ 000001a6519f74c0] Estimating duration from bitrate, this may be inaccurate
+    Last message repeated 1 times
+[af#0:0 @ 000001a65374a900] Reconfiguring filter graph because audio parameters changed to 24000 Hz, mono, fltp
+[af#0:0 @ 000001a65374a900] Reconfiguring filter graph because audio parameters changed to 44100 Hz, mono, fltp
+[mp3 @ 000001a6519f74c0] Estimating duration from bitrate, this may be inaccurate
+    Last message repeated 1 times
+[af#0:0 @ 000001a65374a900] Reconfiguring filter graph because audio parameters changed to 24000 Hz, mono, fltp
+[af#0:0 @ 000001a65374a900] Reconfiguring filter graph because audio parameters changed to 44100 Hz, mono, fltp
+[mp3 @ 000001a6519f74c0] Estimating duration from bitrate, this may be inaccurate
+    Last message repeated 1 times
+size=    4352KiB time=00:04:53.92 bitrate= 121.3kbits/s speed=43.9x elapsed=0:00:06.69    size=    4608KiB time=00:05:14.96 bitrate= 119.9kbits/s speed=43.7x elapsed=0:00:07.21    [mp3 @ 000001a6519f74c0] Estimating duration from bitrate, this may be inaccurate
+[af#0:0 @ 000001a65374a900] Reconfiguring filter graph because audio parameters changed to 24000 Hz, mono, fltp
+[af#0:0 @ 000001a65374a900] Reconfiguring filter graph because audio parameters changed to 44100 Hz, mono, fltp
+[mp3 @ 000001a6519f74c0] Estimating duration from bitrate, this may be inaccurate
+    Last message repeated 1 times
+[af#0:0 @ 000001a65374a900] Reconfiguring filter graph because audio parameters changed to 24000 Hz, mono, fltp
+[af#0:0 @ 000001a65374a900] Reconfiguring filter graph because audio parameters changed to 44100 Hz, mono, fltp
+[mp3 @ 000001a6519f74c0] Estimating duration from bitrate, this may be inaccurate
+    Last message repeated 1 times
+[af#0:0 @ 000001a65374a900] Reconfiguring filter graph because audio parameters changed to 24000 Hz, mono, fltp
+[af#0:0 @ 000001a65374a900] Reconfiguring filter graph because audio parameters changed to 44100 Hz, mono, fltp
+[mp3 @ 000001a6519f74c0] Estimating duration from bitrate, this may be inaccurate
+    Last message repeated 1 times
+[af#0:0 @ 000001a65374a900] Reconfiguring filter graph because audio parameters changed to 24000 Hz, mono, fltp
+[af#0:0 @ 000001a65374a900] Reconfiguring filter graph because audio parameters changed to 44100 Hz, mono, fltp
+[mp3 @ 000001a6519f74c0] Estimating duration from bitrate, this may be inaccurate
+size=    5120KiB time=00:05:43.59 bitrate= 122.1kbits/s speed=44.4x elapsed=0:00:07.73    [mp3 @ 000001a6519f74c0] Estimating duration from bitrate, this may be inaccurate
+[af#0:0 @ 000001a65374a900] Reconfiguring filter graph because audio parameters changed to 24000 Hz, mono, fltp
+[af#0:0 @ 000001a65374a900] Reconfiguring filter graph because audio parameters changed to 44100 Hz, mono, fltp
+[mp3 @ 000001a6519f74c0] Estimating duration from bitrate, this may be inaccurate
+    Last message repeated 1 times
+[af#0:0 @ 000001a65374a900] Reconfiguring filter graph because audio parameters changed to 24000 Hz, mono, fltp
+[af#0:0 @ 000001a65374a900] Reconfiguring filter graph because audio parameters changed to 44100 Hz, mono, fltp
+[mp3 @ 000001a6519f74c0] Estimating duration from bitrate, this may be inaccurate
+    Last message repeated 1 times
+size=    5376KiB time=00:06:08.64 bitrate= 119.5kbits/s speed=44.7x elapsed=0:00:08.24    size=    5632KiB time=00:06:30.77 bitrate= 118.1kbits/s speed=44.6x elapsed=0:00:08.76    [mp3 @ 000001a6519f74c0] Estimating duration from bitrate, this may be inaccurate
+[af#0:0 @ 000001a65374a900] Reconfiguring filter graph because audio parameters changed to 24000 Hz, mono, fltp
+[af#0:0 @ 000001a65374a900] Reconfiguring filter graph because audio parameters changed to 44100 Hz, mono, fltp
+[mp3 @ 000001a6519f74c0] Estimating duration from bitrate, this may be inaccurate
+    Last message repeated 1 times
+[af#0:0 @ 000001a65374a900] Reconfiguring filter graph because audio parameters changed to 24000 Hz, mono, fltp
+[af#0:0 @ 000001a65374a900] Reconfiguring filter graph because audio parameters changed to 44100 Hz, mono, fltp
+[mp3 @ 000001a6519f74c0] Estimating duration from bitrate, this may be inaccurate
+    Last message repeated 1 times
+[af#0:0 @ 000001a65374a900] Reconfiguring filter graph because audio parameters changed to 24000 Hz, mono, fltp
+size=    6144KiB time=00:06:56.99 bitrate= 120.7kbits/s speed=44.9x elapsed=0:00:09.28    [af#0:0 @ 000001a65374a900] Reconfiguring filter graph because audio parameters changed to 44100 Hz, mono, fltp
+[mp3 @ 000001a6537adc00] Estimating duration from bitrate, this may be inaccurate
+    Last message repeated 1 times
+[af#0:0 @ 000001a65374a900] Reconfiguring filter graph because audio parameters changed to 24000 Hz, mono, fltp
+[af#0:0 @ 000001a65374a900] Reconfiguring filter graph because audio parameters changed to 44100 Hz, mono, fltp
+[mp3 @ 000001a6537adc00] Estimating duration from bitrate, this may be inaccurate
+    Last message repeated 1 times
+[af#0:0 @ 000001a65374a900] Reconfiguring filter graph because audio parameters changed to 24000 Hz, mono, fltp
+[af#0:0 @ 000001a65374a900] Reconfiguring filter graph because audio parameters changed to 44100 Hz, mono, fltp
+[mp3 @ 000001a6537adc00] Estimating duration from bitrate, this may be inaccurate
+    Last message repeated 1 times
+size=    6400KiB time=00:07:24.13 bitrate= 118.0kbits/s speed=45.3x elapsed=0:00:09.79    size=    6912KiB time=00:07:45.24 bitrate= 121.7kbits/s speed=45.1x elapsed=0:00:10.31    size=    7168KiB time=00:08:06.67 bitrate= 120.7kbits/s speed=44.9x elapsed=0:00:10.83    [mp3 @ 000001a6537d0100] Estimating duration from bitrate, this may be inaccurate
+size=    7680KiB time=00:08:30.87 bitrate= 123.2kbits/s speed=  45x elapsed=0:00:11.34    size=    7936KiB time=00:08:53.85 bitrate= 121.8kbits/s speed=  45x elapsed=0:00:11.86    size=    8192KiB time=00:09:16.12 bitrate= 120.7kbits/s speed=44.9x elapsed=0:00:12.38    [out#0/ipod @ 000001a651947340] video:0KiB audio:8447KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: 1.137733%
+size=    8543KiB time=00:09:17.99 bitrate= 125.4kbits/s speed=44.9x elapsed=0:00:12.41    
+[aac @ 000001a65197ab80] Qavg: 7970.234
+  Audio track: 558.0s  (61 events)
+
+═══ Step 3: Mux video + audio ═══
+
+  Trimming 0.76s pre-lesson preamble from video
+ffmpeg version 2025-07-23-git-829680f96a-full_build-www.gyan.dev Copyright (c) 2000-2025 the FFmpeg developers
+  built with gcc 15.1.0 (Rev6, Built by MSYS2 project)
+  configuration: --enable-gpl --enable-version3 --enable-static --disable-w32threads --disable-autodetect --enable-fontconfig --enable-iconv --enable-gnutls --enable-lcms2 --enable-libxml2 --enable-gmp --enable-bzlib --enable-lzma --enable-libsnappy --enable-zlib --enable-librist --enable-libsrt --enable-libssh --enable-libzmq --enable-avisynth --enable-libbluray --enable-libcaca --enable-libdvdnav --enable-libdvdread --enable-sdl2 --enable-libaribb24 --enable-libaribcaption --enable-libdav1d --enable-libdavs2 --enable-libopenjpeg --enable-libquirc --enable-libuavs3d --enable-libxevd --enable-libzvbi --enable-liboapv --enable-libqrencode --enable-librav1e --enable-libsvtav1 --enable-libvvenc --enable-libwebp --enable-libx264 --enable-libx265 --enable-libxavs2 --enable-libxeve --enable-libxvid --enable-libaom --enable-libjxl --enable-libvpx --enable-mediafoundation --enable-libass --enable-frei0r --enable-libfreetype --enable-libfribidi --enable-libharfbuzz --enable-liblensfun --enable-libvidstab --enable-libvmaf --enable-libzimg --enable-amf --enable-cuda-llvm --enable-cuvid --enable-dxva2 --enable-d3d11va --enable-d3d12va --enable-ffnvcodec --enable-libvpl --enable-nvdec --enable-nvenc --enable-vaapi --enable-libshaderc --enable-vulkan --enable-libplacebo --enable-opencl --enable-libcdio --enable-openal --enable-libgme --enable-libmodplug --enable-libopenmpt --enable-libopencore-amrwb --enable-libmp3lame --enable-libshine --enable-libtheora --enable-libtwolame --enable-libvo-amrwbenc --enable-libcodec2 --enable-libilbc --enable-libgsm --enable-liblc3 --enable-libopencore-amrnb --enable-libopus --enable-libspeex --enable-libvorbis --enable-ladspa --enable-libbs2b --enable-libflite --enable-libmysofa --enable-librubberband --enable-libsoxr --enable-chromaprint
+  libavutil      60.  6.100 / 60.  6.100
+  libavcodec     62.  8.100 / 62.  8.100
+  libavformat    62.  1.103 / 62.  1.103
+  libavdevice    62.  0.100 / 62.  0.100
+  libavfilter    11.  3.100 / 11.  3.100
+  libswscale      9.  0.100 /  9.  0.100
+  libswresample   6.  0.100 /  6.  0.100
+Input #0, matroska,webm, from 'D:\BUSINESS\executables\love\eklipses\EK7\content\lesson2\headless\page@d71ae473766db9bc0b771ba946050bd4.webm':
+  Metadata:
+    ENCODER         : Lavf61.1.100
+  Duration: 00:09:27.08, start: 0.000000, bitrate: 998 kb/s
+  Stream #0:0: Video: vp8, yuv420p(progressive), 540x960, SAR 1:1 DAR 9:16, 25 fps, 25 tbr, 1k tbn
+    Metadata:
+      ENCODER         : Lavc61.3.100 libvpx
+      DURATION        : 00:09:27.080000000
+Stream mapping:
+  Stream #0:0 -> #0:0 (copy)
+Output #0, webm, to 'D:\BUSINESS\executables\love\eklipses\EK7\content\lesson2\headless\video_trimmed.webm':
+  Metadata:
+    encoder         : Lavf62.1.103
+  Stream #0:0: Video: vp8, yuv420p(progressive), 540x960 [SAR 1:1 DAR 9:16], q=2-31, 25 fps, 25 tbr, 1k tbn
+    Metadata:
+      ENCODER         : Lavc61.3.100 libvpx
+      DURATION        : 00:09:27.080000000
+Press [q] to stop, [?] for help
+[out#0/webm @ 000002a1b5de8f40] video:69008KiB audio:0KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: 0.148173%
+frame=14177 fps=0.0 q=-1.0 Lsize=   69110KiB time=00:09:26.32 bitrate= 999.7kbits/s speed=3.06e+03x elapsed=0:00:00.18    
+ffmpeg version 2025-07-23-git-829680f96a-full_build-www.gyan.dev Copyright (c) 2000-2025 the FFmpeg developers
+  built with gcc 15.1.0 (Rev6, Built by MSYS2 project)
+  configuration: --enable-gpl --enable-version3 --enable-static --disable-w32threads --disable-autodetect --enable-fontconfig --enable-iconv --enable-gnutls --enable-lcms2 --enable-libxml2 --enable-gmp --enable-bzlib --enable-lzma --enable-libsnappy --enable-zlib --enable-librist --enable-libsrt --enable-libssh --enable-libzmq --enable-avisynth --enable-libbluray --enable-libcaca --enable-libdvdnav --enable-libdvdread --enable-sdl2 --enable-libaribb24 --enable-libaribcaption --enable-libdav1d --enable-libdavs2 --enable-libopenjpeg --enable-libquirc --enable-libuavs3d --enable-libxevd --enable-libzvbi --enable-liboapv --enable-libqrencode --enable-librav1e --enable-libsvtav1 --enable-libvvenc --enable-libwebp --enable-libx264 --enable-libx265 --enable-libxavs2 --enable-libxeve --enable-libxvid --enable-libaom --enable-libjxl --enable-libvpx --enable-mediafoundation --enable-libass --enable-frei0r --enable-libfreetype --enable-libfribidi --enable-libharfbuzz --enable-liblensfun --enable-libvidstab --enable-libvmaf --enable-libzimg --enable-amf --enable-cuda-llvm --enable-cuvid --enable-dxva2 --enable-d3d11va --enable-d3d12va --enable-ffnvcodec --enable-libvpl --enable-nvdec --enable-nvenc --enable-vaapi --enable-libshaderc --enable-vulkan --enable-libplacebo --enable-opencl --enable-libcdio --enable-openal --enable-libgme --enable-libmodplug --enable-libopenmpt --enable-libopencore-amrwb --enable-libmp3lame --enable-libshine --enable-libtheora --enable-libtwolame --enable-libvo-amrwbenc --enable-libcodec2 --enable-libilbc --enable-libgsm --enable-liblc3 --enable-libopencore-amrnb --enable-libopus --enable-libspeex --enable-libvorbis --enable-ladspa --enable-libbs2b --enable-libflite --enable-libmysofa --enable-librubberband --enable-libsoxr --enable-chromaprint
+  libavutil      60.  6.100 / 60.  6.100
+  libavcodec     62.  8.100 / 62.  8.100
+  libavformat    62.  1.103 / 62.  1.103
+  libavdevice    62.  0.100 / 62.  0.100
+  libavfilter    11.  3.100 / 11.  3.100
+  libswscale      9.  0.100 /  9.  0.100
+  libswresample   6.  0.100 /  6.  0.100
+Input #0, matroska,webm, from 'D:\BUSINESS\executables\love\eklipses\EK7\content\lesson2\headless\video_trimmed.webm':
+  Metadata:
+    ENCODER         : Lavf62.1.103
+  Duration: 00:09:27.08, start: 0.000000, bitrate: 998 kb/s
+  Stream #0:0: Video: vp8, yuv420p(progressive), 540x960, SAR 1:1 DAR 9:16, 25 fps, 25 tbr, 1k tbn
+    Metadata:
+      ENCODER         : Lavc61.3.100 libvpx
+      DURATION        : 00:09:27.080000000
+Input #1, mov,mp4,m4a,3gp,3g2,mj2, from 'D:\BUSINESS\executables\love\eklipses\EK7\content\lesson2\headless\audio_track.m4a':
+  Metadata:
+    major_brand     : M4A 
+    minor_version   : 512
+    compatible_brands: M4A isomiso2
+    encoder         : Lavf62.1.103
+  Duration: 00:09:18.00, start: 0.000000, bitrate: 125 kb/s
+  Stream #1:0[0x1](und): Audio: aac (LC) (mp4a / 0x6134706D), 44100 Hz, mono, fltp, 124 kb/s (default)
+    Metadata:
+      handler_name    : SoundHandler
+      vendor_id       : [0][0][0][0]
+Stream mapping:
+  Stream #0:0 -> #0:0 (vp8 (native) -> h264 (libx264))
+  Stream #1:0 -> #0:1 (copy)
+Press [q] to stop, [?] for help
+[libx264 @ 0000023702846900] using SAR=1/1
+[libx264 @ 0000023702846900] using cpu capabilities: MMX2 SSE2Fast SSSE3 SSE4.2 AVX FMA3 BMI2 AVX2
+[libx264 @ 0000023702846900] profile High, level 3.1, 4:2:0, 8-bit
+[libx264 @ 0000023702846900] 264 - core 165 r3222 b35605a - H.264/MPEG-4 AVC codec - Copyleft 2003-2025 - http://www.videolan.org/x264.html - options: cabac=1 ref=2 deblock=1:0:0 analyse=0x3:0x113 me=hex subme=6 psy=1 psy_rd=1.00:0.00 mixed_ref=1 me_range=16 chroma_me=1 trellis=1 8x8dct=1 cqm=0 deadzone=21,11 fast_pskip=1 chroma_qp_offset=-2 threads=9 lookahead_threads=1 sliced_threads=0 nr=0 decimate=1 interlaced=0 bluray_compat=0 constrained_intra=0 bframes=3 b_pyramid=2 b_adapt=1 b_bias=0 direct=1 weightb=1 open_gop=0 weightp=1 keyint=250 keyint_min=25 scenecut=40 intra_refresh=0 rc_lookahead=30 rc=crf mbtree=1 crf=23.0 qcomp=0.60 qpmin=0 qpmax=69 qpstep=4 ip_ratio=1.40 aq=1:1.00
+Output #0, mp4, to 'D:\BUSINESS\executables\love\eklipses\EK7\content\lesson2\headless\lesson2-headless.mp4':
+  Metadata:
+    encoder         : Lavf62.1.103
+  Stream #0:0: Video: h264 (avc1 / 0x31637661), yuv420p(tv, bt470bg/unknown/unknown, progressive), 540x960 [SAR 1:1 DAR 9:16], q=2-31, 25 fps, 12800 tbn
+    Metadata:
+      encoder         : Lavc62.8.100 libx264
+      DURATION        : 00:09:27.080000000
+    Side data:
+      cpb: bitrate max/min/avg: 0/0/0 buffer size: 0 vbv_delay: N/A
+  Stream #0:1(und): Audio: aac (LC) (mp4a / 0x6134706D), 44100 Hz, mono, fltp, 124 kb/s (default)
+    Metadata:
+      handler_name    : SoundHandler
+      vendor_id       : [0][0][0][0]
+frame=  143 fps=0.0 q=28.0 size=       0KiB time=00:00:05.64 bitrate=   0.1kbits/s speed=  11x elapsed=0:00:00.51    frame=  306 fps=298 q=28.0 size=     512KiB time=00:00:12.16 bitrate= 345.0kbits/s speed=11.9x elapsed=0:00:01.02    frame=  464 fps=301 q=28.0 size=     768KiB time=00:00:18.56 bitrate= 339.0kbits/s speed=  12x elapsed=0:00:01.54    frame=  631 fps=306 q=28.0 size=    1280KiB time=00:00:25.16 bitrate= 416.8kbits/s speed=12.2x elapsed=0:00:02.06    frame=  797 fps=309 q=28.0 size=    1792KiB time=00:00:31.92 bitrate= 459.9kbits/s speed=12.4x elapsed=0:00:02.58    frame=  980 fps=317 q=28.0 size=    2048KiB time=00:00:39.12 bitrate= 428.9kbits/s speed=12.6x elapsed=0:00:03.09    frame= 1153 fps=319 q=28.0 size=    2560KiB time=00:00:46.04 bitrate= 455.5kbits/s speed=12.8x elapsed=0:00:03.61    frame= 1334 fps=324 q=28.0 size=    2816KiB time=00:00:53.28 bitrate= 433.0kbits/s speed=12.9x elapsed=0:00:04.11    frame= 1503 fps=324 q=28.0 size=    3328KiB time=00:01:00.04 bitrate= 454.1kbits/s speed=  13x elapsed=0:00:04.63    frame= 1677 fps=326 q=28.0 size=    3584KiB time=00:01:07.16 bitrate= 437.2kbits/s speed=  13x elapsed=0:00:05.15    frame= 1850 fps=327 q=28.0 size=    4096KiB time=00:01:13.92 bitrate= 453.9kbits/s speed=  13x elapsed=0:00:05.66    frame= 2023 fps=327 q=28.0 size=    4352KiB time=00:01:20.88 bitrate= 440.8kbits/s speed=13.1x elapsed=0:00:06.18    frame= 2201 fps=328 q=28.0 size=    4864KiB time=00:01:27.96 bitrate= 453.0kbits/s speed=13.1x elapsed=0:00:06.70    frame= 2366 fps=328 q=28.0 size=    5376KiB time=00:01:34.64 bitrate= 465.3kbits/s speed=13.1x elapsed=0:00:07.21    frame= 2546 fps=329 q=28.0 size=    5632KiB time=00:01:41.76 bitrate= 453.4kbits/s speed=13.2x elapsed=0:00:07.73    frame= 2726 fps=330 q=28.0 size=    6144KiB time=00:01:48.96 bitrate= 461.9kbits/s speed=13.2x elapsed=0:00:08.25    frame= 2904 fps=331 q=28.0 size=    6400KiB time=00:01:56.08 bitrate= 451.7kbits/s speed=13.2x elapsed=0:00:08.76    frame= 3080 fps=332 q=28.0 size=    6656KiB time=00:02:03.27 bitrate= 442.3kbits/s speed=13.3x elapsed=0:00:09.27    frame= 3271 fps=334 q=28.0 size=    7168KiB time=00:02:10.76 bitrate= 449.1kbits/s speed=13.3x elapsed=0:00:09.80    frame= 3451 fps=334 q=28.0 size=    7424KiB time=00:02:17.96 bitrate= 440.8kbits/s speed=13.4x elapsed=0:00:10.31    frame= 3619 fps=334 q=28.0 size=    7936KiB time=00:02:24.68 bitrate= 449.4kbits/s speed=13.4x elapsed=0:00:10.82    frame= 3793 fps=334 q=28.0 size=    8192KiB time=00:02:31.64 bitrate= 442.6kbits/s speed=13.4x elapsed=0:00:11.34    frame= 3971 fps=335 q=28.0 size=    8704KiB time=00:02:38.76 bitrate= 449.1kbits/s speed=13.4x elapsed=0:00:11.85    frame= 4142 fps=335 q=28.0 size=    8960KiB time=00:02:45.76 bitrate= 442.8kbits/s speed=13.4x elapsed=0:00:12.37    frame= 4323 fps=335 q=28.0 size=    9472KiB time=00:02:52.88 bitrate= 448.8kbits/s speed=13.4x elapsed=0:00:12.88    frame= 4499 fps=335 q=28.0 size=    9728KiB time=00:02:59.88 bitrate= 443.0kbits/s speed=13.4x elapsed=0:00:13.41    frame= 4682 fps=336 q=28.0 size=   10240KiB time=00:03:07.28 bitrate= 447.9kbits/s speed=13.4x elapsed=0:00:13.92    frame= 4868 fps=337 q=28.0 size=   10496KiB time=00:03:14.64 bitrate= 441.8kbits/s speed=13.5x elapsed=0:00:14.44    frame= 5046 fps=337 q=28.0 size=   10752KiB time=00:03:21.76 bitrate= 436.6kbits/s speed=13.5x elapsed=0:00:14.95    frame= 5223 fps=337 q=28.0 size=   11264KiB time=00:03:28.96 bitrate= 441.6kbits/s speed=13.5x elapsed=0:00:15.47    frame= 5408 fps=338 q=28.0 size=   11520KiB time=00:03:36.24 bitrate= 436.4kbits/s speed=13.5x elapsed=0:00:15.99    frame= 5578 fps=338 q=28.0 size=   12032KiB time=00:03:43.20 bitrate= 441.6kbits/s speed=13.5x elapsed=0:00:16.51    frame= 5748 fps=338 q=28.0 size=   12288KiB time=00:03:49.88 bitrate= 437.9kbits/s speed=13.5x elapsed=0:00:17.02    frame= 5924 fps=338 q=28.0 size=   12800KiB time=00:03:56.88 bitrate= 442.7kbits/s speed=13.5x elapsed=0:00:17.54    frame= 6103 fps=338 q=28.0 size=   13312KiB time=00:04:04.04 bitrate= 446.9kbits/s speed=13.5x elapsed=0:00:18.06    frame= 6276 fps=338 q=28.0 size=   13568KiB time=00:04:10.96 bitrate= 442.9kbits/s speed=13.5x elapsed=0:00:18.57    frame= 6453 fps=338 q=28.0 size=   14080KiB time=00:04:18.04 bitrate= 447.0kbits/s speed=13.5x elapsed=0:00:19.09    frame= 6640 fps=338 q=28.0 size=   14336KiB time=00:04:25.64 bitrate= 442.1kbits/s speed=13.5x elapsed=0:00:19.62    frame= 6833 fps=339 q=28.0 size=   14592KiB time=00:04:33.36 bitrate= 437.3kbits/s speed=13.6x elapsed=0:00:20.14    frame= 7008 fps=339 q=28.0 size=   14848KiB time=00:04:40.24 bitrate= 434.0kbits/s speed=13.6x elapsed=0:00:20.64    frame= 7179 fps=339 q=28.0 size=   15360KiB time=00:04:47.16 bitrate= 438.2kbits/s speed=13.6x elapsed=0:00:21.16    frame= 7347 fps=339 q=28.0 size=   15616KiB time=00:04:53.88 bitrate= 435.3kbits/s speed=13.6x elapsed=0:00:21.68    frame= 7521 fps=339 q=28.0 size=   16128KiB time=00:05:00.80 bitrate= 439.2kbits/s speed=13.5x elapsed=0:00:22.20    frame= 7701 fps=339 q=28.0 size=   16640KiB time=00:05:08.00 bitrate= 442.6kbits/s speed=13.6x elapsed=0:00:22.72    frame= 7871 fps=339 q=28.0 size=   16896KiB time=00:05:14.76 bitrate= 439.7kbits/s speed=13.5x elapsed=0:00:23.23    frame= 8044 fps=339 q=28.0 size=   17408KiB time=00:05:21.68 bitrate= 443.3kbits/s speed=13.5x elapsed=0:00:23.75    frame= 8219 fps=339 q=28.0 size=   17664KiB time=00:05:28.72 bitrate= 440.2kbits/s speed=13.5x elapsed=0:00:24.26    frame= 8408 fps=339 q=28.0 size=   18176KiB time=00:05:36.24 bitrate= 442.8kbits/s speed=13.6x elapsed=0:00:24.78    frame= 8600 fps=340 q=28.0 size=   18432KiB time=00:05:43.92 bitrate= 439.0kbits/s speed=13.6x elapsed=0:00:25.30    frame= 8787 fps=340 q=28.0 size=   18688KiB time=00:05:51.40 bitrate= 435.7kbits/s speed=13.6x elapsed=0:00:25.83    frame= 8968 fps=340 q=28.0 size=   19200KiB time=00:05:58.64 bitrate= 438.6kbits/s speed=13.6x elapsed=0:00:26.35    frame= 9149 fps=341 q=28.0 size=   19456KiB time=00:06:05.96 bitrate= 435.5kbits/s speed=13.6x elapsed=0:00:26.86    frame= 9325 fps=340 q=28.0 size=   19968KiB time=00:06:12.96 bitrate= 438.6kbits/s speed=13.6x elapsed=0:00:27.39    frame= 9500 fps=340 q=28.0 size=   20224KiB time=00:06:19.96 bitrate= 436.0kbits/s speed=13.6x elapsed=0:00:27.90    frame= 9675 fps=340 q=28.0 size=   20736KiB time=00:06:26.92 bitrate= 439.0kbits/s speed=13.6x elapsed=0:00:28.42    frame= 9846 fps=340 q=28.0 size=   20992KiB time=00:06:33.76 bitrate= 436.7kbits/s speed=13.6x elapsed=0:00:28.93    frame=10019 fps=340 q=28.0 size=   21504KiB time=00:06:40.72 bitrate= 439.6kbits/s speed=13.6x elapsed=0:00:29.45    frame=10194 fps=340 q=28.0 size=   21760KiB time=00:06:47.68 bitrate= 437.3kbits/s speed=13.6x elapsed=0:00:29.97    frame=10371 fps=340 q=28.0 size=   22272KiB time=00:06:54.76 bitrate= 439.9kbits/s speed=13.6x elapsed=0:00:30.49    frame=10557 fps=340 q=28.0 size=   22528KiB time=00:07:02.20 bitrate= 437.1kbits/s speed=13.6x elapsed=0:00:31.00    frame=10744 fps=341 q=28.0 size=   23040KiB time=00:07:09.76 bitrate= 439.2kbits/s speed=13.6x elapsed=0:00:31.53    frame=10925 fps=341 q=28.0 size=   23296KiB time=00:07:16.96 bitrate= 436.7kbits/s speed=13.6x elapsed=0:00:32.04    frame=11106 fps=341 q=28.0 size=   23552KiB time=00:07:24.16 bitrate= 434.4kbits/s speed=13.6x elapsed=0:00:32.56    frame=11281 fps=341 q=28.0 size=   24064KiB time=00:07:31.20 bitrate= 436.9kbits/s speed=13.6x elapsed=0:00:33.07    frame=11455 fps=341 q=28.0 size=   24320KiB time=00:07:38.12 bitrate= 434.9kbits/s speed=13.6x elapsed=0:00:33.59    frame=11623 fps=341 q=28.0 size=   24832KiB time=00:07:44.84 bitrate= 437.6kbits/s speed=13.6x elapsed=0:00:34.10    frame=11801 fps=341 q=28.0 size=   25344KiB time=00:07:51.96 bitrate= 439.9kbits/s speed=13.6x elapsed=0:00:34.62    frame=11972 fps=341 q=28.0 size=   25600KiB time=00:07:58.92 bitrate= 437.9kbits/s speed=13.6x elapsed=0:00:35.14    frame=12148 fps=341 q=28.0 size=   26112KiB time=00:08:05.84 bitrate= 440.3kbits/s speed=13.6x elapsed=0:00:35.66    frame=12325 fps=341 q=28.0 size=   26368KiB time=00:08:12.92 bitrate= 438.2kbits/s speed=13.6x elapsed=0:00:36.17    frame=12489 fps=340 q=28.0 size=   26880KiB time=00:08:19.48 bitrate= 440.9kbits/s speed=13.6x elapsed=0:00:36.69    frame=12661 fps=340 q=28.0 size=   27136KiB time=00:08:26.36 bitrate= 439.0kbits/s speed=13.6x elapsed=0:00:37.21    frame=12836 fps=340 q=28.0 size=   27648KiB time=00:08:33.36 bitrate= 441.2kbits/s speed=13.6x elapsed=0:00:37.72    frame=13014 fps=340 q=28.0 size=   27904KiB time=00:08:40.48 bitrate= 439.2kbits/s speed=13.6x elapsed=0:00:38.24    frame=13187 fps=340 q=28.0 size=   28416KiB time=00:08:47.40 bitrate= 441.4kbits/s speed=13.6x elapsed=0:00:38.76    frame=13359 fps=340 q=28.0 size=   28672KiB time=00:08:54.44 bitrate= 439.5kbits/s speed=13.6x elapsed=0:00:39.28    frame=13539 fps=340 q=28.0 size=   29184KiB time=00:09:01.48 bitrate= 441.5kbits/s speed=13.6x elapsed=0:00:39.79    frame=13709 fps=340 q=28.0 size=   29696KiB time=00:09:08.28 bitrate= 443.7kbits/s speed=13.6x elapsed=0:00:40.31    frame=13873 fps=340 q=28.0 size=   29952KiB time=00:09:14.84 bitrate= 442.2kbits/s speed=13.6x elapsed=0:00:40.83    [out#0/mp4 @ 000002370284a380] video:21815KiB audio:8447KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: 1.509671%
+frame=13948 fps=338 q=-1.0 Lsize=   30719KiB time=00:09:17.92 bitrate= 451.1kbits/s speed=13.5x elapsed=0:00:41.22    
+[libx264 @ 0000023702846900] frame I:69    Avg QP:12.15  size: 23849
+[libx264 @ 0000023702846900] frame P:4130  Avg QP:18.84  size:  3875
+[libx264 @ 0000023702846900] frame B:9827  Avg QP:19.58  size:   488
+[libx264 @ 0000023702846900] consecutive B-frames:  4.5%  4.0%  6.3% 85.1%
+[libx264 @ 0000023702846900] mb I  I16..4: 53.4% 33.6% 13.0%
+[libx264 @ 0000023702846900] mb P  I16..4:  2.3%  2.0%  0.3%  P16..4: 16.1%  6.4%  3.5%  0.0%  0.0%    skip:69.4%
+[libx264 @ 0000023702846900] mb B  I16..4:  0.2%  0.1%  0.0%  B16..8:  8.5%  0.9%  0.0%  direct: 3.8%  skip:86.5%  L0:41.4% L1:51.4% BI: 7.2%
+[libx264 @ 0000023702846900] 8x8 transform intra:39.0% inter:64.2%
+[libx264 @ 0000023702846900] coded y,uvDC,uvAC intra: 18.5% 26.6% 13.8% inter: 3.7% 5.5% 0.2%
+[libx264 @ 0000023702846900] i16 v,h,dc,p: 79% 12%  8%  1%
+[libx264 @ 0000023702846900] i8 v,h,dc,ddl,ddr,vr,hd,vl,hu: 14% 12% 55%  3%  2%  3%  2%  5%  3%
+[libx264 @ 0000023702846900] i4 v,h,dc,ddl,ddr,vr,hd,vl,hu: 30% 19% 15%  6%  6%  7%  5%  8%  5%
+[libx264 @ 0000023702846900] i8c dc,h,v,p: 70% 13% 14%  2%
+[libx264 @ 0000023702846900] Weighted P-Frames: Y:0.0% UV:0.0%
+[libx264 @ 0000023702846900] ref P L0: 77.1% 22.9%
+[libx264 @ 0000023702846900] ref B L0: 89.9% 10.1%
+[libx264 @ 0000023702846900] ref B L1: 97.3%  2.7%
+[libx264 @ 0000023702846900] kb/s:320.09
+  Final: D:\BUSINESS\executables\love\eklipses\EK7\content\lesson2\headless\lesson2-headless.mp4 (31.5 MB)
+
+═══ Step 4: Validate ═══
+
+  Lesson runtime:    565.2s
+  Constructed audio: 558.0s
+  Duration delta:    7202ms ⚠ large
+  Frame @ 102.2s → frames/seg03-exchange-start.png
+  Frame @ 179.2s → frames/seg05-exchange-start.png
+  Frame @ 255.1s → frames/seg07-exchange-start.png
+  Frame @ 321.5s → frames/seg09-exchange-start.png
+  Frame @ 404.8s → frames/seg11-exchange-start.png
+
+  Running Whisper small (this takes a few minutes)...
+  0%|                                               | 0.00/461M [00:00<?, ?iB/s]  0%|                                       | 368k/461M [00:00<02:22, 3.39MiB/s]  0%|                                      | 1.05M/461M [00:00<01:29, 5.39MiB/s]  0%|1                                     | 1.69M/461M [00:00<01:21, 5.90MiB/s]  1%|2                                     | 2.75M/461M [00:00<01:01, 7.86MiB/s]  1%|3                                     | 3.86M/461M [00:00<00:52, 9.17MiB/s]  1%|4                                     | 4.94M/461M [00:00<00:48, 9.76MiB/s]  1%|5                                     | 6.09M/461M [00:00<00:45, 10.5MiB/s]  2%|5                                     | 7.23M/461M [00:00<00:43, 10.8MiB/s]  2%|6                                     | 8.38M/461M [00:00<00:42, 11.1MiB/s]  2%|7                                     | 9.52M/461M [00:01<00:41, 11.3MiB/s]  2%|8                                     | 10.6M/461M [00:01<00:45, 10.3MiB/s]  3%|9                                     | 11.8M/461M [00:01<00:43, 10.9MiB/s]  3%|#                                     | 13.0M/461M [00:01<00:42, 11.2MiB/s]  3%|#1                                    | 14.2M/461M [00:01<00:40, 11.6MiB/s]  3%|#2                                    | 15.4M/461M [00:01<00:40, 11.6MiB/s]  4%|#3                                    | 16.6M/461M [00:01<00:39, 12.0MiB/s]  4%|#4                                    | 17.7M/461M [00:01<00:44, 10.5MiB/s]  4%|#6                                    | 19.6M/461M [00:01<00:35, 12.9MiB/s]  5%|#7                                    | 20.9M/461M [00:02<00:38, 11.9MiB/s]  5%|#8                                    | 22.1M/461M [00:02<00:40, 11.3MiB/s]  5%|#9                                    | 23.6M/461M [00:02<00:36, 12.6MiB/s]  5%|##                                    | 24.9M/461M [00:02<00:38, 11.9MiB/s]  6%|##1                                   | 26.3M/461M [00:02<00:36, 12.5MiB/s]  6%|##2                                   | 27.5M/461M [00:02<00:40, 11.2MiB/s]  6%|##3                                   | 29.0M/461M [00:02<00:36, 12.5MiB/s]  7%|##4                                   | 30.3M/461M [00:02<00:36, 12.3MiB/s]  7%|##5                                   | 31.5M/461M [00:03<00:39, 11.3MiB/s]  7%|##7                                   | 33.1M/461M [00:03<00:35, 12.5MiB/s]  7%|##8                                   | 34.3M/461M [00:03<00:40, 11.0MiB/s]  8%|##9                                   | 35.9M/461M [00:03<00:37, 12.0MiB/s]  8%|###                                   | 37.5M/461M [00:03<00:33, 13.1MiB/s]  8%|###1                                  | 38.8M/461M [00:03<00:36, 12.2MiB/s]  9%|###3                                  | 40.3M/461M [00:03<00:33, 13.1MiB/s]  9%|###4                                  | 41.6M/461M [00:03<00:38, 11.6MiB/s]  9%|###5                                  | 42.9M/461M [00:03<00:36, 12.0MiB/s] 10%|###6                                  | 44.6M/461M [00:04<00:32, 13.3MiB/s] 10%|###7                                  | 45.9M/461M [00:04<00:41, 10.6MiB/s] 10%|###9                                  | 47.6M/461M [00:04<00:34, 12.4MiB/s] 11%|####                                  | 49.0M/461M [00:04<00:35, 12.1MiB/s] 11%|####1                                 | 50.5M/461M [00:04<00:32, 13.2MiB/s] 11%|####2                                 | 51.9M/461M [00:04<00:37, 11.4MiB/s] 11%|####3                                 | 53.0M/461M [00:04<00:37, 11.4MiB/s] 12%|####4                                 | 54.6M/461M [00:04<00:33, 12.6MiB/s] 12%|####6                                 | 55.9M/461M [00:05<00:33, 12.6MiB/s] 12%|####7                                 | 57.1M/461M [00:05<00:39, 10.6MiB/s] 13%|####8                                 | 58.7M/461M [00:05<00:35, 11.9MiB/s] 13%|####9                                 | 59.9M/461M [00:05<00:35, 12.0MiB/s] 13%|#####                                 | 61.1M/461M [00:05<00:38, 11.0MiB/s] 14%|#####2                                | 63.1M/461M [00:05<00:30, 13.6MiB/s] 14%|#####3                                | 64.5M/461M [00:05<00:33, 12.3MiB/s] 14%|#####4                                | 65.7M/461M [00:05<00:34, 11.9MiB/s] 15%|#####5                                | 67.1M/461M [00:06<00:33, 12.5MiB/s] 15%|#####6                                | 68.3M/461M [00:06<00:37, 11.0MiB/s] 15%|#####7                                | 69.6M/461M [00:06<00:35, 11.5MiB/s] 15%|#####8                                | 70.7M/461M [00:06<00:36, 11.4MiB/s] 16%|#####9                                | 71.9M/461M [00:06<00:37, 10.8MiB/s] 16%|######                                | 73.9M/461M [00:06<00:30, 13.2MiB/s] 16%|######1                               | 75.2M/461M [00:06<00:33, 12.2MiB/s] 17%|######3                               | 76.7M/461M [00:06<00:30, 13.0MiB/s] 17%|######4                               | 78.0M/461M [00:07<00:32, 12.3MiB/s] 17%|######5                               | 79.2M/461M [00:07<00:32, 12.3MiB/s] 17%|######6                               | 80.4M/461M [00:07<00:36, 10.8MiB/s] 18%|######7                               | 81.9M/461M [00:07<00:34, 11.6MiB/s] 18%|######8                               | 83.0M/461M [00:07<00:34, 11.6MiB/s] 18%|######9                               | 84.2M/461M [00:07<00:35, 11.3MiB/s] 19%|#######                               | 85.7M/461M [00:07<00:31, 12.7MiB/s] 19%|#######1                              | 87.0M/461M [00:07<00:36, 10.7MiB/s] 19%|#######2                              | 88.5M/461M [00:07<00:33, 11.8MiB/s] 19%|#######3                              | 89.8M/461M [00:08<00:31, 12.3MiB/s] 20%|#######4                              | 91.0M/461M [00:08<00:32, 11.9MiB/s] 20%|#######6                              | 92.6M/461M [00:08<00:29, 13.0MiB/s] 20%|#######7                              | 93.8M/461M [00:08<00:30, 12.5MiB/s] 21%|#######8                              | 95.1M/461M [00:08<00:30, 12.5MiB/s] 21%|#######9                              | 96.3M/461M [00:08<00:32, 11.6MiB/s] 21%|########                              | 97.6M/461M [00:08<00:32, 11.6MiB/s] 22%|########1                             | 99.2M/461M [00:08<00:29, 12.8MiB/s] 22%|########4                              | 100M/461M [00:09<00:30, 12.3MiB/s] 22%|########5                              | 102M/461M [00:09<00:31, 12.0MiB/s] 22%|########6                              | 103M/461M [00:09<00:33, 11.1MiB/s] 23%|########7                              | 104M/461M [00:09<00:34, 10.9MiB/s] 23%|########8                              | 105M/461M [00:09<00:32, 11.6MiB/s] 23%|########9                              | 106M/461M [00:09<00:38, 9.68MiB/s] 23%|#########1                             | 108M/461M [00:09<00:31, 11.9MiB/s] 24%|#########2                             | 109M/461M [00:09<00:30, 12.0MiB/s] 24%|#########3                             | 111M/461M [00:09<00:30, 11.9MiB/s] 24%|#########4                             | 112M/461M [00:10<00:30, 11.9MiB/s] 24%|#########5                             | 113M/461M [00:10<00:50, 7.26MiB/s] 25%|#########6                             | 114M/461M [00:10<00:44, 8.25MiB/s] 25%|#########7                             | 115M/461M [00:10<00:40, 8.88MiB/s] 25%|#########8                             | 116M/461M [00:10<00:37, 9.68MiB/s] 25%|#########9                             | 117M/461M [00:10<00:36, 9.97MiB/s] 26%|##########                             | 118M/461M [00:10<00:37, 9.71MiB/s] 26%|##########1                            | 120M/461M [00:11<00:30, 11.6MiB/s] 26%|##########2                            | 121M/461M [00:11<00:31, 11.3MiB/s] 27%|##########3                            | 122M/461M [00:11<00:31, 11.2MiB/s] 27%|##########4                            | 124M/461M [00:11<00:32, 10.7MiB/s] 27%|##########5                            | 125M/461M [00:11<00:29, 12.1MiB/s] 27%|##########6                            | 126M/461M [00:11<00:30, 11.4MiB/s] 28%|##########8                            | 128M/461M [00:11<00:27, 12.7MiB/s] 28%|##########9                            | 129M/461M [00:11<00:29, 11.7MiB/s] 28%|###########                            | 131M/461M [00:11<00:29, 11.9MiB/s] 29%|###########1                           | 132M/461M [00:12<00:28, 12.1MiB/s] 29%|###########2                           | 133M/461M [00:12<00:28, 12.1MiB/s] 29%|###########3                           | 134M/461M [00:12<00:28, 12.1MiB/s] 29%|###########4                           | 135M/461M [00:12<00:28, 11.9MiB/s] 30%|###########5                           | 137M/461M [00:12<00:28, 11.9MiB/s] 30%|###########6                           | 138M/461M [00:12<00:28, 12.0MiB/s] 30%|###########7                           | 139M/461M [00:12<00:28, 11.9MiB/s] 30%|###########8                           | 140M/461M [00:12<00:28, 11.9MiB/s] 31%|###########9                           | 141M/461M [00:12<00:27, 12.1MiB/s] 31%|############                           | 142M/461M [00:12<00:28, 11.8MiB/s] 31%|############1                          | 144M/461M [00:13<00:25, 12.8MiB/s] 31%|############2                          | 145M/461M [00:13<00:31, 10.7MiB/s] 32%|############4                          | 147M/461M [00:13<00:24, 13.3MiB/s] 32%|############5                          | 149M/461M [00:13<00:25, 12.9MiB/s] 33%|############6                          | 150M/461M [00:13<00:25, 13.1MiB/s] 33%|############7                          | 151M/461M [00:13<00:25, 12.7MiB/s] 33%|############8                          | 152M/461M [00:13<00:27, 11.7MiB/s] 33%|#############                          | 154M/461M [00:13<00:25, 12.4MiB/s] 34%|#############1                         | 155M/461M [00:14<00:27, 11.8MiB/s] 34%|#############2                         | 157M/461M [00:14<00:24, 12.9MiB/s] 34%|#############3                         | 158M/461M [00:14<00:26, 11.9MiB/s] 35%|#############4                         | 159M/461M [00:14<00:26, 11.9MiB/s] 35%|#############5                         | 161M/461M [00:14<00:26, 12.0MiB/s] 35%|#############6                         | 162M/461M [00:14<00:26, 11.9MiB/s] 35%|#############7                         | 163M/461M [00:14<00:25, 12.5MiB/s] 36%|#############8                         | 164M/461M [00:14<00:25, 12.0MiB/s] 36%|##############                         | 166M/461M [00:14<00:23, 13.0MiB/s] 36%|##############1                        | 167M/461M [00:15<00:25, 12.0MiB/s] 37%|##############2                        | 169M/461M [00:15<00:23, 13.2MiB/s] 37%|##############3                        | 170M/461M [00:15<00:27, 11.3MiB/s] 37%|##############4                        | 171M/461M [00:15<00:24, 12.2MiB/s] 37%|##############5                        | 173M/461M [00:15<00:24, 12.2MiB/s] 38%|##############7                        | 174M/461M [00:15<00:25, 11.9MiB/s] 38%|##############8                        | 175M/461M [00:15<00:24, 12.3MiB/s] 38%|##############9                        | 176M/461M [00:15<00:24, 12.1MiB/s] 38%|###############                        | 177M/461M [00:16<00:26, 11.2MiB/s] 39%|###############1                       | 179M/461M [00:16<00:26, 11.0MiB/s] 39%|###############2                       | 181M/461M [00:16<00:23, 12.3MiB/s] 40%|###############4                       | 182M/461M [00:16<00:23, 12.6MiB/s] 40%|###############5                       | 184M/461M [00:16<00:25, 11.4MiB/s] 40%|###############6                       | 185M/461M [00:16<00:23, 12.3MiB/s] 40%|###############7                       | 187M/461M [00:16<00:25, 11.2MiB/s] 41%|###############9                       | 188M/461M [00:16<00:23, 12.4MiB/s] 41%|################                       | 189M/461M [00:17<00:24, 11.4MiB/s] 41%|################1                      | 191M/461M [00:17<00:23, 11.9MiB/s] 42%|################2                      | 192M/461M [00:17<00:22, 12.7MiB/s] 42%|################3                      | 193M/461M [00:17<00:27, 10.3MiB/s] 42%|################4                      | 194M/461M [00:17<00:26, 10.4MiB/s] 42%|################5                      | 196M/461M [00:17<00:23, 11.8MiB/s] 43%|################7                      | 198M/461M [00:17<00:20, 13.3MiB/s] 43%|################8                      | 199M/461M [00:17<00:21, 12.8MiB/s] 43%|################9                      | 200M/461M [00:18<00:22, 12.4MiB/s] 44%|#################                      | 201M/461M [00:18<00:22, 11.9MiB/s] 44%|#################1                     | 203M/461M [00:18<00:22, 11.8MiB/s] 44%|#################2                     | 204M/461M [00:18<00:22, 11.8MiB/s] 44%|#################3                     | 205M/461M [00:18<00:23, 11.6MiB/s] 45%|#################4                     | 206M/461M [00:18<00:23, 11.4MiB/s] 45%|#################5                     | 207M/461M [00:18<00:23, 11.5MiB/s] 45%|#################6                     | 208M/461M [00:18<00:23, 11.4MiB/s] 45%|#################7                     | 209M/461M [00:18<00:23, 11.4MiB/s] 46%|#################7                     | 210M/461M [00:18<00:23, 11.3MiB/s] 46%|#################8                     | 212M/461M [00:19<00:23, 11.3MiB/s] 46%|#################9                     | 213M/461M [00:19<00:22, 11.4MiB/s] 46%|##################                     | 214M/461M [00:19<00:22, 11.3MiB/s] 47%|##################1                    | 215M/461M [00:19<00:22, 11.5MiB/s] 47%|##################2                    | 216M/461M [00:19<00:21, 11.7MiB/s] 47%|##################3                    | 217M/461M [00:19<00:21, 11.8MiB/s] 47%|##################4                    | 218M/461M [00:19<00:22, 11.4MiB/s] 48%|##################5                    | 220M/461M [00:19<00:20, 12.2MiB/s] 48%|##################6                    | 221M/461M [00:19<00:21, 11.6MiB/s] 48%|##################8                    | 222M/461M [00:20<00:20, 12.4MiB/s] 48%|##################9                    | 224M/461M [00:20<00:20, 12.0MiB/s] 49%|###################                    | 225M/461M [00:20<00:21, 11.4MiB/s] 49%|###################1                   | 226M/461M [00:20<00:20, 11.8MiB/s] 49%|###################2                   | 228M/461M [00:20<00:19, 12.9MiB/s] 50%|###################3                   | 229M/461M [00:20<00:19, 12.7MiB/s] 50%|###################4                   | 230M/461M [00:20<00:22, 10.8MiB/s] 50%|###################5                   | 232M/461M [00:20<00:19, 12.2MiB/s] 50%|###################6                   | 233M/461M [00:20<00:20, 11.9MiB/s] 51%|###################7                   | 234M/461M [00:21<00:19, 12.1MiB/s] 51%|###################8                   | 235M/461M [00:21<00:19, 12.3MiB/s] 51%|####################                   | 237M/461M [00:21<00:18, 12.9MiB/s] 52%|####################1                  | 238M/461M [00:21<00:18, 12.5MiB/s] 52%|####################2                  | 239M/461M [00:21<00:20, 11.6MiB/s] 52%|####################3                  | 241M/461M [00:21<00:18, 12.4MiB/s] 52%|####################4                  | 242M/461M [00:21<00:19, 12.0MiB/s] 53%|####################5                  | 243M/461M [00:21<00:19, 12.0MiB/s] 53%|####################6                  | 244M/461M [00:21<00:22, 10.3MiB/s] 53%|####################7                  | 246M/461M [00:22<00:20, 11.3MiB/s] 54%|####################8                  | 247M/461M [00:22<00:20, 11.0MiB/s] 54%|#####################                  | 248M/461M [00:22<00:18, 12.2MiB/s] 54%|#####################1                 | 250M/461M [00:22<00:17, 12.3MiB/s] 54%|#####################2                 | 251M/461M [00:22<00:18, 12.1MiB/s] 55%|#####################3                 | 252M/461M [00:22<00:17, 12.4MiB/s] 55%|#####################4                 | 253M/461M [00:22<00:17, 12.2MiB/s] 55%|#####################5                 | 255M/461M [00:22<00:17, 12.7MiB/s] 55%|#####################6                 | 256M/461M [00:22<00:18, 11.7MiB/s] 56%|#####################7                 | 257M/461M [00:23<00:16, 12.6MiB/s] 56%|#####################8                 | 259M/461M [00:23<00:18, 11.7MiB/s] 56%|#####################9                 | 260M/461M [00:23<00:17, 12.2MiB/s] 57%|######################                 | 261M/461M [00:23<00:19, 10.6MiB/s] 57%|######################1                | 263M/461M [00:23<00:17, 11.6MiB/s] 57%|######################3                | 264M/461M [00:23<00:17, 11.9MiB/s] 57%|######################4                | 265M/461M [00:23<00:17, 11.8MiB/s] 58%|######################5                | 266M/461M [00:23<00:17, 11.8MiB/s] 58%|######################5                | 267M/461M [00:23<00:17, 11.8MiB/s] 58%|######################6                | 268M/461M [00:24<00:17, 11.9MiB/s] 58%|######################7                | 270M/461M [00:24<00:18, 10.9MiB/s] 59%|######################9                | 271M/461M [00:24<00:15, 13.0MiB/s] 59%|#######################                | 273M/461M [00:24<00:15, 12.4MiB/s] 59%|#######################1               | 274M/461M [00:24<00:15, 12.7MiB/s] 60%|#######################2               | 275M/461M [00:24<00:16, 11.6MiB/s] 60%|#######################3               | 276M/461M [00:24<00:16, 11.8MiB/s] 60%|#######################4               | 278M/461M [00:24<00:17, 11.3MiB/s] 61%|#######################5               | 279M/461M [00:24<00:15, 12.2MiB/s] 61%|#######################6               | 280M/461M [00:25<00:15, 12.0MiB/s] 61%|#######################7               | 281M/461M [00:25<00:15, 12.0MiB/s] 61%|#######################8               | 283M/461M [00:25<00:15, 11.8MiB/s] 62%|#######################9               | 284M/461M [00:25<00:18, 10.2MiB/s] 62%|########################1              | 286M/461M [00:25<00:14, 12.3MiB/s] 62%|########################2              | 287M/461M [00:25<00:16, 11.3MiB/s] 63%|########################3              | 288M/461M [00:25<00:15, 11.5MiB/s] 63%|########################5              | 290M/461M [00:25<00:13, 13.5MiB/s] 63%|########################6              | 292M/461M [00:26<00:15, 11.2MiB/s] 63%|########################7              | 293M/461M [00:26<00:16, 10.5MiB/s] 64%|########################9              | 295M/461M [00:26<00:13, 12.8MiB/s] 64%|#########################              | 296M/461M [00:26<00:15, 11.2MiB/s] 64%|#########################1             | 297M/461M [00:26<00:14, 11.9MiB/s] 65%|#########################2             | 299M/461M [00:26<00:14, 12.1MiB/s] 65%|#########################3             | 300M/461M [00:26<00:14, 11.8MiB/s] 65%|#########################4             | 301M/461M [00:26<00:14, 11.8MiB/s] 66%|#########################5             | 302M/461M [00:27<00:14, 11.8MiB/s] 66%|#########################6             | 303M/461M [00:27<00:13, 11.9MiB/s] 66%|#########################7             | 305M/461M [00:27<00:12, 12.9MiB/s] 66%|#########################8             | 306M/461M [00:27<00:12, 13.3MiB/s] 67%|##########################             | 308M/461M [00:27<00:12, 12.7MiB/s] 67%|##########################1            | 309M/461M [00:27<00:13, 11.6MiB/s] 67%|##########################2            | 310M/461M [00:27<00:12, 12.7MiB/s] 68%|##########################3            | 312M/461M [00:27<00:13, 11.7MiB/s] 68%|##########################4            | 313M/461M [00:27<00:13, 11.4MiB/s] 68%|##########################5            | 314M/461M [00:28<00:12, 12.1MiB/s] 68%|##########################6            | 315M/461M [00:28<00:13, 11.1MiB/s] 69%|##########################8            | 317M/461M [00:28<00:11, 13.1MiB/s] 69%|##########################9            | 318M/461M [00:28<00:19, 7.70MiB/s] 69%|##########################9            | 319M/461M [00:28<00:18, 8.24MiB/s] 69%|###########################            | 320M/461M [00:28<00:17, 8.46MiB/s] 70%|###########################1           | 321M/461M [00:28<00:15, 9.17MiB/s] 70%|###########################2           | 323M/461M [00:29<00:14, 9.78MiB/s] 70%|###########################3           | 324M/461M [00:29<00:13, 10.7MiB/s] 70%|###########################4           | 325M/461M [00:29<00:12, 11.0MiB/s] 71%|###########################6           | 326M/461M [00:29<00:12, 11.7MiB/s] 71%|###########################7           | 328M/461M [00:29<00:12, 11.5MiB/s] 71%|###########################8           | 329M/461M [00:29<00:11, 11.7MiB/s] 72%|###########################9           | 330M/461M [00:29<00:11, 11.5MiB/s] 72%|###########################9           | 331M/461M [00:29<00:12, 10.9MiB/s] 72%|############################1          | 332M/461M [00:29<00:11, 11.9MiB/s] 72%|############################2          | 334M/461M [00:30<00:11, 11.3MiB/s] 73%|############################3          | 335M/461M [00:30<00:10, 12.3MiB/s] 73%|############################4          | 336M/461M [00:30<00:11, 11.4MiB/s] 73%|############################5          | 338M/461M [00:30<00:09, 13.4MiB/s] 74%|############################6          | 339M/461M [00:30<00:10, 12.7MiB/s] 74%|############################8          | 341M/461M [00:30<00:09, 12.9MiB/s] 74%|############################9          | 342M/461M [00:30<00:10, 12.1MiB/s] 74%|#############################          | 343M/461M [00:30<00:10, 11.6MiB/s] 75%|#############################1         | 345M/461M [00:30<00:09, 12.7MiB/s] 75%|#############################2         | 346M/461M [00:31<00:11, 10.7MiB/s] 75%|#############################3         | 348M/461M [00:31<00:09, 12.8MiB/s] 76%|#############################5         | 349M/461M [00:31<00:09, 11.8MiB/s] 76%|#############################6         | 350M/461M [00:31<00:10, 11.4MiB/s] 76%|#############################7         | 351M/461M [00:31<00:10, 11.1MiB/s] 76%|#############################8         | 353M/461M [00:31<00:09, 11.8MiB/s] 77%|#############################9         | 354M/461M [00:31<00:09, 11.6MiB/s] 77%|##############################         | 355M/461M [00:31<00:09, 11.8MiB/s] 77%|##############################1        | 356M/461M [00:32<00:09, 11.5MiB/s] 77%|##############################2        | 357M/461M [00:32<00:09, 11.8MiB/s] 78%|##############################3        | 359M/461M [00:32<00:08, 12.3MiB/s] 78%|##############################4        | 360M/461M [00:32<00:08, 11.9MiB/s] 78%|##############################5        | 361M/461M [00:32<00:09, 11.3MiB/s] 79%|##############################6        | 362M/461M [00:32<00:08, 12.1MiB/s] 79%|##############################7        | 363M/461M [00:32<00:08, 11.9MiB/s] 79%|##############################8        | 365M/461M [00:32<00:08, 12.0MiB/s] 79%|##############################9        | 366M/461M [00:32<00:08, 11.4MiB/s] 80%|###############################        | 367M/461M [00:33<00:08, 12.2MiB/s] 80%|###############################1       | 368M/461M [00:33<00:08, 12.1MiB/s] 80%|###############################2       | 370M/461M [00:33<00:08, 11.0MiB/s] 81%|###############################4       | 371M/461M [00:33<00:07, 13.0MiB/s] 81%|###############################5       | 373M/461M [00:33<00:08, 11.3MiB/s] 81%|###############################6       | 374M/461M [00:33<00:07, 11.5MiB/s] 81%|###############################7       | 375M/461M [00:33<00:08, 11.2MiB/s] 82%|###############################8       | 377M/461M [00:33<00:07, 12.1MiB/s] 82%|###############################9       | 378M/461M [00:33<00:07, 11.7MiB/s] 82%|################################       | 379M/461M [00:34<00:07, 12.2MiB/s] 82%|################################1      | 380M/461M [00:34<00:06, 12.4MiB/s] 83%|################################2      | 382M/461M [00:34<00:06, 12.2MiB/s] 83%|################################3      | 383M/461M [00:34<00:06, 12.2MiB/s] 83%|################################4      | 384M/461M [00:34<00:06, 12.1MiB/s] 83%|################################5      | 385M/461M [00:34<00:06, 11.6MiB/s] 84%|################################6      | 387M/461M [00:34<00:06, 12.3MiB/s] 84%|################################8      | 388M/461M [00:34<00:05, 13.5MiB/s] 84%|################################9      | 389M/461M [00:34<00:06, 12.4MiB/s] 85%|#################################      | 391M/461M [00:35<00:05, 13.0MiB/s] 85%|#################################1     | 392M/461M [00:35<00:06, 11.4MiB/s] 85%|#################################2     | 393M/461M [00:35<00:05, 11.8MiB/s] 86%|#################################3     | 395M/461M [00:35<00:05, 11.8MiB/s] 86%|#################################4     | 396M/461M [00:35<00:05, 12.8MiB/s] 86%|#################################6     | 397M/461M [00:35<00:05, 12.5MiB/s] 86%|#################################7     | 399M/461M [00:35<00:05, 12.8MiB/s] 87%|#################################8     | 400M/461M [00:35<00:05, 12.5MiB/s] 87%|#################################9     | 401M/461M [00:36<00:06, 10.1MiB/s] 87%|##################################1    | 403M/461M [00:36<00:05, 12.1MiB/s] 88%|##################################2    | 405M/461M [00:36<00:04, 12.4MiB/s] 88%|##################################3    | 406M/461M [00:36<00:04, 12.1MiB/s] 88%|##################################4    | 407M/461M [00:36<00:04, 13.2MiB/s] 89%|##################################5    | 409M/461M [00:36<00:04, 12.3MiB/s] 89%|##################################6    | 410M/461M [00:36<00:04, 12.6MiB/s] 89%|##################################7    | 411M/461M [00:36<00:04, 11.6MiB/s] 89%|##################################8    | 412M/461M [00:36<00:04, 12.0MiB/s] 90%|##################################9    | 414M/461M [00:37<00:04, 10.5MiB/s] 90%|###################################1   | 415M/461M [00:37<00:04, 11.8MiB/s] 90%|###################################2   | 417M/461M [00:37<00:03, 12.0MiB/s] 91%|###################################3   | 418M/461M [00:37<00:03, 11.7MiB/s] 91%|###################################4   | 419M/461M [00:37<00:03, 12.2MiB/s] 91%|###################################5   | 421M/461M [00:37<00:03, 12.0MiB/s] 92%|###################################6   | 422M/461M [00:37<00:03, 12.1MiB/s] 92%|###################################8   | 423M/461M [00:37<00:03, 12.4MiB/s] 92%|###################################9   | 425M/461M [00:38<00:03, 12.0MiB/s] 92%|####################################   | 426M/461M [00:38<00:02, 12.9MiB/s] 93%|####################################1  | 427M/461M [00:38<00:03, 11.8MiB/s] 93%|####################################2  | 429M/461M [00:38<00:02, 12.9MiB/s] 93%|####################################3  | 430M/461M [00:38<00:02, 12.9MiB/s] 94%|####################################4  | 431M/461M [00:38<00:02, 12.6MiB/s] 94%|####################################5  | 433M/461M [00:38<00:02, 11.6MiB/s] 94%|####################################6  | 434M/461M [00:38<00:02, 11.6MiB/s] 94%|####################################7  | 435M/461M [00:38<00:02, 10.9MiB/s] 95%|####################################9  | 436M/461M [00:39<00:02, 12.2MiB/s] 95%|#####################################  | 438M/461M [00:39<00:02, 12.3MiB/s] 95%|#####################################1 | 439M/461M [00:39<00:01, 12.1MiB/s] 96%|#####################################2 | 441M/461M [00:39<00:01, 13.0MiB/s] 96%|#####################################3 | 442M/461M [00:39<00:01, 11.9MiB/s] 96%|#####################################4 | 443M/461M [00:39<00:01, 13.0MiB/s] 96%|#####################################5 | 445M/461M [00:39<00:01, 11.5MiB/s] 97%|#####################################7 | 446M/461M [00:39<00:01, 11.5MiB/s] 97%|#####################################8 | 448M/461M [00:39<00:01, 12.7MiB/s] 97%|#####################################9 | 449M/461M [00:40<00:01, 11.6MiB/s] 98%|###################################### | 450M/461M [00:40<00:00, 12.8MiB/s] 98%|######################################1| 452M/461M [00:40<00:00, 11.9MiB/s] 98%|######################################2| 453M/461M [00:40<00:00, 10.9MiB/s] 99%|######################################4| 455M/461M [00:40<00:00, 13.3MiB/s] 99%|######################################5| 456M/461M [00:40<00:00, 12.9MiB/s] 99%|######################################6| 457M/461M [00:40<00:00, 12.4MiB/s] 99%|######################################7| 459M/461M [00:40<00:00, 11.2MiB/s]100%|######################################8| 460M/461M [00:41<00:00, 11.5MiB/s]100%|######################################9| 461M/461M [00:41<00:00, 11.6MiB/s]100%|#######################################| 461M/461M [00:41<00:00, 11.7MiB/s]
+C:\Users\serge\AppData\Local\Programs\Python\Python311\Lib\site-packages\whisper\transcribe.py:132: UserWarning: FP16 is not supported on CPU; using FP32 instead
+  warnings.warn("FP16 is not supported on CPU; using FP32 instead")
+
+[FATAL] spawnSync C:\WINDOWS\system32\cmd.exe ETIMEDOUT
+[00:00.000 --> 00:04.680]  Lesson 2. If you went through lesson 1, you know how to open. You know how to make her feel
+[00:04.680 --> 00:09.680]  noticed. Not hit on. You know how to build something from nothing. Now comes the harder part.
+[00:10.040 --> 00:14.200]  Because once she's interested, or even before she's interested, she's going to test you.
+[00:14.560 --> 00:19.020]  Not because she's mean. Not because she doesn't like you. Because that's how attraction works.
+[00:19.540 --> 00:23.680]  Women test men instinctively. They push to see who they're dealing with. A man who
+[00:23.680 --> 00:27.880]  breaks under the pressure, doesn't make her feel safe. A man who holds his ground does.
+[00:27.880 --> 00:32.620]  What you're about to learn is frame. Five principles for holding your ground when things
+[00:32.620 --> 00:38.080]  get uncomfortable. Most men never learn this. They bend. They over explain. They apologize for
+[00:38.080 --> 00:42.140]  things they didn't do wrong. And every time they do, she loses a little more interest.
+[00:42.660 --> 00:48.420]  You're not going to do that. Let's begin. Frame stands for five things. Feel nothing.
+[00:48.900 --> 00:57.860]  Reframe. Add humor. Make her qualify. Exit. Together, they answer one question. What do
+[00:57.860 --> 01:01.080]  you think? It could be a cold response when you thought it was going well. Could be a dismissive
+[01:01.080 --> 01:05.240]  comment. Could be her looking at her phone while you're talking. Could be a direct challenge.
+[01:05.500 --> 01:09.820]  I bet you say that to everyone. Whatever the test is, most men fail at the same way.
+[01:10.080 --> 01:14.680]  They flinch. They explain themselves. They chase. Frame gives you something else to do instead.
+[01:15.220 --> 01:20.120]  Watch Alex now. Sophia is about to make things uncomfortable. Watch how he handles it.
+[01:20.900 --> 01:25.320]  Notice where we are in the conversation. Things were going okay. There was some warmth.
+[01:25.320 --> 01:30.140]  It felt like it was building. And then she's going to pull back. This is the part most men get
+[01:30.140 --> 01:35.120]  wrong. They take it personally. They think the conversation broke. They try harder to fix it.
+[01:35.280 --> 01:39.560]  And in doing so, they make it worse. Alex is about to do something completely different.
+[01:39.980 --> 01:43.140]  Watch how still he stays. What are you working on?
+[01:44.380 --> 01:48.680]  Something you probably wouldn't understand. Probably not. What is it anyway?
+[01:49.760 --> 01:51.420]  A piece on coastal erosion.
+[01:52.280 --> 01:55.900]  So, not what I expected. What made you start writing about that?
+[01:56.880 --> 02:00.040]  I grew up here. You notice things when you grow up somewhere.
+[02:00.900 --> 02:02.180]  Yeah, that makes sense.
+[02:02.960 --> 02:06.360]  You're not going to pretend you find coastal erosion interesting, are you?
+[02:07.100 --> 02:09.120]  No, but I'm interested in why you do.
+[02:11.380 --> 02:16.340]  Stop. Did you see that? She opened with a small test. Something you probably wouldn't
+[02:16.340 --> 02:20.920]  understand. That line is designed to provoke. Most men try to prove themselves immediately.
+[02:21.500 --> 02:26.900]  Oh no. I'm actually really smart. I went to. Alex said nothing like that. He said probably not.
+[02:27.200 --> 02:32.440]  And kept going. That's feel nothing. When she tests you, don't react. Not with defensiveness.
+[02:32.820 --> 02:37.500]  Not with approval seeking. Not with a long explanation. The move is to stay exactly where
+[02:37.500 --> 02:42.620]  you are. Calm. Comfortable. Interested in her. Not concerned with how she's evaluating you.
+[02:42.620 --> 02:47.060]  Here's the thing about tests. They're not personal. She doesn't know you well enough
+[02:47.060 --> 02:50.620]  for it to be personal. She's checking to see if you're the kind of man who breaks under
+[02:50.620 --> 02:55.160]  mild pressure. You're not going to break. You're not going to react. You're going to stay still
+[02:55.160 --> 03:00.620]  and keep going. F. Feel nothing. Done. I don't usually talk to strangers.
+[03:01.600 --> 03:06.280]  That's interesting. You're talking to me. You caught me in a weak moment.
+[03:07.040 --> 03:12.200]  Or a strong one. Depends how you look at it. That's a convenient interpretation.
+[03:13.040 --> 03:18.660]  Most of the useful ones are. You do that a lot, don't you? Flip things.
+[03:19.500 --> 03:24.380]  Only when the original framing doesn't hold. And you think mine didn't?
+[03:25.100 --> 03:30.360]  She said I don't usually talk to strangers. Most men hear that as rejection. They apologize.
+[03:30.880 --> 03:35.300]  They back off. They explain why it's okay that she's talking to them. Alex heard something
+[03:35.300 --> 03:40.300]  completely different. He heard an opportunity. That's reframe. A frame is the way someone
+[03:40.300 --> 03:45.600]  describes a situation. Sophia's frame was. This is unusual. This is me being weak.
+[03:46.000 --> 03:50.000]  Alex took that frame and turned it over. Or a strong one depends how you look at it.
+[03:50.240 --> 03:54.520]  He didn't argue with her. He didn't lecture her. He just offered a different way to see the same
+[03:54.520 --> 03:59.720]  moment. And because it was calm and honest, it landed. The key to reframing is you can't
+[03:59.720 --> 04:03.740]  be defensive when you do it. You have to be genuinely curious about the other possibility.
+[04:04.220 --> 04:08.460]  She says it's too soon. You say depends what we're measuring. She says you're too forward.
+[04:08.460 --> 04:13.920]  You say I prefer clear. Not a fight, a shift, are, reframe, done.
+[04:14.680 --> 04:18.640]  You're very sure of yourself. It's got me into trouble before.
+[04:19.940 --> 04:24.440]  I bet it has. Worth it, though. How do you figure?
+[04:25.340 --> 04:31.140]  Still here, aren't I? Barely. I'll take it. You're strange.
+[04:32.040 --> 04:36.660]  That's the nicest thing anyone said to me all week. Oh, God.
+[04:37.500 --> 04:40.420]  She said you're very sure of yourself. Classic test.
+[04:40.820 --> 04:43.280]  She's checking to see if the confidence is real or performed.
+[04:43.760 --> 04:48.600]  Alex didn't explain himself. He didn't say, well, I wouldn't say that. I'm actually very humble.
+[04:49.020 --> 04:52.600]  He leaned into it. It's gotten me into trouble before. That's add humor.
+[04:53.120 --> 04:55.680]  When she challenges your confidence or calls you out on something,
+[04:56.040 --> 04:59.220]  the worst thing you can do is defend it seriously. You become stiff.
+[04:59.640 --> 05:03.140]  You confirm that you care what she thinks. Humor does the opposite. It says,
+[05:03.140 --> 05:06.800]  yeah, I see it. I'm not bothered by it. And I'm also not going anywhere.
+[05:07.300 --> 05:12.000]  The humor has to be low key, not a joke, not a bit. Just a light acknowledgement that doesn't
+[05:12.000 --> 05:17.620]  explain and doesn't apologize. Still here, aren't I? Three words, no defense, no pressure.
+[05:17.940 --> 05:23.160]  She laughed. A, add humor, done. So what made you come to this beach specifically?
+[05:25.020 --> 05:28.620]  It's quiet here. Half the beach is quiet. What else?
+[05:29.580 --> 05:33.560]  I don't know. I just like it. What do you like about it?
+[05:34.740 --> 05:37.520]  The tide line is always different. It changes.
+[05:38.380 --> 05:40.520]  That matters to you. Things that change?
+[05:41.640 --> 05:45.800]  I guess, yeah. Things that stay exactly the same start to feel dead.
+[05:48.520 --> 05:52.980]  What? That's a real answer. Most people would have just said, I grew up nearby.
+[05:52.980 --> 05:55.220]  I almost did.
+[05:55.940 --> 06:00.100]  He asked what she liked about the beach. She gave a short answer. He pushed.
+[06:00.440 --> 06:05.160]  She gave a real answer. That's make her qualify. Most men in conversation give everything.
+[06:05.560 --> 06:09.600]  They explain themselves. They answer every question. They volunteer information to fill
+[06:09.600 --> 06:15.280]  silence. And in doing so, they remove all tension. Alex flipped it. He made her explain herself to
+[06:15.280 --> 06:20.420]  him. He didn't interrogate. He didn't press. He just showed genuine interest and kept going deeper.
+[06:20.420 --> 06:24.480]  Half the beach is quiet. What else? The more she explains herself to you,
+[06:24.720 --> 06:28.360]  the more invested she becomes. That's psychology, not manipulation.
+[06:28.860 --> 06:32.100]  When someone says something out loud, it becomes more real to them.
+[06:32.380 --> 06:35.260]  When she tells you what she values, she's also telling herself.
+[06:35.680 --> 06:39.760]  Make her qualify doesn't mean make her beg. It means stay curious long enough for her to
+[06:39.760 --> 06:43.440]  give you something real. M. Make her qualify. Done.
+[06:44.220 --> 06:48.140]  I should probably let you get back to it. You don't have to.
+[06:48.800 --> 06:51.720]  You are working. I can take a break.
+[06:52.580 --> 06:58.580]  One question first. What's the piece actually about? The real one, not the one you tell a stranger.
+[07:00.120 --> 07:05.000]  Disappearance. How things go. Slowly. And you don't notice until they're gone.
+[07:05.980 --> 07:09.900]  Okay, that's a much better pitch. It's not really a pitch.
+[07:10.800 --> 07:15.600]  Even better. All right, I really should go, but give me your number. I want to hear how it ends.
+[07:16.700 --> 07:22.600]  Okay. He said I should probably let you get back to it. Why did he do that? Because he's been leading
+[07:22.600 --> 07:27.760]  this conversation from the beginning and leaders leave first. That's exit. There's a moment in
+[07:27.760 --> 07:33.060]  every good conversation where you have a choice. Stay until things naturally wind down or leave
+[07:33.060 --> 07:37.700]  while things are still good. Most men stay too long. They worry that leaving means losing.
+[07:38.020 --> 07:42.900]  So they push to extend. They think of reasons to stay. They make the conversation go on longer
+[07:42.900 --> 07:48.220]  than it wants to. And then it ends flatly. When you leave at the right moment before things plateau,
+[07:48.620 --> 07:53.580]  you do something powerful. You create pull. She wanted to keep going. You're the one who decided
+[07:53.580 --> 07:58.380]  when that's the same composure you've been showing throughout. You're not chasing. You're not trying.
+[07:58.820 --> 08:03.740]  You're moving at your own pace and inviting her to join. Notice he asked for her number as he was
+[08:03.740 --> 08:09.000]  leaving. Not as a big moment as the natural next step. Give me your number. I want to hear how it
+[08:09.000 --> 08:17.340]  ends. Direct, simple, light. She said, okay, exit, done. That's frame M. Let me give you the five
+[08:17.340 --> 08:24.280]  one more time. F, feel nothing. When she tests you, don't react. Stay where you are. Keep going. R,
+[08:24.640 --> 08:30.000]  reframe. When she describes a situation one way, offer her a different way to see it. No argument.
+[08:30.400 --> 08:37.660]  Just a flip. A, add humor. When she calls you out, don't defend. Lean into it lightly. She can't shame
+[08:37.660 --> 08:43.840]  the unashamed. M, make her qualify. Stay curious. Push her for real answers. The more she explains
+[08:43.840 --> 08:49.840]  herself to you, the more she's invested. E, exit, leave before things plateau. Decision makers leave
+[08:49.840 --> 08:56.000]  first. Now, how do you remember all five? Frame M. That's it. The word is the mnemonic. Every time a
+[08:56.000 --> 09:00.860]  woman tests you, a frame is exactly what you're holding. That frame is who you are. Your standards,
+[09:01.260 --> 09:06.260]  your pace, your posture. She's checking to see if she can move it. She can't. The women are waiting
+[09:06.260 --> 09:11.240]  for you. Some will test harder than what you just watched. Some will test differently. All of them
+[09:11.240 --> 09:15.780]  are asking the same question. Who are you when things get uncomfortable? Now you have an answer.
+[09:16.120 --> 09:16.760]  Go find out.

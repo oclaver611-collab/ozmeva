@@ -474,6 +474,7 @@ const DailyLimit = (() => {
         if (data.active && data.customerId) {
           setStripeCustomer(data.customerId);
           console.log('[DailyLimit] Pro subscription activated:', data.customerId);
+          if (window._ekTrack) _ekTrack('subscription_activated', { plan: new URLSearchParams(window.location.search).get('plan') || 'pro', ...(window._ekUtm ? _ekUtm() : {}) });
           const banner = document.createElement('div');
           banner.style.cssText = 'position:fixed;top:0;left:0;right:0;background:#ffb300;color:#000;text-align:center;padding:12px;font-weight:700;font-size:15px;z-index:99999;cursor:pointer';
           banner.textContent = 'Welcome to Ozmeva Pro! Unlimited sessions activated.';
@@ -543,6 +544,7 @@ const DailyLimit = (() => {
 
   // ── Show paywall overlay ──────────────────────────────────────────────────
   function showPaywall() {
+    if (window._ekTrack) _ekTrack('paywall_seen', window._ekUtm ? _ekUtm() : {});
     const existing = document.getElementById('ek-paywall');
     if (existing) existing.remove();
 
@@ -591,7 +593,7 @@ const DailyLimit = (() => {
         </div>
       </div>
       <div style="color:#555;font-size:12px;margin-bottom:8px">No contract · Cancel anytime</div>
-      <div style="color:#444;font-size:11px;margin-bottom:12px">By subscribing you agree to our <a href="/terms" style="color:#6b7685;text-decoration:underline" target="_blank">Terms of Service</a></div>
+      <div style="color:#444;font-size:11px;margin-bottom:12px">By subscribing you agree to our <a href="/terms" style="color:#6b7685;text-decoration:underline" target="_blank">Terms of Service</a> and <a href="/privacy" style="color:#6b7685;text-decoration:underline" target="_blank">Privacy Policy</a></div>
       <div style="color:#666;font-size:13px;cursor:pointer;text-decoration:underline"
            onclick="document.getElementById('ek-paywall').remove()">
         Come back tomorrow
@@ -606,11 +608,13 @@ const DailyLimit = (() => {
         this.textContent = 'Loading...';
         this.style.opacity = '0.7';
         this.disabled = true;
+        if (window._ekTrack) _ekTrack('checkout_started', { plan, ...(window._ekUtm ? _ekUtm() : {}) });
         try {
+          const utm = window._ekUtm ? _ekUtm() : {};
           const r = await fetch('/api/create-checkout', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ plan }),
+            body: JSON.stringify({ plan, utm }),
           });
           const data = await r.json();
           if (data.url) {

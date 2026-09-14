@@ -9,7 +9,7 @@ module.exports = async function handler(req, res) {
   if (!key) return res.status(500).json({ error: 'Stripe not configured' });
 
   const stripe = require('stripe')(key);
-  const { email, plan } = req.body || {};
+  const { email, plan, utm } = req.body || {};
 
   // In test mode, prefer _TEST-suffixed price IDs so Preview deployments can use
   // test-mode Stripe prices without overwriting the Production (live-mode) values.
@@ -40,6 +40,11 @@ module.exports = async function handler(req, res) {
       metadata: {
         source: 'ozmeva-paywall',
         plan: plan || 'pro',
+        ...(utm && typeof utm === 'object' ? {
+          utm_source:   String(utm.utm_source   || '').slice(0, 500),
+          utm_medium:   String(utm.utm_medium   || '').slice(0, 500),
+          utm_campaign: String(utm.utm_campaign || '').slice(0, 500),
+        } : {}),
       },
     });
 

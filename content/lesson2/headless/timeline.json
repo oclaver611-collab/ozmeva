@@ -1,0 +1,307 @@
+[
+  {
+    "t": 0,
+    "segmentId": "00",
+    "file": "ryan_seg00.mp3"
+  },
+  {
+    "t": 45704,
+    "segmentId": "01",
+    "file": "ryan_seg01.mp3"
+  },
+  {
+    "t": 81038,
+    "segmentId": "02",
+    "file": "ryan_seg02.mp3"
+  },
+  {
+    "t": 102240,
+    "segmentId": "03",
+    "file": "alex_s03_01.mp3"
+  },
+  {
+    "t": 104476,
+    "segmentId": "03",
+    "file": "sofia_s03_01.mp3"
+  },
+  {
+    "t": 107370,
+    "segmentId": "03",
+    "file": "alex_s03_02.mp3"
+  },
+  {
+    "t": 110014,
+    "segmentId": "03",
+    "file": "sofia_s03_02.mp3"
+  },
+  {
+    "t": 112438,
+    "segmentId": "03",
+    "file": "alex_s03_03.mp3"
+  },
+  {
+    "t": 117122,
+    "segmentId": "03",
+    "file": "sofia_s03_03.mp3"
+  },
+  {
+    "t": 121139,
+    "segmentId": "03",
+    "file": "alex_s03_04.mp3"
+  },
+  {
+    "t": 123255,
+    "segmentId": "03",
+    "file": "sofia_s03_04.mp3"
+  },
+  {
+    "t": 127351,
+    "segmentId": "03",
+    "file": "alex_s03_05.mp3"
+  },
+  {
+    "t": 130307,
+    "segmentId": "03",
+    "file": "sofia_s03_05.mp3"
+  },
+  {
+    "t": 131577,
+    "segmentId": "04",
+    "file": "ryan_seg04.mp3"
+  },
+  {
+    "t": 179241,
+    "segmentId": "05",
+    "file": "sofia_s05_01.mp3"
+  },
+  {
+    "t": 181874,
+    "segmentId": "05",
+    "file": "alex_s05_01.mp3"
+  },
+  {
+    "t": 185094,
+    "segmentId": "05",
+    "file": "sofia_s05_02.mp3"
+  },
+  {
+    "t": 187387,
+    "segmentId": "05",
+    "file": "alex_s05_02.mp3"
+  },
+  {
+    "t": 190823,
+    "segmentId": "05",
+    "file": "sofia_s05_03.mp3"
+  },
+  {
+    "t": 193404,
+    "segmentId": "05",
+    "file": "alex_s05_03.mp3"
+  },
+  {
+    "t": 195832,
+    "segmentId": "05",
+    "file": "sofia_s05_04.mp3"
+  },
+  {
+    "t": 199849,
+    "segmentId": "05",
+    "file": "alex_s05_04.mp3"
+  },
+  {
+    "t": 203333,
+    "segmentId": "05",
+    "file": "sofia_s05_05.mp3"
+  },
+  {
+    "t": 205491,
+    "segmentId": "06",
+    "file": "ryan_seg06.mp3"
+  },
+  {
+    "t": 255140,
+    "segmentId": "07",
+    "file": "sofia_s07_01.mp3"
+  },
+  {
+    "t": 257381,
+    "segmentId": "07",
+    "file": "alex_s07_01.mp3"
+  },
+  {
+    "t": 260337,
+    "segmentId": "07",
+    "file": "sofia_s07_02.mp3"
+  },
+  {
+    "t": 262212,
+    "segmentId": "07",
+    "file": "alex_s07_02.mp3"
+  },
+  {
+    "t": 263800,
+    "segmentId": "07",
+    "file": "sofia_s07_03.mp3"
+  },
+  {
+    "t": 265675,
+    "segmentId": "07",
+    "file": "alex_s07_03.mp3"
+  },
+  {
+    "t": 267671,
+    "segmentId": "07",
+    "file": "sofia_s07_04.mp3"
+  },
+  {
+    "t": 269181,
+    "segmentId": "07",
+    "file": "alex_s07_04.mp3"
+  },
+  {
+    "t": 270625,
+    "segmentId": "07",
+    "file": "sofia_s07_05.mp3"
+  },
+  {
+    "t": 272448,
+    "segmentId": "07",
+    "file": "alex_s07_05.mp3"
+  },
+  {
+    "t": 276364,
+    "segmentId": "07",
+    "file": "sofia_s07_06.mp3"
+  },
+  {
+    "t": 277921,
+    "segmentId": "08",
+    "file": "ryan_seg08.mp3"
+  },
+  {
+    "t": 321483,
+    "segmentId": "09",
+    "file": "alex_s09_01.mp3"
+  },
+  {
+    "t": 325279,
+    "segmentId": "09",
+    "file": "sofia_s09_01.mp3"
+  },
+  {
+    "t": 327207,
+    "segmentId": "09",
+    "file": "alex_s09_02.mp3"
+  },
+  {
+    "t": 330091,
+    "segmentId": "09",
+    "file": "sofia_s09_02.mp3"
+  },
+  {
+    "t": 332855,
+    "segmentId": "09",
+    "file": "alex_s09_03.mp3"
+  },
+  {
+    "t": 335163,
+    "segmentId": "09",
+    "file": "sofia_s09_03.mp3"
+  },
+  {
+    "t": 338841,
+    "segmentId": "09",
+    "file": "alex_s09_04.mp3"
+  },
+  {
+    "t": 342061,
+    "segmentId": "09",
+    "file": "sofia_s09_04.mp3"
+  },
+  {
+    "t": 346967,
+    "segmentId": "09",
+    "file": "alex_s09_05.mp3"
+  },
+  {
+    "t": 348195,
+    "segmentId": "09",
+    "file": "sofia_s09_05.mp3"
+  },
+  {
+    "t": 349470,
+    "segmentId": "09",
+    "file": "alex_s09_06.mp3"
+  },
+  {
+    "t": 354586,
+    "segmentId": "09",
+    "file": "sofia_s09_06.mp3"
+  },
+  {
+    "t": 356483,
+    "segmentId": "10",
+    "file": "ryan_seg10.mp3"
+  },
+  {
+    "t": 404774,
+    "segmentId": "11",
+    "file": "alex_s11_01.mp3"
+  },
+  {
+    "t": 407562,
+    "segmentId": "11",
+    "file": "sofia_s11_01.mp3"
+  },
+  {
+    "t": 409359,
+    "segmentId": "11",
+    "file": "alex_s11_02.mp3"
+  },
+  {
+    "t": 411163,
+    "segmentId": "11",
+    "file": "sofia_s11_02.mp3"
+  },
+  {
+    "t": 412986,
+    "segmentId": "11",
+    "file": "alex_s11_03.mp3"
+  },
+  {
+    "t": 419998,
+    "segmentId": "11",
+    "file": "sofia_s11_03.mp3"
+  },
+  {
+    "t": 426340,
+    "segmentId": "11",
+    "file": "alex_s11_04.mp3"
+  },
+  {
+    "t": 429032,
+    "segmentId": "11",
+    "file": "sofia_s11_04.mp3"
+  },
+  {
+    "t": 431247,
+    "segmentId": "11",
+    "file": "alex_s11_05.mp3"
+  },
+  {
+    "t": 437107,
+    "segmentId": "11",
+    "file": "sofia_s11_05.mp3"
+  },
+  {
+    "t": 438482,
+    "segmentId": "12",
+    "file": "ryan_seg12.mp3"
+  },
+  {
+    "t": 495262,
+    "segmentId": "13",
+    "file": "ryan_seg13.mp3"
+  }
+]

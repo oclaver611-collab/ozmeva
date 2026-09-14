@@ -12,6 +12,45 @@
         person_profiles: 'identified_only',
     })
 </script>
+<script>
+// UTM capture — store attribution params from landing URL in sessionStorage
+(function() {
+  try {
+    var p = new URLSearchParams(window.location.search);
+    var utmFields = ['utm_source','utm_medium','utm_campaign','utm_content','utm_term'];
+    var captured = {};
+    utmFields.forEach(function(k) { if (p.get(k)) captured[k] = p.get(k); });
+    if (Object.keys(captured).length) {
+      sessionStorage.setItem('ek_utm', JSON.stringify(captured));
+      if (window.posthog) posthog.register(captured);
+    } else {
+      var stored = sessionStorage.getItem('ek_utm');
+      if (stored && window.posthog) {
+        try { posthog.register(JSON.parse(stored)); } catch(e) {}
+      }
+    }
+    window._ekUtm = function() {
+      try { return JSON.parse(sessionStorage.getItem('ek_utm') || '{}'); } catch(e) { return {}; }
+    };
+  } catch(e) {}
+})();
+// Pixel placeholders — replace TIKTOK_PIXEL_ID and META_PIXEL_ID once you have them
+// TikTok Pixel (no-op until real ID is set)
+window._ekTrack = function(event, data) {
+  try {
+    if (window.ttq && typeof ttq.track === 'function') ttq.track(event, data || {});
+  } catch(e) {}
+  try {
+    if (window.fbq && typeof fbq === 'function') {
+      if (event === 'checkout_started') fbq('track', 'InitiateCheckout', data || {});
+      else if (event === 'subscription_activated') fbq('track', 'Purchase', data || {});
+    }
+  } catch(e) {}
+  try {
+    if (window.posthog) posthog.capture(event, data || {});
+  } catch(e) {}
+};
+</script>
 	
 	
 	
@@ -283,8 +322,69 @@
   .mn-item { display:flex;align-items:baseline;gap:8px }
   .mn-letter { font-size:13px;font-weight:700;color:#e4e8f1;min-width:12px }
   .mn-meaning { font-size:12px;color:#8a93a8;line-height:1.3 }</style>
+
+<!-- TikTok / Instagram / WeChat in-app browser banner styles -->
+<style>
+#ek-iab-banner{display:none;position:fixed;top:0;left:0;right:0;z-index:999999;background:#1a1200;border-bottom:2px solid #ffb300;padding:12px 16px;font-family:-apple-system,BlinkMacSystemFont,sans-serif;text-align:center}
+#ek-iab-banner p{color:#ffd67a;font-size:14px;font-weight:600;margin:0 0 8px}
+#ek-iab-banner small{color:#b89a3a;font-size:12px;display:block;margin-bottom:10px}
+#ek-iab-banner button{background:#ffb300;color:#000;font-size:13px;font-weight:700;border:none;border-radius:999px;padding:8px 20px;cursor:pointer;margin:0 4px}
+#ek-iab-banner .ek-iab-dismiss{background:transparent;color:#888;font-size:12px;border:1px solid #333;padding:6px 14px}
+</style>
 </head>
 <body>
+
+<!-- In-app browser warning banner (TikTok, Instagram, WeChat) -->
+<div id="ek-iab-banner">
+  <p id="ek-iab-msg">🎤 Voice practice needs your system browser</p>
+  <small id="ek-iab-sub"></small>
+  <div>
+    <a id="ek-iab-open-btn" href="#"><button id="ek-iab-open">Open in Browser</button></a>
+    <button class="ek-iab-dismiss" onclick="document.getElementById('ek-iab-banner').style.display='none'">Continue anyway</button>
+  </div>
+</div>
+<script>
+(function() {
+  var ua = navigator.userAgent || '';
+  var isTikTok   = /musical_ly|BytedanceWebview|TikTok/i.test(ua);
+  var isInstagram = /FBAN|FBAV|Instagram/i.test(ua);
+  var isWeChat   = /MicroMessenger/i.test(ua);
+  if (!isTikTok && !isInstagram && !isWeChat) return;
+
+  var banner = document.getElementById('ek-iab-banner');
+  var msg    = document.getElementById('ek-iab-msg');
+  var sub    = document.getElementById('ek-iab-sub');
+  var btn    = document.getElementById('ek-iab-open');
+  var link   = document.getElementById('ek-iab-open-btn');
+
+  var appName = isTikTok ? 'TikTok' : isInstagram ? 'Instagram' : 'WeChat';
+  msg.textContent = '🎤 Voice practice won\'t work in ' + appName + '\'s browser';
+
+  var isAndroid = /Android/i.test(ua);
+  var isIOS = /iPhone|iPad|iPod/i.test(ua);
+
+  if (isAndroid) {
+    sub.textContent = 'Tap "Open in Browser" to use Chrome so the mic works.';
+    btn.textContent = 'Open in Chrome';
+    link.href = 'intent://ozmeva.com#Intent;scheme=https;package=com.android.chrome;end';
+  } else if (isIOS) {
+    sub.textContent = 'Tap ··· (three dots) or the share icon → "Open in Safari"';
+    btn.textContent = 'Instructions';
+    link.href = '#';
+    link.onclick = function(e) {
+      e.preventDefault();
+      alert('To use voice practice:\n\n1. Tap the ⋯ (three dots) in the top-right corner\n2. Choose "Open in Safari" or "Open in browser"\n\nThen return to this page.');
+    };
+  } else {
+    sub.textContent = 'Open this link in your phone\'s default browser for full voice support.';
+    btn.textContent = 'Open in Browser';
+    link.href = 'https://ozmeva.com' + window.location.pathname + window.location.search;
+    link.target = '_blank';
+  }
+
+  banner.style.display = 'block';
+})();
+</script>
   <!-- Streak badge — populated by Progress.refreshStreakBadge() -->
   <span id="ek-streak-badge" style="display:none;position:fixed;top:10px;right:10px;z-index:9990;align-items:center;gap:5px;background:#1e1a0e;border:1px solid #7a5500;border-radius:999px;padding:5px 12px;font-size:13px;font-weight:700;color:#ffb300;cursor:pointer" title="View progress"></span>
 
@@ -368,7 +468,9 @@
   <footer class="site-footer">
     Questions? <a href="mailto:support@ozmeva.com" style="color:#6b7685;text-decoration:none;">support@ozmeva.com</a>
     &nbsp;·&nbsp;
-    <a href="/terms" style="color:#6b7685;text-decoration:none;">Terms of Service</a>
+    <a href="/terms" style="color:#6b7685;text-decoration:none;">Terms</a>
+    &nbsp;·&nbsp;
+    <a href="/privacy" style="color:#6b7685;text-decoration:none;">Privacy</a>
     <span id="ek-cancel-wrap" style="display:none">
       &nbsp;·&nbsp;
       <a href="#" id="ek-cancel-btn" style="color:#6b7685;text-decoration:none;" onclick="ekCancelSubscription(event)">Cancel subscription</a>
@@ -433,7 +535,7 @@
     btn.textContent = 'Yes, cancel my subscription';
     btn.disabled = false;
     btn.onclick = async function() {
-      btn.textContent = 'Cancelling…';
+      btn.textContent = 'Loading…';
       btn.disabled = true;
       const customerId = localStorage.getItem('ek-stripe-cus');
       if (!customerId) {
@@ -441,6 +543,25 @@
           '<p style="color:#e05252;font-size:14px">Could not find your subscription. Email <a href="mailto:support@ozmeva.com" style="color:#6b9fff">support@ozmeva.com</a> and we\'ll cancel it for you.</p>';
         return;
       }
+
+      // Try Stripe Customer Portal first — works for all subscribers, no auth needed.
+      try {
+        const portalRes = await fetch('/api/customer-portal', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ customerId }),
+        });
+        const portalData = await portalRes.json();
+        if (portalData.url) {
+          window.location.href = portalData.url;
+          return;
+        }
+      } catch (portalErr) {
+        // Portal not configured yet — fall through to JWT path
+        console.warn('[cancel] portal unavailable:', portalErr.message);
+      }
+
+      // Portal failed (not configured in Stripe dashboard) — try JWT-authenticated API
       try {
         const token = await window.EkAuth?.getToken?.();
         if (!token) {
@@ -497,12 +618,12 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 
   <!-- Auth + progress sync — must load before lesson-player.js -->
-  <script src="auth.js?v=b4ae4e1"></script>
+  <script src="auth.js?v=4d3721b"></script>
 
-  <script src="kokoro-speech.js?v=b4ae4e1"></script>
-  <script src="player.js?v=b4ae4e1"></script>
-  <script src="netflix-rows.js?v=b4ae4e1"></script>
-  <script src="transcript.js?v=b4ae4e1"></script>
-  <script src="lesson-player.js?v=b4ae4e1"></script>
+  <script src="kokoro-speech.js?v=4d3721b"></script>
+  <script src="player.js?v=4d3721b"></script>
+  <script src="netflix-rows.js?v=4d3721b"></script>
+  <script src="transcript.js?v=4d3721b"></script>
+  <script src="lesson-player.js?v=4d3721b"></script>
 </body>
 </html>

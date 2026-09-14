@@ -12,6 +12,10 @@
     { "source": "/admin/", "destination": "/api/admin" },
     { "source": "/terms", "destination": "/terms.html" },
     { "source": "/terms/", "destination": "/terms.html" },
-    { "source": "/api/stt", "destination": "/api/stt" }
+    { "source": "/privacy", "destination": "/privacy.html" },
+    { "source": "/privacy/", "destination": "/privacy.html" },
+    { "source": "/api/stt", "destination": "/api/stt" },
+    { "source": "/api/customer-portal", "destination": "/api/customer-portal" },
+    { "source": "/api/stripe-health", "destination": "/api/stripe-health" }
   ]
 }
