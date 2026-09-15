@@ -1420,11 +1420,13 @@ async function speakElevenLabs(text, onStart) {
       // Fallback: full buffer (Safari / older browsers)
       const arrayBuf = await res.arrayBuffer();
       const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      __audioContexts.push(audioCtx);
+      // monkey-patch at line ~1022 auto-tracks this in __audioContexts — no manual push needed
       const audioBuf = await audioCtx.decodeAudioData(arrayBuf);
       const source = audioCtx.createBufferSource();
       source.buffer = audioBuf;
       source.connect(audioCtx.destination);
+      // AudioContext created async always starts suspended in Chrome — resume before scheduling
+      if (audioCtx.state === 'suspended') { try { await audioCtx.resume(); } catch {} }
       onStart();
       return new Promise((resolve) => {
         source.onended = () => { audioCtx.close(); resolve(); };
