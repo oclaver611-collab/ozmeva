@@ -1597,7 +1597,6 @@ async function streamCharacterAndSpeak(userSaid, mySession, onTextReady = null) 
             const el = els.media;
             if (el && el.tagName === 'VIDEO' && (el.getAttribute('src') || '') !== AVATARS._marySpeakingVideo) {
               el.src = AVATARS._marySpeakingVideo;
-              el.load();
               try { el.play().catch(() => {}); } catch {}
             }
           } else {
@@ -1618,7 +1617,6 @@ async function streamCharacterAndSpeak(userSaid, mySession, onTextReady = null) 
         const idleSrc = AVATARS._maryIdleVideo || AVATARS.User_Prompt.src;
         if (idleSrc && (els.media.getAttribute('src') || '') !== idleSrc) {
           els.media.src = idleSrc;
-          els.media.load();
           try { els.media.play().catch(() => {}); } catch {}
         }
       }
@@ -1632,7 +1630,6 @@ async function streamCharacterAndSpeak(userSaid, mySession, onTextReady = null) 
         const idleSrc = AVATARS._maryIdleVideo || AVATARS.User_Prompt.src;
         if (idleSrc && (doneEl.getAttribute('src') || '') !== idleSrc) {
           doneEl.src = idleSrc;
-          doneEl.load();
           try { doneEl.play().catch(() => {}); } catch {}
         }
       }
@@ -1821,6 +1818,8 @@ function correctSTT(text) {
   if (/\b(book|novel|article|journal|story|piece|draft|chapter|essay|something)\b/i.test(t)) {
     t = t.replace(/\briding\b/gi, 'writing');
   }
+  // Remove consecutive duplicate words — catchall for watchdog-restart STT artifacts
+  t = t.replace(/\b(\w+)(\s+\1)+\b/gi, '$1');
   return t;
 }
 
@@ -1835,7 +1834,7 @@ function showListening(on=true) {
     if (current && current.tagName==='VIDEO' && current.id!=='ryan-orb') {
       const idleSrc=AVATARS.User_Prompt?.src;
       if (idleSrc && (current.getAttribute('src')||'')!==idleSrc) {
-        current.src=idleSrc; current.load();
+        current.src=idleSrc;
         try{current.play().catch(()=>{});}catch{}
       }
     }
@@ -1987,6 +1986,7 @@ function listenForUser(mySession, maxTotalMs) {
         console.warn('[SR] watchdog: no activity in 3s, restarting');
         try{currentRec.onresult=null;currentRec.onerror=null;currentRec.onend=null;currentRec.stop();}catch{}
         currentRec=null; rec=null;
+        accumulated=''; // clear stale accumulated on watchdog restart to prevent cross-restart duplication
         setTimeout(()=>{if(!resolved&&mySession===session)startRec();},300);
       }
     },3000);
