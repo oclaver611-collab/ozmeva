@@ -3804,8 +3804,8 @@ function launchHeroV6() {
       <div class="ek-h6-brand">Ozmeva</div>
       <div class="ek-h6-navlinks">
         <a href="#ek-h6-breadth">How it works</a>
-        <button class="ek-h6-signin-btn" id="ek-hero-signin">Sign in</button>
       </div>
+      <button class="ek-h6-signin-btn" id="ek-hero-signin">Sign in</button>
     </nav>
     <section class="ek-h6-hero">
       <div>
