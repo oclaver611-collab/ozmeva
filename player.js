@@ -2068,7 +2068,7 @@ function listenForUser(mySession, maxTotalMs) {
         if(e.error==='not-allowed'){finish('err_not-allowed');return;}
         if(e.error==='no-speech'){
           restarts=Math.max(0,restarts-1);
-          setTimeout(()=>{ if(!resolved&&mySession===session) startRec(); }, 500);
+          setTimeout(()=>{ if(!resolved&&mySession===session) startRec(); }, 2000);
           return;
         }
         // Fix 4: network/audio-capture/service errors — retry up to MAX_ERROR_RETRIES
