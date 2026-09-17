@@ -1989,7 +1989,7 @@ function listenForUser(mySession, maxTotalMs) {
         try{currentRec.onresult=null;currentRec.onerror=null;currentRec.onend=null;currentRec.stop();}catch{}
         currentRec=null; rec=null;
         accumulated=''; // clear stale accumulated on watchdog restart to prevent cross-restart duplication
-        setTimeout(()=>{if(!resolved&&mySession===session)startRec();},300);
+        setTimeout(()=>{if(!resolved&&mySession===session)startRec();},2000);
       }
     },3000);
 
@@ -2090,7 +2090,7 @@ function listenForUser(mySession, maxTotalMs) {
           return;
         }
         if(accumulated||interim) { finish(accumulated||interim); return; }
-        setTimeout(()=>{ if(!resolved&&mySession===session) startRec(); }, 300);
+        setTimeout(()=>{ if(!resolved&&mySession===session) startRec(); }, 2000);
       };
 
       try { r.start(); showListening(true); }
