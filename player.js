@@ -1492,7 +1492,7 @@ async function speak(text, speaker, onAudioReady, prefetchedUrl = null) {
       if (AVATARS._marySpeakingVideo) {
         const el=els.media;
         if(el&&el.tagName==='VIDEO'&&(el.getAttribute('src')||'')!==AVATARS._marySpeakingVideo){
-          el.src=AVATARS._marySpeakingVideo; el.load(); try{el.play().catch(()=>{});}catch{}
+          el.src=AVATARS._marySpeakingVideo; try{el.play().catch(()=>{});}catch{}
         }
       } else { setMediaForSpeaker('Mary'); }
     } else {
@@ -1508,7 +1508,7 @@ async function speak(text, speaker, onAudioReady, prefetchedUrl = null) {
       try { doneEl.pause(); } catch {}
       const idleSrc = AVATARS._maryIdleVideo || AVATARS.User_Prompt.src;
       if(idleSrc && (doneEl.getAttribute('src')||'')!==idleSrc){
-        doneEl.src=idleSrc; doneEl.load(); try{doneEl.play().catch(()=>{});}catch{}
+        doneEl.src=idleSrc; try{doneEl.play().catch(()=>{});}catch{}
       }
     }
   };
@@ -2319,6 +2319,7 @@ async function playScenario(key, practice=false) {
     const style = await showStyleSelector();
     if (style === null) return;
     currentUserStyle = style;
+    DailyLimit.countSession(); // count at session start — fired once user commits, not after completion
   }
 
   // Kick off TTS fetch for the first Ryan line NOW — pause(800) + setup below gives it
@@ -2651,8 +2652,6 @@ async function runCoachFeedback(mySession) {
     await speak("Looks like we didn't get enough conversation to work with. Hit Try Again and give me something to coach.", 'Ryan');
     return;
   }
-  await DailyLimit.countSession(_exchangeCount);
-
   // FIX 4: Fire API call and thinking line IN PARALLEL — no more dead silence
   // Both start at the same time. Thinking line plays while API is in flight.
   const coachPayload = JSON.stringify({

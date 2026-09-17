@@ -1,4 +1,4 @@
-// api/count-session.js — increment session count when a real session ends
+// api/count-session.js — increment session count when a session starts
 const { supabase } = require('./supabase');
 const { isDevBypass, isActiveSubscriber, getClientIP, isTestAccount } = require('./ratelimit');
 
@@ -7,15 +7,10 @@ const FREE_SESSION_LIMIT = 2;
 module.exports = async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  console.log('[count-session] called, exchangeCount:', req.body?.exchangeCount, 'IP:', req.headers['x-forwarded-for'] || req.socket?.remoteAddress);
+  console.log('[count-session] called, IP:', req.headers['x-forwarded-for'] || req.socket?.remoteAddress);
 
   if (isDevBypass(req) || await isTestAccount(req) || await isActiveSubscriber(req)) {
     return res.status(200).json({ allowed: true, sessionsUsed: 0, sessionsRemaining: 999, counted: false });
-  }
-
-  const { exchangeCount } = req.body || {};
-  if (typeof exchangeCount !== 'number' || exchangeCount < 5) {
-    return res.status(200).json({ allowed: true, sessionsUsed: null, sessionsRemaining: null, counted: false });
   }
 
   const ip = getClientIP(req);
