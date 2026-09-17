@@ -85,6 +85,7 @@ const els = {
   select:         document.getElementById('scenarioSelect'),
   chooseBtn:      document.getElementById('chooseAvatarBtn'),
   media:          document.getElementById('media'),
+  mediaSpeaking:  null, // second video element overlaid on media — shows speaking.mp4; toggled by visibility
   name:           document.getElementById('speakerName'),
   text:           document.getElementById('lineText'),
   shelf:          document.getElementById('shelfList'),
@@ -988,30 +989,17 @@ function applyAvatarSet(set) {
   AVATARS._marySpeakingVideo = set.maryVideo || null;
   AVATARS._maryIdleVideo = set.maryIdleVideo || set.danielVideo || null;
 
-  // Preload speaking video in background to eliminate flicker on first speech
-  if (set.maryVideo && set.maryVideo !== set.maryIdleVideo) {
-    const preload = document.createElement('video');
-    preload.src = set.maryVideo;
-    preload.preload = 'auto';
-    preload.muted = true;
-    preload.style.display = 'none';
-    preload.load();
-    // Remove after preload to avoid memory leak
-    preload.oncanplaythrough = () => { try { preload.remove(); } catch {} };
-    document.body.appendChild(preload);
-  }
-  // Preload idle video — prevents 1-2s black screen on first speaking→idle transition
-  // for avatars that have a separate maryIdleVideo (different from speaking video).
-  const idleUrl = set.maryIdleVideo || set.danielVideo || null;
-  if (idleUrl && idleUrl !== set.maryVideo) {
-    const preloadIdle = document.createElement('video');
-    preloadIdle.src = idleUrl;
-    preloadIdle.preload = 'auto';
-    preloadIdle.muted = true;
-    preloadIdle.style.display = 'none';
-    preloadIdle.load();
-    preloadIdle.oncanplaythrough = () => { try { preloadIdle.remove(); } catch {} };
-    document.body.appendChild(preloadIdle);
+  // Update the persistent speaking overlay for the new avatar.
+  // _initMediaSpeaking will handle creation if the video element exists.
+  // If the idle video isn't in the DOM yet (orb state), creation is deferred
+  // to setMediaForSpeaker's first-time video creation path.
+  if (els.mediaSpeaking && set.maryVideo) {
+    els.mediaSpeaking.src = set.maryVideo;
+    els.mediaSpeaking.load();
+    els.mediaSpeaking.hidden = true;
+    try { els.mediaSpeaking.play().catch(() => {}); } catch {}
+  } else if (!els.mediaSpeaking && els.media && els.media.tagName === 'VIDEO') {
+    _initMediaSpeaking(els.media);
   }
 }
 
@@ -1219,6 +1207,40 @@ function ryanOrbSetState(state) {
   tick();
 }
 
+/* ===== Dual-video helpers =====
+ * Keep a second <video> (#media-speaking) permanently alive next to #media.
+ * Both loop continuously (muted). Speaking/idle transitions toggle visibility
+ * instead of swapping src, eliminating the black-frame flash on mobile. */
+function _initMediaSpeaking(idleVid) {
+  if (els.mediaSpeaking) { els.mediaSpeaking.hidden = true; return; } // already exists
+  if (!idleVid || !idleVid.parentElement) return;
+  const v = document.createElement('video');
+  v.id = 'media-speaking';
+  v.className = idleVid.className || 'media';
+  v.autoplay = true; v.loop = true; v.muted = true; v.playsInline = true;
+  v.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:440px;object-fit:cover;';
+  v.hidden = true;
+  idleVid.parentElement.style.position = 'relative';
+  idleVid.parentElement.appendChild(v);
+  els.mediaSpeaking = v;
+  if (AVATARS._marySpeakingVideo) {
+    v.src = AVATARS._marySpeakingVideo;
+    v.load();
+    try { v.play().catch(() => {}); } catch {}
+  }
+}
+
+function _showSpeakingVideo() {
+  if (!els.mediaSpeaking) return;
+  els.media.hidden = true;
+  els.mediaSpeaking.hidden = false;
+}
+
+function _showIdleVideo() {
+  if (els.mediaSpeaking) els.mediaSpeaking.hidden = true;
+  if (els.media) els.media.hidden = false;
+}
+
 /* ===== Media ===== */
 function setMediaForSpeaker(speaker) {
   const asset = AVATARS[speaker] || AVATARS.Ryan;
@@ -1228,6 +1250,7 @@ function setMediaForSpeaker(speaker) {
   if (asset.type==='orb') {
     if (current.id!=='ryan-orb') {
       if (current.tagName==='VIDEO') { try{current.pause();current.src='';}catch{} }
+      if (els.mediaSpeaking) { try{els.mediaSpeaking.pause();els.mediaSpeaking.hidden=true;}catch{} }
       const orbEl=getRyanOrb();
       current.replaceWith(orbEl);
       els.media=orbEl; _ryanOrbEl=orbEl;
@@ -1246,9 +1269,12 @@ function setMediaForSpeaker(speaker) {
     vid.src=asset.src;
     current.replaceWith(vid); els.media=vid;
     vid.load(); try{vid.play().catch(()=>{});}catch{}
+    _initMediaSpeaking(vid); // create the speaking overlay alongside the new idle video
   } else {
     if ((current.getAttribute('src')||'')!==asset.src) { current.src=asset.src; current.load(); }
+    _showIdleVideo(); // ensure idle is visible and speaking is hidden
     try{current.play().catch(()=>{});}catch{}
+    if (!els.mediaSpeaking) _initMediaSpeaking(current);
   }
 }
 
@@ -1489,12 +1515,7 @@ async function speak(text, speaker, onAudioReady, prefetchedUrl = null) {
     if (onAudioReady) onAudioReady();
     if (speaker === 'Mary') Caption.show(text);
     if (speaker === 'Mary') {
-      if (AVATARS._marySpeakingVideo) {
-        const el=els.media;
-        if(el&&el.tagName==='VIDEO'&&(el.getAttribute('src')||'')!==AVATARS._marySpeakingVideo){
-          el.src=AVATARS._marySpeakingVideo; try{el.play().catch(()=>{});}catch{}
-        }
-      } else { setMediaForSpeaker('Mary'); }
+      _showSpeakingVideo();
     } else {
       const el=els.media; if(el&&el.tagName==='VIDEO'){try{el.play().catch(()=>{});}catch{}}
     }
@@ -1504,12 +1525,8 @@ async function speak(text, speaker, onAudioReady, prefetchedUrl = null) {
     if (speaker === 'Mary') Caption.hide();
     const doneEl=els.media;
     if(doneEl&&doneEl.id==='ryan-orb') ryanOrbSetState('silent');
-    if (speaker === 'Mary' && doneEl && doneEl.tagName === 'VIDEO') {
-      try { doneEl.pause(); } catch {}
-      const idleSrc = AVATARS._maryIdleVideo || AVATARS.User_Prompt.src;
-      if(idleSrc && (doneEl.getAttribute('src')||'')!==idleSrc){
-        doneEl.src=idleSrc; try{doneEl.play().catch(()=>{});}catch{}
-      }
+    if (speaker === 'Mary') {
+      _showIdleVideo();
     }
   };
 
@@ -1595,15 +1612,7 @@ async function streamCharacterAndSpeak(userSaid, mySession, onTextReady = null) 
         await speakElevenLabs(sentence, () => {
           if (mySession !== session) return;
           Caption.show(sentence);
-          if (AVATARS._marySpeakingVideo) {
-            const el = els.media;
-            if (el && el.tagName === 'VIDEO' && (el.getAttribute('src') || '') !== AVATARS._marySpeakingVideo) {
-              el.src = AVATARS._marySpeakingVideo;
-              try { el.play().catch(() => {}); } catch {}
-            }
-          } else {
-            setMediaForSpeaker('Mary');
-          }
+          _showSpeakingVideo();
         });
       } catch (e) {
         if (e.message !== 'session_changed') console.warn('TTS error:', e.message);
@@ -1615,26 +1624,13 @@ async function streamCharacterAndSpeak(userSaid, mySession, onTextReady = null) 
       // (lips still moving) through the TTS fetch/decode gap before the next
       // sentence's audio is actually ready — the next onStart callback above
       // switches back to speaking only once its own audio chunk is ready.
-      if (els.media && els.media.tagName === 'VIDEO') {
-        const idleSrc = AVATARS._maryIdleVideo || AVATARS.User_Prompt.src;
-        if (idleSrc && (els.media.getAttribute('src') || '') !== idleSrc) {
-          els.media.src = idleSrc;
-          try { els.media.play().catch(() => {}); } catch {}
-        }
-      }
+      _showIdleVideo();
     }
 
     // Switch back to idle after all audio done
     if (mySession === session) {
       Caption.hide();
-      const doneEl = els.media;
-      if (doneEl && doneEl.tagName === 'VIDEO') {
-        const idleSrc = AVATARS._maryIdleVideo || AVATARS.User_Prompt.src;
-        if (idleSrc && (doneEl.getAttribute('src') || '') !== idleSrc) {
-          doneEl.src = idleSrc;
-          try { doneEl.play().catch(() => {}); } catch {}
-        }
-      }
+      _showIdleVideo();
     }
 
     isPlayingAudio = false;
