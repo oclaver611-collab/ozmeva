@@ -2547,6 +2547,7 @@ async function freeConversation(mySession) {
           supermarket:  ["You stopped in this aisle for a reason.", "Most people just keep moving.", "You look like you had something to say.", "Take your time.", "Still working up to it?"],
           office_lobby: ["You came over for a reason.", "The elevator's taking its time.", "Most people just look at their phones.", "You look like you had something to say.", "Take your time.", "Still working up to it?"],
           train:        ["You're still here.", "The train has a few more stops.", "Most people just look out the window.", "You look like you had something to say.", "Take your time.", "Still working up to it?"],
+          art_studio:   ["You walked in for a reason.", "Most people just look and leave.", "The work is right there.", "You look like you had something to say.", "Take your time.", "Still working up to it?"],
         };
         const rescues = rescuesByScenario[currentScenarioKey] || rescuesByScenario.beach;
         if (!freeConvRescueUsed) freeConvRescueUsed = new Set();
@@ -2578,6 +2579,7 @@ async function freeConversation(mySession) {
             supermarket:  ["Still there?", "You went quiet.", "Was there something else?"],
             office_lobby: ["Still there?", "You went quiet.", "Was there something else?"],
             train:        ["Still there?", "You went quiet.", "Was there something else?", "Few more stops."],
+            art_studio:   ["Still there?", "You went quiet.", "Was there something else?"],
           };
           const pool = impatience[currentScenarioKey] || impatience.beach;
           const line = pool[Math.floor(Math.random() * pool.length)];

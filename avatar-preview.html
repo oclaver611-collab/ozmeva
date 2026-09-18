@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Avatar Preview</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #111; color: #eee; font-family: system-ui, sans-serif; padding: 20px; }
+  h1 { font-size: 18px; margin-bottom: 24px; color: #fff; }
+  h2 { font-size: 14px; text-transform: uppercase; letter-spacing: 2px; color: #888;
+       margin: 32px 0 14px; padding-bottom: 6px; border-bottom: 1px solid #333; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 20px; }
+  .card { background: #1a1a1a; border-radius: 8px; overflow: hidden; border: 1px solid #2a2a2a; }
+  .card.current { border-color: #f59e0b; }
+  .card-header { padding: 10px 12px; display: flex; align-items: baseline; gap: 8px; }
+  .card-name { font-size: 15px; font-weight: 600; color: #fff; }
+  .card-badge { font-size: 11px; padding: 2px 6px; border-radius: 10px;
+                background: #2a2a2a; color: #aaa; }
+  .card-badge.active { background: #92400e; color: #fcd34d; }
+  .card-vibe { font-size: 11px; color: #666; margin-left: auto; }
+  .videos { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+  .video-wrap { position: relative; }
+  .video-wrap video { width: 100%; height: 180px; object-fit: cover; display: block; background: #000; }
+  .video-label { position: absolute; bottom: 4px; left: 6px;
+                 font-size: 10px; background: rgba(0,0,0,.65); padding: 2px 5px;
+                 border-radius: 3px; color: #ccc; }
+  .card-scenario { padding: 6px 12px 10px; font-size: 11px; color: #555; }
+  .error-badge { position: absolute; top: 4px; right: 6px; font-size: 10px;
+                 background: rgba(180,0,0,.8); padding: 2px 5px; border-radius: 3px;
+                 color: #fcc; display: none; }
+</style>
+</head>
+<body>
+<h1>Avatar Preview — all waves</h1>
+
+<script>
+const WAVE1 = [
+  { id:'sofia',       label:'Sofia',     vibe:'Direct & self-contained',  scenario:'Beach',          active:false,
+    idle:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/sofia_idle.mp4',
+    speaking:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/sofia_speaking.mp4' },
+  { id:'isabelle',    label:'Isabelle',  vibe:'Intellectual & curious',   scenario:'Museum',         active:false,
+    idle:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/Isabelle_idle.mp4',
+    speaking:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/Isabelle_speaking.mp4' },
+  { id:'ava',         label:'Ava',       vibe:'Sharp & direct',           scenario:'Bar',            active:false, hidden:true,
+    idle:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/Ava_idle.mp4',
+    speaking:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/Ava_speaking.mp4' },
+  { id:'zoe',         label:'Zoe',       vibe:'Direct & no-nonsense',     scenario:'Gym',            active:false,
+    idle:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/zoe_idle.mp4',
+    speaking:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/zoe_speaking.mp4' },
+  { id:'nadia',       label:'Nadia',     vibe:'Warm & bookish',           scenario:'Bookstore',      active:false,
+    idle:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/nadia_idle.mp4',
+    speaking:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/nadia_speaking.mp4' },
+  { id:'julia',       label:'Julia',     vibe:'Mysterious & confident',   scenario:'Street',         active:false,
+    idle:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/julia_daniel.mp4',
+    speaking:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/julia_mary.mp4' },
+];
+
+const WAVE2 = [
+  { id:'sanna',       label:'Sanna',     vibe:'Sharp & composed',         scenario:'Rooftop',        active:true,
+    idle:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/sanna_idle.mp4',
+    speaking:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/sanna_speaking.mp4' },
+  { id:'sarah',       label:'Sarah',     vibe:'Warm & guarded',           scenario:'House Party',    active:false,
+    idle:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/sarah_idle.mp4',
+    speaking:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/sarah_speaking.mp4' },
+  { id:'anna',        label:'Anna',      vibe:'Creative & deflects',      scenario:'Coffee Shop',    active:false,
+    idle:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/anna_idle.mp4',
+    speaking:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/anna_speaking.mp4' },
+  { id:'leila',       label:'Leila',     vibe:'Quiet & present',          scenario:'Art Gallery',    active:false,
+    idle:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/leila_idle.mp4',
+    speaking:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/leila_speaking.mp4' },
+  { id:'fatou',       label:'Fatou',     vibe:'Direct & honest',          scenario:'Yoga Studio',    active:false,
+    idle:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/fatou_idle.mp4',
+    speaking:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/fatou_speaking.mp4' },
+  { id:'elena',       label:'Elena',     vibe:'Witty & bantery',          scenario:'Airport',        active:false,
+    idle:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/elena_idle.mp4',
+    speaking:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/elena_speaking.mp4' },
+  { id:'eden',        label:'Eden',      vibe:'Warm & straight-talking',  scenario:'Supermarket',    active:true,
+    idle:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/eden_idle.mp4',
+    speaking:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/eden_speaking.mp4' },
+  { id:'maya_office', label:'Maya',      vibe:'Grounded & sharp',         scenario:'Office Lobby',   active:false,
+    idle:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/maya_idle.mp4',
+    speaking:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/maya_speaking.mp4' },
+  { id:'erika',       label:'Erika',     vibe:'Chaotic & fun',            scenario:'Train',          active:true,
+    idle:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/erika_idle.mp4',
+    speaking:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/erika_speaking.mp4' },
+];
+
+const WAVE3 = [
+  { id:'camille',     label:'Camille',   vibe:'Warm & sideways',          scenario:'Farmers Market', active:false,
+    idle:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/camille_idle.mp4',
+    speaking:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/camille_speaking.mp4' },
+  { id:'priya',       label:'Priya',     vibe:'Sharp & risk-aware',       scenario:'Rooftop Pool',   active:false,
+    idle:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/priya_idle.mp4',
+    speaking:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/priya_speaking.mp4' },
+  { id:'valentina',   label:'Valentina', vibe:'Elegant & dangerous',      scenario:'Wine Bar',       active:false,
+    idle:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/valentina_idle.mp4',
+    speaking:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/valentina_speaking.mp4' },
+  { id:'mei',         label:'Mei',       vibe:'Playful & surgical',       scenario:'Night Market',   active:false,
+    idle:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/mei_idle.mp4',
+    speaking:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/mei_speaking.mp4' },
+  { id:'amara',       label:'Amara',     vibe:'Still & charged',          scenario:'Dance Studio',   active:false,
+    idle:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/amara_idle.mp4',
+    speaking:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/amara_speaking.mp4' },
+  { id:'ingrid',      label:'Ingrid',    vibe:'Dry & fast',               scenario:'Running Trail',  active:false,
+    idle:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/ingrid_idle.mp4',
+    speaking:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/ingrid_speaking.mp4' },
+  { id:'solene',      label:'Solène',    vibe:'Romantic & testing',       scenario:'Jazz Bar',       active:false,
+    idle:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/solene_idle.mp4',
+    speaking:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/solene_speaking.mp4' },
+  { id:'keiko',       label:'Keiko',     vibe:'Quiet & conserved',        scenario:'Cherry Blossoms',active:false,
+    idle:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/keiko_idle.mp4',
+    speaking:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/keiko_speaking.mp4' },
+  { id:'rania',       label:'Rania',     vibe:'Warm & relentless',        scenario:'Rooftop Terrace',active:false,
+    idle:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/rania_idle.mp4',
+    speaking:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/rania_speaking.mp4' },
+  { id:'bianca',      label:'Bianca',    vibe:'High-energy & real',       scenario:'Pool Party',     active:false,
+    idle:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/bianca_idle.mp4',
+    speaking:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/bianca_speaking.mp4' },
+  { id:'chloe',       label:'Chloe',     vibe:'Intense & deadpan',        scenario:'University Library', active:false, hidden:true,
+    idle:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/chloe_idle.mp4',
+    speaking:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/chloe_speaking.mp4' },
+  { id:'nour',        label:'Nour',      vibe:'Warm & principled',        scenario:'Spice Market',   active:false,
+    idle:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/nour_idle.mp4',
+    speaking:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/nour_speaking.mp4' },
+  { id:'astrid',      label:'Astrid',    vibe:'Competence-first',         scenario:'Climbing Wall',  active:false,
+    idle:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/astrid_idle.mp4',
+    speaking:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/astrid_speaking.mp4' },
+  { id:'layla',       label:'Layla',     vibe:'Warm & radar-sharp',       scenario:'Sunday Brunch',  active:false,
+    idle:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/layla_idle.mp4',
+    speaking:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/layla_speaking.mp4' },
+  { id:'ines',        label:'Inès',      vibe:'Observes everything',      scenario:'Photo Exhibit',  active:false,
+    idle:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/ines_idle.mp4',
+    speaking:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/ines_speaking.mp4' },
+  { id:'zara',        label:'Zara',      vibe:'Authentic & cool',         scenario:'Skate Park',     active:false,
+    idle:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/zara_idle.mp4',
+    speaking:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/zara_speaking.mp4' },
+  { id:'talia',       label:'Talia',     vibe:'Grounded & direct',        scenario:'Cooking Class',  active:false,
+    idle:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/talia_idle.mp4',
+    speaking:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/talia_speaking.mp4' },
+  { id:'miriam',      label:'Miriam',    vibe:'Formidable & dry',         scenario:'Book Fair',      active:false,
+    idle:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/miriam_idle.mp4',
+    speaking:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/miriam_speaking.mp4' },
+  { id:'suki',        label:'Suki',      vibe:'Still & unexpected',       scenario:'Flower Shop',    active:false,
+    idle:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/suki_idle.mp4',
+    speaking:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/suki_speaking.mp4' },
+  { id:'cara',        label:'Cara',      vibe:'Direct & warm',            scenario:'Dog Park',       active:false,
+    idle:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/cara_idle.mp4',
+    speaking:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/cara_speaking.mp4' },
+  { id:'elif',        label:'Elif',      vibe:'Unhurried & present',      scenario:'Hammam Spa',     active:false,
+    idle:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/elif_idle.mp4',
+    speaking:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/elif_speaking.mp4' },
+  { id:'aisha',       label:'Aisha',     vibe:'Purposeful & warm',        scenario:'Community Garden',active:false,
+    idle:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/aisha_idle.mp4',
+    speaking:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/aisha_speaking.mp4' },
+  { id:'fiona',       label:'Fiona',     vibe:'Music-first & dry',        scenario:'Record Shop',    active:false,
+    idle:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/fiona_idle.mp4',
+    speaking:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/fiona_speaking.mp4' },
+  { id:'celeste',     label:'Celeste',   vibe:'Deep-time curious',        scenario:'Observatory',    active:false,
+    idle:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/celeste_idle.mp4',
+    speaking:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/celeste_speaking.mp4' },
+  { id:'naomi',       label:'Naomi',     vibe:'Post-show & open',         scenario:'Jazz Club',      active:false,
+    idle:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/naomi_idle.mp4',
+    speaking:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/naomi_speaking.mp4' },
+  { id:'zola',        label:'Zola',      vibe:'Sees in frames',           scenario:'Rooftop Sunset', active:false,
+    idle:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/zola_idle.mp4',
+    speaking:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/zola_speaking.mp4' },
+  { id:'imani',       label:'Imani',     vibe:'Poet & sharp',             scenario:'Open Mic',       active:false,
+    idle:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/imani_idle.mp4',
+    speaking:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/imani_speaking.mp4' },
+  { id:'nia',         label:'Nia',       vibe:'Artist & watchful',        scenario:'Art Studio',     active:false,
+    idle:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/nia_idle.mp4',
+    speaking:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/nia_speaking.mp4' },
+  { id:'cleo',        label:'Cleo',      vibe:'Ocean-grounded',           scenario:'Beachside Cafe', active:false,
+    idle:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/cleo_idle.mp4',
+    speaking:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/cleo_speaking.mp4' },
+  { id:'sage',        label:'Sage',      vibe:'Quiet & deep',             scenario:'Bookshop',       active:false,
+    idle:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/sage_idle.mp4',
+    speaking:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/sage_speaking.mp4' },
+  { id:'kaia',        label:'Kaia',      vibe:'Always in motion',         scenario:'Airport Gate',   active:false,
+    idle:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/kaia_idle.mp4',
+    speaking:'https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/kaia_speaking.mp4' },
+];
+
+function makeCard(a, wave) {
+  const card = document.createElement('div');
+  card.className = 'card' + (a.active ? ' current' : '');
+
+  const header = document.createElement('div');
+  header.className = 'card-header';
+
+  const name = document.createElement('span');
+  name.className = 'card-name';
+  name.textContent = a.label;
+
+  const waveBadge = document.createElement('span');
+  waveBadge.className = 'card-badge';
+  waveBadge.textContent = 'W' + wave;
+
+  const badges = [waveBadge];
+  if (a.active) {
+    const activeBadge = document.createElement('span');
+    activeBadge.className = 'card-badge active';
+    activeBadge.textContent = 'active';
+    badges.push(activeBadge);
+  }
+  if (a.hidden) {
+    const hiddenBadge = document.createElement('span');
+    hiddenBadge.className = 'card-badge';
+    hiddenBadge.textContent = 'hidden';
+    badges.push(hiddenBadge);
+  }
+
+  const vibe = document.createElement('span');
+  vibe.className = 'card-vibe';
+  vibe.textContent = a.vibe;
+
+  header.append(name, ...badges, vibe);
+
+  const videos = document.createElement('div');
+  videos.className = 'videos';
+
+  for (const [src, lbl] of [[a.idle, 'idle'], [a.speaking, 'speaking']]) {
+    const wrap = document.createElement('div');
+    wrap.className = 'video-wrap';
+
+    const vid = document.createElement('video');
+    vid.autoplay = true; vid.loop = true; vid.muted = true; vid.playsInline = true;
+    vid.src = src;
+
+    const label = document.createElement('div');
+    label.className = 'video-label';
+    label.textContent = lbl;
+
+    const errBadge = document.createElement('div');
+    errBadge.className = 'error-badge';
+    errBadge.textContent = '404';
+    vid.onerror = () => { errBadge.style.display = 'block'; vid.style.opacity = '0.2'; };
+
+    wrap.append(vid, label, errBadge);
+    videos.appendChild(wrap);
+  }
+
+  const scenario = document.createElement('div');
+  scenario.className = 'card-scenario';
+  scenario.textContent = '📍 ' + a.scenario;
+
+  card.append(header, videos, scenario);
+  return card;
+}
+
+const waves = [
+  { label: 'Wave 1', avatars: WAVE1, num: 1 },
+  { label: 'Wave 2', avatars: WAVE2, num: 2 },
+  { label: 'Wave 3', avatars: WAVE3, num: 3 },
+];
+
+for (const { label, avatars, num } of waves) {
+  const h2 = document.createElement('h2');
+  h2.textContent = label + ' — ' + avatars.length + ' avatars';
+  document.body.appendChild(h2);
+
+  const grid = document.createElement('div');
+  grid.className = 'grid';
+  for (const a of avatars) grid.appendChild(makeCard(a, num));
+  document.body.appendChild(grid);
+}
+</script>
+</body>
+</html>

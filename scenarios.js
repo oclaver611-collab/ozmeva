@@ -1325,7 +1325,6 @@
     thumb: "https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/nia_thumb.jpg",
     bg: "https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/nia_speaking.mp4",
     coldOpen: true,
-    hidden: true,
     category: "dating",
     difficulty: 3,
     duration_min: 10,

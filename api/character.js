@@ -2720,6 +2720,7 @@ CRITICAL RULES — APPLY TO EVERY RESPONSE:
   const GRADED_CHARACTERS = new Set([
     'sofia', 'ava', 'isabelle', 'zoe', 'nadia', 'julia', 'claire',
     'sanna', 'sarah', 'anna', 'leila', 'fatou', 'elena', 'eden', 'maya_office', 'erika',
+    'nia',
   ]);
   const showLesson1Tests = practiceFocus === 'lesson1' || practiceFocus === 'both' || practiceFocus === 'all';
   const showLesson2Tests = practiceFocus === 'lesson2' || practiceFocus === 'both' || practiceFocus === 'all';
