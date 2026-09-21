@@ -405,40 +405,6 @@
     ]
   },
 
-  supermarket: {
-    title: "Supermarket — Sunday morning. Unhurried.",
-    thumb: "https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/Eden_thumb.jpg",
-    bg: "https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/supermarket_bg.jpg?v=2",
-    coldOpen: true,
-    category: "dating",
-    difficulty: 2,
-    duration_min: 10,
-    demo: [
-      { speaker:"Ryan",   text:"Supermarket. Sunday afternoon. The specific quiet of ordinary errands." },
-      { speaker:"Ryan",   text:"She's in the same aisle as you. Basket in hand, slightly off her list." },
-      { speaker:"Ryan",   text:"This one catches people out — there's no obvious hook. You have to make something out of nothing." },
-      { speaker:"Ryan",   text:"Watch how this goes." },
-      { speaker:"Daniel", text:"You look like someone who came in with a plan and abandoned it in produce." },
-      { speaker:"Mary",   text:"I had a list." },
-      { speaker:"Daniel", text:"Had." },
-      { speaker:"Mary",   text:"I saw the mangoes and it unraveled." },
-      { speaker:"Daniel", text:"Mangoes will do that." },
-      { speaker:"Mary",   text:"I'm Eden." },
-      { speaker:"Daniel", text:"Daniel. Do you actually know what you're making or is this still developing?" },
-      { speaker:"Mary",   text:"Still developing." },
-      { speaker:"Mary",   text:"That's the most honest thing I've said today." },
-      { speaker:"Ryan",   text:"See that? He made a real observation and kept it light. Eden responds to honesty and warmth. She'll give you real feedback fast — make sure you're ready for it." }
-    ],
-    practice: [
-      { speaker:"Ryan", text:"You're in a supermarket on Sunday afternoon. She's in the same aisle, basket in hand, clearly off her original shopping list." },
-      { speaker:"Ryan", text:"Sunday afternoon. You're in the same aisle. She has a basket that's clearly gone off-script — you can tell from what's in it." },
-      { speaker:"Ryan", text:"The supermarket on a weekend. Nobody's performing. Nobody's on. She's just a real person doing a real thing — and so are you. That's rarer than you think." },
-      { speaker:"Ryan", text:"Most men don't even consider this. No mood lighting, no social excuse. Just two people in a grocery aisle." },
-      { speaker:"Ryan", text:"And that's exactly why it works when you do it right — she's off her guard, and the man who matches that realness stands out completely." },
-      { speaker:"Ryan", text:"Turn toward her. She's looking at two options, slightly undecided. Your eyes meet for a second." },
-      { speaker:"Ryan", text:"What do you do?" }
-    ]
-  },
 
   office_lobby: {
     title: "Office Lobby — You've walked past each other for months.",

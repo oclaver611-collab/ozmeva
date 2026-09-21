@@ -20,7 +20,6 @@ const SCENARIO_CHARACTER_MAP = {
   art_gallery:  'leila',
   yoga_studio:  'fatou',
   airport:      'elena',
-  supermarket:  'eden',
   office_lobby: 'maya_office',
   train:        'erika',
   // ── Wave 3 — June 2026 ──
@@ -878,7 +877,6 @@ const AmbientAudio = (() => {
     art_gallery:  'gallery',
     yoga_studio:  'yoga',
     airport:      'airport',
-    supermarket:  'supermarket',
     office_lobby: 'office',
     train:        'train',
   };
@@ -2544,7 +2542,6 @@ async function freeConversation(mySession) {
           art_gallery:  ["You stopped at this piece for a reason.", "Most people walked past it.", "You look like you had something to say.", "Take your time.", "Still working up to it?", "The painting isn't going anywhere."],
           yoga_studio:  ["You came over for a reason.", "I'm stretching, not meditating.", "Clock's ticking — I'll finish and leave.", "You look like you had something to say.", "Take your time."],
           airport:      ["We've got time. Flight's delayed.", "Most people just stay in their seat.", "You look like you had something to say.", "Take your time.", "Still working up to it?", "The board hasn't changed."],
-          supermarket:  ["You stopped in this aisle for a reason.", "Most people just keep moving.", "You look like you had something to say.", "Take your time.", "Still working up to it?"],
           office_lobby: ["You came over for a reason.", "The elevator's taking its time.", "Most people just look at their phones.", "You look like you had something to say.", "Take your time.", "Still working up to it?"],
           train:        ["You're still here.", "The train has a few more stops.", "Most people just look out the window.", "You look like you had something to say.", "Take your time.", "Still working up to it?"],
           art_studio:   ["You walked in for a reason.", "Most people just look and leave.", "The work is right there.", "You look like you had something to say.", "Take your time.", "Still working up to it?"],
@@ -2576,7 +2573,6 @@ async function freeConversation(mySession) {
             art_gallery:  ["Still there?", "You went quiet.", "Was there something else?"],
             yoga_studio:  ["Still there?", "You went quiet.", "Was there something else?"],
             airport:      ["Still there?", "You went quiet.", "Was there something else?", "The board still hasn't changed."],
-            supermarket:  ["Still there?", "You went quiet.", "Was there something else?"],
             office_lobby: ["Still there?", "You went quiet.", "Was there something else?"],
             train:        ["Still there?", "You went quiet.", "Was there something else?", "Few more stops."],
             art_studio:   ["Still there?", "You went quiet.", "Was there something else?"],
@@ -2646,6 +2642,10 @@ async function runCoachFeedback(mySession) {
   if(mySession!==session) return;
   els.name.textContent='Ryan'; els.text.textContent='Analyzing your session...';
   setMediaForSpeaker('Ryan');
+  // Tear down scene-bg video so character loop doesn't continue behind feedback
+  const _bg = els.stageFrame && els.stageFrame.querySelector('.scene-bg');
+  if (_bg) { try { if (_bg.tagName === 'VIDEO') { _bg.pause(); _bg.src = ''; } } catch {} _bg.remove(); }
+  if (els.stageFrame) els.stageFrame.classList.remove('has-bg');
   ryanOrbSetState('speaking');
   const sc=SCENARIOS[currentScenarioKey]||{};
 

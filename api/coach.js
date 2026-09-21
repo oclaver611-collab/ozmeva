@@ -67,11 +67,11 @@ module.exports = async function handler(req, res) {
     gym: 'ZOE', bookstore: 'NADIA', street: 'JULIA', wedding: 'CLAIRE',
     rooftop: 'SANNA', house_party: 'SARAH', coffee_shop: 'ANNA',
     art_gallery: 'LEILA', yoga_studio: 'FATOU', airport: 'ELENA',
-    supermarket: 'EDEN', office_lobby: 'MAYA', train: 'ERIKA',
+    office_lobby: 'MAYA', train: 'ERIKA', art_studio: 'NIA',
   };
   const characterLabel = CHARACTER_NAME_MAP[scenarioKey] || 'HER';
 
-  // Build transcript — strip Sofia's final reply so the C-skill gate evaluates only
+  // Build transcript — strip her final reply so the C-skill gate evaluates only
   // his last message, not her reaction (model can't ignore a signal that's in context).
   const evalConversation = conversation.at(-1)?.role === 'assistant'
     ? conversation.slice(0, -1)
@@ -219,12 +219,12 @@ module.exports = async function handler(req, res) {
       whatKills: `Trying to cheer her up. Generic delay sympathy. Being too energetic. Moving to a close before you've earned any real time.`,
       missedOpportunityExamples: `If she named her stage of grief about the delay and he didn't run with the bit — missed. If she said something dry and he responded sincerely — wrong register. If she went quiet watching the board and he interrupted it.`,
     },
-    supermarket: {
-      name: 'Eden',
-      profile: `Eden is 26, reads people for a living — UX research. She came in with a list and the mangoes derailed it. She has warmth and she gives real feedback fast — she'll tell him directly if something isn't working. She responds to honesty, observational humor, and someone who doesn't try too hard. She will know immediately if he's performing.`,
-      whatWorks: `Being honest and warm. Finding something real in the shared mundane situation. Not trying to be impressive. Following what she says instead of redirecting to yourself.`,
-      whatKills: `Performing confidence. Being too smooth. Generic openers. Asking where she's from. Moving to the number ask before anything real has happened between them.`,
-      missedOpportunityExamples: `If she said she abandoned her list and he didn't play along — missed the warmth. If she gave him direct feedback and he got defensive — wrong. If she made an observation about her own situation and he turned it back to himself.`,
+    art_studio: {
+      name: 'Nia',
+      profile: `Nia is 23, visual artist — large-format painting. She is at her studio during open studios day. The paintings are the test: what he looks at first tells her everything. She has a complicated relationship with explaining her work — she prefers people bring their own reading. Her wit is precise and image-first. She rewards genuine engagement with the work and goes flat when someone focuses on her instead of it.`,
+      whatWorks: `Looking at the paintings with real attention. Asking something genuine about the work — not "how long did that take" but what it does to him specifically. Bringing his own reading rather than asking her to explain. Saying something unexpected that shows he actually sees it.`,
+      whatKills: `Ignoring the work and talking directly to her. Generic compliments ("amazing / beautiful / so talented"). Asking what the painting means and expecting a direct answer. Focusing on her as a person before the work has earned it.`,
+      missedOpportunityExamples: `If she said "what do you think it's about?" and he deflected — free door, missed. If she went quiet after he said something generic about the painting — she was waiting for something real. If the paintings were right there and he asked about her instead of them — wrong read from the first move.`,
     },
     office_lobby: {
       name: 'Maya',
@@ -548,34 +548,34 @@ IMPORTANT: All CHAIN skills evaluate what the user does with HER words, not whet
 These fields (lesson4Eval and lesson4Check) are already part of the JSON schema above — fill them based on the criteria and definitions above.` : ''}${lesson5Complete ? `
 
 LESSON 5 EVALUATION — TRACE: Reading the Signal:
-Evaluate the user on these 5 skills. T, R, A, C are observational — Sofia emits signals through parenthetical stage directions in her responses. The user PASSES these by acknowledging, naming, or responding to the signal; FAILS by ignoring it entirely when it appeared.
+Evaluate the user on these 5 skills. T, R, A, C are observational — ${girlName} emits signals through parenthetical stage directions in her responses. The user PASSES these by acknowledging, naming, or responding to the signal; FAILS by ignoring it entirely when it appeared.
 
-T — Track gaze: Did Sofia describe holding eye contact longer than normal, and did the user respond to or acknowledge the gaze dynamic?
+T — Track gaze: Did ${girlName} describe holding eye contact longer than normal, and did the user respond to or acknowledge the gaze dynamic?
 PASS = user named or played with the gaze signal: "don't look away on my account", "I noticed that", any line that holds or engages the eye contact dynamic rather than ignoring it.
-FAIL = the gaze stage direction appeared in Sofia's response and the user made no reference to it — responded only to conversational content.
-NOT T = Sofia emitted no gaze stage direction in the conversation.
+FAIL = the gaze stage direction appeared in ${girlName}'s response and the user made no reference to it — responded only to conversational content.
+NOT T = ${girlName} emitted no gaze stage direction in the conversation.
 
-R — Register proximity: Did Sofia describe moving closer, and did the user acknowledge the shift?
+R — Register proximity: Did ${girlName} describe moving closer, and did the user acknowledge the shift?
 PASS = user named it ("we started much further apart", "you moved over here — I noticed") or played with it without pulling back.
 FAIL = proximity stage direction appeared and the user ignored it entirely.
-NOT R = Sofia emitted no proximity stage direction.
+NOT R = ${girlName} emitted no proximity stage direction.
 
-A — Attend to alignment: Did Sofia describe mirroring his posture, and did the user notice or name it?
+A — Attend to alignment: Did ${girlName} describe mirroring his posture, and did the user notice or name it?
 PASS = user named the mirroring ("you match the pace of whoever you're with"), pointed it out, or acknowledged it in any way.
 FAIL = mirroring stage direction appeared and the user made no acknowledgment.
-NOT A = Sofia emitted no alignment stage direction.
+NOT A = ${girlName} emitted no alignment stage direction.
 
-C — Catch touch: Did Sofia describe brief deliberate touch, and did the user respond without ignoring or over-reacting?
+C — Catch touch: Did ${girlName} describe brief deliberate touch, and did the user respond without ignoring or over-reacting?
 PASS = user acknowledged it directly ("you did that on purpose", "that wasn't accidental") or responded with any line that plays with the touch signal.
 FAIL = touch stage direction appeared and the user completely ignored it in their reply.
-NOT C = Sofia emitted no touch stage direction.
+NOT C = ${girlName} emitted no touch stage direction.
 
 E — Enter on the cluster: Did the user make a direct, unambiguous move — ask for her number, suggest continuing somewhere else, or include her in what they're doing next — after three or more signals had appeared?
-PASS = direct statement or question moving the interaction forward with no hedge language, delivered after Sofia had emitted at least three signal stage directions.
+PASS = direct statement or question moving the interaction forward with no hedge language, delivered after ${girlName} had emitted at least three signal stage directions.
 FAIL = user never made a move; OR used hedge language ("maybe we could..."); OR acted before three signals appeared.
 NOT E = conversation too short for the cluster to have formed.
 
-IMPORTANT: For any NOT-fired skill (Sofia emitted no signal), mark it PASS — do not penalize the user for an opportunity that wasn't created. Score and passed should only reflect skills where a genuine test occurred.
+IMPORTANT: For any NOT-fired skill (${girlName} emitted no signal), mark it PASS — do not penalize the user for an opportunity that wasn't created. Score and passed should only reflect skills where a genuine test occurred.
 
 These fields (lesson5Eval and lesson5Check) are already part of the JSON schema above — fill them based on the criteria and definitions above.` : ''}`;
 
