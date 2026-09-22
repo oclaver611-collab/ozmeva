@@ -38,6 +38,7 @@ module.exports = async function handler(req, res) {
     lesson2Complete = false,
     practiceFocus = null,
     voiceInput = false,
+    episodeCallback = null,
   } = req.body || {};
 
   const history = rawHistory.slice(-16);
@@ -3111,6 +3112,12 @@ A man just spoke to you.`,
 Saturday afternoon. The public is welcome.
 A man just walked in.`,
 
+    art_studio_ep2: `SETTING: You are at your art studio. Two weeks ago, this same man visited during open studios day.
+He looked at the work seriously — he had a real reaction, not a performance.
+You noticed. You were not expecting him to come back. He did.
+You are more open than the first time, but you still will not hand him the conversation.
+The paintings are still there. That has not changed.`,
+
   };
 
   // ════════════════════════════════════════════════════════════════════════════
@@ -3158,7 +3165,10 @@ CRITICAL RULES — APPLY TO EVERY RESPONSE:
   // ── Combine layers ───────────────────────────────────────────────────────────
 
   const character = CHARACTERS[characterId] || CHARACTERS['sofia'];
-  const setting = SETTINGS[scenarioKey] || SETTINGS['beach'];
+  const rawSetting = SETTINGS[scenarioKey] || SETTINGS['beach'];
+  const setting = (episodeCallback && episodeCallback.trim())
+    ? rawSetting + `\nYou remember something he said last time: "${episodeCallback.trim().slice(0, 200)}"`
+    : rawSetting;
 
   // Detect if character already introduced herself in conversation history
   const charNames = {

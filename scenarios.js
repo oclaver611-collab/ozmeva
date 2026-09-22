@@ -1314,6 +1314,35 @@
     ]
   },
 
+  art_studio_ep2: {
+    title: "Her Studio — Two Weeks Later",
+    thumb: "https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/nia_thumb.jpg",
+    bg: "https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/nia_speaking.mp4",
+    coldOpen: true,
+    unlockKey: 'ozmeva_art_studio_ep1_complete',
+    category: "dating",
+    difficulty: 4,
+    duration_min: 10,
+    demo: [
+      { speaker:"Ryan",   text:"Two weeks later. He came back. She was expecting him to forget — he didn't." },
+      { speaker:"Ryan",   text:"Last time, the test was the work. This time she's more open, but she still won't hand you the conversation." },
+      { speaker:"Ryan",   text:"Watch how Daniel earns her attention by returning to the painting, not to her." },
+      { speaker:"Daniel", text:"The large blue one — I had a reading two weeks ago but I wasn't sure enough to say it." },
+      { speaker:"Mary",   text:"And now?" },
+      { speaker:"Daniel", text:"Still not completely sure. But I think it's about something you lost, not something you're waiting for." },
+      { speaker:"Mary",   text:"You're the first person who's gotten that far with it." },
+      { speaker:"Ryan",   text:"He came back to the painting, not to her. She noticed. That told her more about him than anything he could have said directly." }
+    ],
+    practice: [
+      { speaker:"Ryan", text:"Two weeks later. Her studio. She's working — not hiding, not performing." },
+      { speaker:"Ryan", text:"She noticed you came back. She won't say it directly." },
+      { speaker:"Ryan", text:"Last time: engaging with the work was the test. That earned you access." },
+      { speaker:"Ryan", text:"This time, the test is different — she wants to know if you actually listen, if you're curious about her without making it a pickup." },
+      { speaker:"Ryan", text:"She's near the large painting you both stood in front of last time." },
+      { speaker:"Ryan", text:"What do you do?" }
+    ]
+  },
+
   beachside_cafe: {
     title: "Beachside Café — After a Dive",
     thumb: "https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/cleo_thumb.jpg",

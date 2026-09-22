@@ -68,6 +68,7 @@ module.exports = async function handler(req, res) {
     rooftop: 'SANNA', house_party: 'SARAH', coffee_shop: 'ANNA',
     art_gallery: 'LEILA', yoga_studio: 'FATOU', airport: 'ELENA',
     office_lobby: 'MAYA', train: 'ERIKA', art_studio: 'NIA',
+    art_studio_ep2: 'NIA',
   };
   const characterLabel = CHARACTER_NAME_MAP[scenarioKey] || 'HER';
 
@@ -225,6 +226,13 @@ module.exports = async function handler(req, res) {
       whatWorks: `Looking at the paintings with real attention. Asking something genuine about the work — not "how long did that take" but what it does to him specifically. Bringing his own reading rather than asking her to explain. Saying something unexpected that shows he actually sees it.`,
       whatKills: `Ignoring the work and talking directly to her. Generic compliments ("amazing / beautiful / so talented"). Asking what the painting means and expecting a direct answer. Focusing on her as a person before the work has earned it.`,
       missedOpportunityExamples: `If she said "what do you think it's about?" and he deflected — free door, missed. If she went quiet after he said something generic about the painting — she was waiting for something real. If the paintings were right there and he asked about her instead of them — wrong read from the first move.`,
+    },
+    art_studio_ep2: {
+      name: 'Nia',
+      profile: `Nia is 23, visual artist. He came back — two weeks after open studios day. She noticed. She is more open this time: the work already proved he can see, now she is curious whether he can actually listen. She reveals more than she normally would. She goes flat on anyone who talks to perform, who asks questions without really waiting for the answer, or who tries to impress her with what they know about art.`,
+      whatWorks: `Actually listening when she says something — not nodding and pivoting, but following a thread she opens. Asking one real question and staying with the answer. Saying something that shows he remembered something from the first meeting. Letting silences sit instead of filling them. Matching her pace rather than pushing the interaction forward.`,
+      whatKills: `Asking three questions in a row. Talking about himself unprompted. Filling every silence with words. Pivoting away from something she said because he had something he wanted to say. Being eager in a way that feels like performance. Making the conversation about getting somewhere with her rather than being somewhere with her.`,
+      missedOpportunityExamples: `If she said something personal and he acknowledged it with "cool" then moved on — he didn't follow the thread. If she went quiet and he rushed to fill it — she was giving him a moment to sit with her. If she mentioned something specific about the work and he didn't connect it to what he saw last time — missed the callback.`,
     },
     office_lobby: {
       name: 'Maya',

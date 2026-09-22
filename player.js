@@ -51,6 +51,7 @@ const SCENARIO_CHARACTER_MAP = {
   rooftop_filmmaker:    'zola',
   open_mic:             'imani',
   art_studio:           'nia',
+  art_studio_ep2:       'nia',
   beachside_cafe:       'cleo',
   independent_bookshop: 'sage',
   airport_gate:         'kaia',
@@ -1660,6 +1661,9 @@ async function streamCharacterAndSpeak(userSaid, mySession, onTextReady = null) 
         lesson4Complete: localStorage.getItem('ozmeva_lesson4_complete') === 'true',
         practiceFocus: localStorage.getItem('ozmeva_practice_focus') || 'free',
         voiceInput: _lastInputMode === 'voice',
+        episodeCallback: currentScenarioKey === 'art_studio_ep2'
+          ? (localStorage.getItem('ozmeva_art_studio_ep1_moment') || null)
+          : null,
       }),
       signal: controller.signal,
     });
@@ -1767,6 +1771,9 @@ async function getCharacterResponseFallback(userSaid) {
         lesson4Complete: localStorage.getItem('ozmeva_lesson4_complete') === 'true',
         practiceFocus: localStorage.getItem('ozmeva_practice_focus') || 'free',
         voiceInput: _lastInputMode === 'voice',
+        episodeCallback: currentScenarioKey === 'art_studio_ep2'
+          ? (localStorage.getItem('ozmeva_art_studio_ep1_moment') || null)
+          : null,
       }),
       signal: controller.signal,
     });
@@ -2901,6 +2908,11 @@ function showFeedbackCard(f) {
   if (!f.wouldSheDateHim || f.wouldSheDateHim === '---') f.wouldSheDateHim = 'Maybe — show more genuine curiosity next time.';
   // Record this session in progress history
   if (f.score >= 1 && f.score <= 10) Progress.recordSession(f.score, currentScenarioKey, currentCharacterId);
+  // Episode 1 completion — unlock art_studio_ep2
+  if (currentScenarioKey === 'art_studio' && f.score >= 1) {
+    localStorage.setItem('ozmeva_art_studio_ep1_complete', 'true');
+    localStorage.setItem('ozmeva_art_studio_ep1_moment', f.bestMoment || '');
+  }
   // Lesson 1 certification tracking
   if (f.lesson1Check && window.LessonPlayer) {
     const lc = f.lesson1Check;

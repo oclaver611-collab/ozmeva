@@ -74,6 +74,7 @@
     'darkpsych_narc_boss':  { name: 'Derek',    vibe: 'Power hungry, unfair' },
     'darkpsych_lovebomb':   { name: 'Mia',      vibe: 'Intense, too fast' },
     'darkpsych_guilt':      { name: 'Carol',    vibe: 'Weaponizes family' },
+    'art_studio_ep2':       { name: 'Nia',      vibe: 'More open. Still testing.' },
   };
 
   // Skill trained per scenario
@@ -95,6 +96,7 @@
     'darkpsych_narc_boss':  'Navigate unfair authority',
     'darkpsych_lovebomb':   'Slow down safely',
     'darkpsych_guilt':      'Hold boundaries with family',
+    'art_studio_ep2':       'Listening under lower guard',
   };
 
   function groupScenariosByCategory() {
@@ -128,6 +130,11 @@
     const duration = sc.duration_min || 10;
     const isNew = NEW_SCENARIO_KEYS.has(key);
 
+    // Episode lock: check if an unlock key is required and not yet set
+    const isLocked = sc.unlockKey
+      ? (localStorage.getItem(sc.unlockKey) !== 'true')
+      : false;
+
     const thumbUrl = sc.thumb || '';
     const thumbInner = thumbUrl
       ? `<img class="nf-card-thumb" src="${thumbUrl}" alt="" onerror="this.style.display='none'">`
@@ -137,7 +144,9 @@
       <div class="nf-card-thumb-wrap">
         ${thumbInner}
         <div class="nf-card-thumb-overlay"></div>
-        ${isNew ? '<div class="nf-card-new-badge">NEW</div>' : ''}
+        ${isLocked ? '<div class="nf-card-new-badge" style="background:#555;color:#aaa">EP 2</div>' : ''}
+        ${!isLocked && isNew ? '<div class="nf-card-new-badge">NEW</div>' : ''}
+        ${isLocked ? '<div style="position:absolute;inset:0;background:rgba(0,0,0,0.55);display:flex;align-items:center;justify-content:center;font-size:28px;">🔒</div>' : ''}
         <div class="nf-card-character">
           ${char.name ? `<div class="nf-card-char-name">${char.name}</div>` : ''}
           ${char.vibe ? `<div class="nf-card-char-vibe">${char.vibe}</div>` : ''}
@@ -145,7 +154,7 @@
       </div>
       <div class="nf-card-body">
         <div class="nf-card-title">${sc.title || key}</div>
-        ${skill ? `<div class="nf-card-skill">${skill}</div>` : ''}
+        ${isLocked ? '<div class="nf-card-skill" style="color:#888">Complete Open Studios Day to unlock</div>' : (skill ? `<div class="nf-card-skill">${skill}</div>` : '')}
         <div class="nf-card-stars">${difficultyStars(difficulty)}</div>
         <div class="nf-card-meta">
           <span class="nf-badge nf-badge-duration">⏱ ${duration} min</span>
@@ -166,6 +175,10 @@
 
     // Click handler: show practice focus modal (or start directly if function unavailable)
     const selectScenario = () => {
+      if (isLocked) {
+        alert('Complete "Open Studios Day — Saturday" first to unlock this episode.');
+        return;
+      }
       if (typeof window.showPracticeFocusModal === 'function') {
         window.showPracticeFocusModal(key);
       } else {
