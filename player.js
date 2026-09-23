@@ -1280,14 +1280,15 @@ function setMediaForSpeaker(speaker) {
 const KB_ANIMS = ['kenBurns1','kenBurns2','kenBurns3','kenBurns4'];
 let _kbIndex = 0;
 
-function setSceneBackground(key) {
+function setSceneBackground(key, urlOverride = null) {
   const sc=(SCENARIOS[key])||{};
+  const bgUrl = urlOverride || sc.bg;
   const frameEl=els.stageFrame;
   if (!frameEl) return;
   const old=frameEl.querySelector('.scene-bg');
   if (old) { try{if(old.tagName==='VIDEO'){old.pause();old.src='';}}catch{} old.remove(); }
-  if (!sc.bg) { frameEl.classList.remove('has-bg'); return; }
-  const isVideo=/\.mp4$/i.test(sc.bg);
+  if (!bgUrl) { frameEl.classList.remove('has-bg'); return; }
+  const isVideo=/\.mp4$/i.test(bgUrl);
   const bgEl=document.createElement(isVideo?'video':'img');
   bgEl.className='scene-bg';
   if (isVideo) {
@@ -1301,7 +1302,7 @@ function setSceneBackground(key) {
       bgEl.style.animationName = anim;
     };
   }
-  bgEl.src=sc.bg;
+  bgEl.src=bgUrl;
   frameEl.insertBefore(bgEl, frameEl.firstChild);
   frameEl.classList.add('has-bg');
   els.sceneBg=bgEl;
@@ -2629,6 +2630,10 @@ async function freeConversation(mySession) {
     await pause(300);
     setMediaForSpeaker('Mary');
     els.name.textContent = getCharacterDisplayName(currentCharacterId);
+
+    // Scene background beat — swap bg if scenario defines a bgBeats entry for this exchange count
+    const _bgBeat = (SCENARIOS[currentScenarioKey]?.bgBeats || []).find(b => b.after === _exchangeCount);
+    if (_bgBeat) setSceneBackground(currentScenarioKey, _bgBeat.bg);
 
     // ── Coached Practice gate: blocks if interrupt fired; discards check if still pending ──
     if (_coachActive) {
