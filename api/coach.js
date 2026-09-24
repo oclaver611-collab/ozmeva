@@ -8,7 +8,8 @@ module.exports = async function handler(req, res) {
   const rl = await checkRateLimit(req, res);
   if (!rl.allowed) return;
 
-  const { conversation, scenarioTitle, scenarioKey, opener, lesson1Complete: _l1 = false, lesson2Complete: _l2 = false, lesson3Complete: _l3 = false, lesson4Complete: _l4 = false, lesson5Complete: _l5 = false, practiceFocus = null, characterId = 'sofia' } = req.body || {};
+  const { conversation, scenarioTitle, scenarioKey, opener, milestone: _milestone = null, lesson1Complete: _l1 = false, lesson2Complete: _l2 = false, lesson3Complete: _l3 = false, lesson4Complete: _l4 = false, lesson5Complete: _l5 = false, practiceFocus = null, characterId = 'sofia' } = req.body || {};
+  const milestone = (_milestone || '').trim() || null;
   // practiceFocus overrides raw lesson flags when present
   const lesson1Complete = practiceFocus ? (practiceFocus === 'lesson1' || practiceFocus === 'both' || practiceFocus === 'all') : _l1;
   const lesson2Complete = practiceFocus ? (practiceFocus === 'lesson2' || practiceFocus === 'both' || practiceFocus === 'all') : _l2;
@@ -256,6 +257,36 @@ module.exports = async function handler(req, res) {
   }
   const girlName = charProfile.name;
 
+  // Milestone framing — for episodes that aren't a first meeting (reunions, sequels),
+  // judging the first line as a pickup "opener" is wrong. When the scenario declares a
+  // milestone, part1/openerBreakdown get reframed around it instead of opener mechanics.
+  const part1Schema = milestone
+    ? `"part1": "<THE OPENING MOMENT. Minimum 150 characters. Three sentences. ALWAYS begin with a positive: quote ONE specific line the user said anywhere in the conversation that showed real listening, curiosity, or presence, and say in one sentence why it worked. Second sentence: quote how he opened THIS conversation (HIM_1) verbatim inside quotes, and say what it signaled about whether he remembered or respected where things left off — do NOT judge it as a pickup opener and do NOT 'name the move' like a first-meeting approach. Third sentence: the one thing to sharpen to get closer to this session's goal: ${milestone} Never start part1 with a negative or a critique. The user must hear what to keep doing before hearing what to fix. Example structure: 'When you said [quote from the conversation], that landed — it showed you were actually listening, not just picking up where a script left off. You opened with [HIM_1 quote], which [what it signaled]. Next time, [one specific thing to sharpen toward the goal].'>"`
+    : `"part1": "<THE OPENER. Minimum 150 characters. Three sentences. ALWAYS begin with a positive: quote ONE specific line the user said anywhere in the conversation that showed curiosity, humor, or confidence, and say in one sentence why it worked. Second sentence: quote their opening line (HIM_1) verbatim inside quotes, name the move in 5 words or fewer, and say how it landed with ${girlName}. Third sentence: the one thing to sharpen next time. Never start part1 with a negative or a critique. The user must hear what to keep doing before hearing what to fix. Example structure: 'When you said [quote from the conversation], that landed — it showed you were paying attention to her, not just running a move. Your opener, [HIM_1 quote], was [name the move] — with ${girlName} that [how it landed]. Next time, [one specific thing to sharpen].'>"`;
+
+  const openerBreakdownSchema = milestone
+    ? `"openerBreakdown": "<One sentence on how his first message THIS conversation (HIM_1) set the tone — not judged as a pickup opener, just whether it respected the history between them and opened the door toward this session's goal. Quote it. No banned words.>"`
+    : `"openerBreakdown": "<One sentence on why his opening line (HIM_1 in the transcript) worked or didn't with ${girlName}. Quote it. No banned words.>"`;
+
+  const milestoneOutcomeSchema = milestone
+    ? `,\n  "milestoneOutcome": "<'Yes', 'Partially', or 'No' — did he reach this session's actual goal: ${milestone} One sentence citing specific evidence from the transcript, not a vibe check.>"`
+    : '';
+
+  const scoreFloorRule = milestone
+    ? `SCORE FLOOR RULE: If the user showed genuine listening or presence at any point (following a thread she opened, referencing something specific from earlier, not just performing) AND made any real attempt toward this session's goal (${milestone}) — minimum score is 5. It takes multiple critical failures across most skills to score below 4.`
+    : `SCORE FLOOR RULE: If the user opened with something specific they noticed (anything that references the scene, what she's doing, or her environment) AND attempted a close at any point — minimum score is 5. It takes multiple critical failures across most skills to score below 4.`;
+
+  const milestoneSection = milestone ? `
+
+THIS SESSION'S GOAL — READ THIS CAREFULLY:
+This is not a first-meeting scenario. He has already met ${girlName} before, or this conversation is a continuation of an established thread. Do NOT evaluate his first message as a pickup "opener" — do not name it as a move, do not judge it by first-meeting standards. The actual target for this session is:
+"${milestone}"
+Judge the conversation primarily on whether he made real progress toward that target, using WHAT WORKS / WHAT KILLS above (already written for this specific episode) as your guide for what progress looks like. Fill milestoneOutcome based on concrete evidence from the transcript, not a general impression.` : '';
+
+  const openerReminder = milestone
+    ? 'REMINDER: this is not a first-meeting scenario — do not judge HIM_1 as a pickup opener. part1 should reflect what he opened with this time in light of the history between them, oriented toward this session\'s goal, not opener mechanics.'
+    : 'REMINDER: part1 must NAME and JUDGE the move — do NOT quote HIM_1 back verbatim.';
+
   const systemPrompt = `You are Ryan, a dating coach doing a spoken debrief after a practice session.
 You talk directly to the guy — second person, casual, no fluff.
 You are honest but fair: your job is to make him better, not protect his feelings.
@@ -283,6 +314,7 @@ ${charProfile.whatKills}
 
 MOMENTS GUYS USUALLY MISS WITH HER:
 ${charProfile.missedOpportunityExamples}
+${milestoneSection}
 
 CRITICAL: Your feedback must be about THIS conversation. Reference what actually happened. Quote real lines. Show him the exact better version using what she actually said.
 
@@ -358,7 +390,7 @@ ${lesson5Complete ? `  "lesson5Check": {
     "summary": "<1-2 punchy sentences: 4-5 PASS = TRACE applied well, 3 = Making progress, 2 or fewer = Review and try again>"
   },
   "lesson5Eval": "<Spoken coaching paragraph — Ryan talking to the user. Start with 'Let me walk you through the Lesson 5 skills — TRACE.' Then describe each skill result conversationally, matching the PASS/FAIL verdicts in lesson5Check above. For each skill speak it naturally: 'For Track gaze', 'For Register proximity', 'For Attend to alignment', 'For Catch touch', 'For Enter' — then say what happened and whether it worked. One or two coaching sentences per skill. Note: T, R, A, C are observational — the user PASSES by naming or responding to signals Sofia emitted. E is the active move. Spoken out loud — write it to be heard, not read off a form.>",` : ''}
-  "part1": "<THE OPENER. Minimum 150 characters. Three sentences. ALWAYS begin with a positive: quote ONE specific line the user said anywhere in the conversation that showed curiosity, humor, or confidence, and say in one sentence why it worked. Second sentence: quote their opening line (HIM_1) verbatim inside quotes, name the move in 5 words or fewer, and say how it landed with ${girlName}. Third sentence: the one thing to sharpen next time. Never start part1 with a negative or a critique. The user must hear what to keep doing before hearing what to fix. Example structure: 'When you said [quote from the conversation], that landed — it showed you were paying attention to her, not just running a move. Your opener, [HIM_1 quote], was [name the move] — with ${girlName} that [how it landed]. Next time, [one specific thing to sharpen].'>",
+  ${part1Schema},
 
   "part2": "<THE MIDDLE. Minimum 150 characters. Two to three sentences. Quote the single most revealing exchange: 'When she said [exact ${girlName} quote], you said [exact HIM quote].' Then one to two sentences on what that exchange cost him or earned him with ${girlName}, specific to who she is. Be surgical — name exactly what she was responding to.>",
 
@@ -366,11 +398,11 @@ ${lesson5Complete ? `  "lesson5Check": {
 
   "part4": "<THE CLOSER. Two sentences maximum. Format: 'Two things to fix: [pattern 1] and [pattern 2]. [One punchy closing line — boxing coach energy, references something specific from this session. No clichés.]' BANNED ENDINGS: 'Practice is the only way through', 'every rep makes you sharper', 'you are closer than you think', 'one more round', 'you will feel the difference', 'you have got something real here', 'push it further', 'you will surprise yourself', 'keep at it', 'practice makes perfect', 'keep pushing'. BANNED WORDS: 'go out there', 'dive deeper', 'aim to', 'work on that', 'dig into', 'push deeper', 'delve', 'delved', 'engage', 'dynamic', 'showcase', 'score is a', 'giving you a', 'I give you'. REQUIRED: the final sentence MUST contain one of these motivational words or phrases: 'go again', 'next time', 'try again', 'keep going', 'you got this', 'next session', or 'make all the difference'.>",
 
-  "openerBreakdown": "<One sentence on why his opening line (HIM_1 in the transcript) worked or didn't with ${girlName}. Quote it. No banned words.>",
+  ${openerBreakdownSchema},
   "bestMoment": "<Quote the single best thing he said verbatim. One sentence on why it landed with ${girlName}. No banned words.>",
   "missedOpportunity": "<Quote the moment he lost the most ground — his exact line and ${girlName}'s exact response. One sentence on what he should have done instead. No banned words.>",
   "tryNextTime": "<THREE specific lines the user should try in a FUTURE conversation — not quotes of what he already said, but better alternatives tailored to this character and scenario. Each line should feel natural and be something he could actually say next time he's in this situation. Number them 1, 2, 3. Format: '1. [line] 2. [line] 3. [line]' Each line must be specific to ${girlName}'s personality and the scenario — not generic advice that could apply anywhere. Never use 'Tell me more about that' or any generic curiosity prompt. AUTOMATIC FAIL if any of these phrases appear: 'Say something real', 'Ask about the specific', 'Reference what actually happened', 'Tell me more about that', 'focus on', 'try to', 'make sure', 'be more'.>",
-  "wouldSheDateHim": "<'Yes', 'No', or 'Maybe' — then one sentence from ${girlName}'s point of view in first person, about something specific he said or did. No banned words.>"
+  "wouldSheDateHim": "<'Yes', 'No', or 'Maybe' — then one sentence from ${girlName}'s point of view in first person, about something specific he said or did. No banned words.>"${milestoneOutcomeSchema}
 }
 
 MANDATORY: All four parts (part1, part2, part3, part4) must always be present. Never return fewer than 4 parts regardless of conversation length.
@@ -391,7 +423,7 @@ SCORE BANDS — use the anchor that best matches this conversation:
 4-5: Weak opener OR missed 3+ skills. Had some exchanges but the conversation felt flat or approval-seeking overall.
 1-3: Generic opener, no tease, no mystery, no imply, no close. Little to no real engagement. Compliments without content, or barely spoke.
 
-SCORE FLOOR RULE: If the user opened with something specific they noticed (anything that references the scene, what she's doing, or her environment) AND attempted a close at any point — minimum score is 5. It takes multiple critical failures across most skills to score below 4.
+${scoreFloorRule}
 
 Do not default to 7 out of habit — score based on the specific band above. A 4 requires the conversation to have been largely ineffective across most dimensions, not just one missed skill.
 
@@ -594,7 +626,7 @@ These fields (lesson5Eval and lesson5Check) are already part of the JSON schema 
 
     const mainMessages = [
       { role: 'system', content: systemPrompt },
-      { role: 'user', content: `Scenario: ${scenarioTitle}\n\nHIS OPENING LINE (HIM_1): "${conversation.find(m => m.role === 'user')?.content?.trim() || ''}"\n\nFull conversation transcript:\n${transcript}${finalOutcomeNote}\n\nREMINDER: part1 must NAME and JUDGE the move — do NOT quote HIM_1 back verbatim.` },
+      { role: 'user', content: `Scenario: ${scenarioTitle}\n\nHIS OPENING LINE (HIM_1): "${conversation.find(m => m.role === 'user')?.content?.trim() || ''}"\n\nFull conversation transcript:\n${transcript}${finalOutcomeNote}\n\n${openerReminder}` },
     ];
     let raw;
     try { raw = await callLLM(mainMessages, 5000); }
@@ -607,7 +639,7 @@ These fields (lesson5Eval and lesson5Check) are already part of the JSON schema 
       console.warn('[coach] JSON parse failed, retrying with stricter prompt...');
       const retryMessages = [
         { role: 'system', content: systemPrompt },
-        { role: 'user', content: `Scenario: ${scenarioTitle}\n\nHIS OPENING LINE (HIM_1): "${conversation.find(m => m.role === 'user')?.content?.trim() || ''}"\n\nFull conversation transcript:\n${transcript}${finalOutcomeNote}\n\nREMINDER: part1 must NAME and JUDGE the move — do NOT quote HIM_1 back verbatim.\n\nCRITICAL: Return ONLY valid JSON. No markdown, no backticks, no preamble. Start with { and end with }.` },
+        { role: 'user', content: `Scenario: ${scenarioTitle}\n\nHIS OPENING LINE (HIM_1): "${conversation.find(m => m.role === 'user')?.content?.trim() || ''}"\n\nFull conversation transcript:\n${transcript}${finalOutcomeNote}\n\n${openerReminder}\n\nCRITICAL: Return ONLY valid JSON. No markdown, no backticks, no preamble. Start with { and end with }.` },
       ];
       try {
         const retryRaw = await callLLM(retryMessages, 5000);
@@ -628,6 +660,12 @@ These fields (lesson5Eval and lesson5Check) are already part of the JSON schema 
         else if (field === 'part1') feedback[field] = 'You showed up. That is the first step. Now let\'s look at what happened.';
         else feedback[field] = 'See the feedback above.';
       }
+    }
+
+    // milestoneOutcome is optional (only requested when the scenario declares a milestone)
+    if (milestone && (!feedback.milestoneOutcome || feedback.milestoneOutcome.length < 5)) {
+      console.warn('[coach] milestoneOutcome missing despite milestone present — filling fallback');
+      feedback.milestoneOutcome = 'Unclear — not enough in this conversation to say for sure.';
     }
 
     // Warn if lesson1 fields are missing when they should be present
@@ -842,6 +880,7 @@ These fields (lesson5Eval and lesson5Check) are already part of the JSON schema 
     feedback.missedOpportunity = cleanText(feedback.missedOpportunity);
     feedback.bestMoment = cleanText(feedback.bestMoment);
     feedback.wouldSheDateHim = cleanText(feedback.wouldSheDateHim);
+    if (feedback.milestoneOutcome) feedback.milestoneOutcome = cleanText(feedback.milestoneOutcome);
     if (feedback.lesson1Eval) feedback.lesson1Eval = cleanText(feedback.lesson1Eval);
     if (feedback.lesson2Eval) feedback.lesson2Eval = cleanText(feedback.lesson2Eval);
     if (feedback.lesson3Eval) feedback.lesson3Eval = cleanText(feedback.lesson3Eval);
