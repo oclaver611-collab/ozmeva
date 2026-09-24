@@ -1289,7 +1289,13 @@
   art_studio: {
     title: "Open Studios Day — Saturday",
     thumb: "https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/nia_thumb.jpg",
-    bg: "https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/nia_speaking.mp4",
+    // Opening background: wide studio shot with paintings
+    bg: "https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/nia_studio_wide.jpg",
+    // Background shifts at exchange 3 (near a painting) and exchange 6 (warmer/personal)
+    bgBeats: [
+      { after: 3, bg: "https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/nia_studio_blue.jpg" },
+      { after: 6, bg: "https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/nia_studio_warm.jpg" },
+    ],
     coldOpen: true,
     category: "dating",
     difficulty: 3,
@@ -1317,12 +1323,12 @@
   art_studio_ep2: {
     title: "Her Studio — Two Weeks Later",
     thumb: "https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/nia_thumb.jpg",
-    // Opening background: wide studio shot with paintings (placeholder — swap for real R2 URL)
-    bg: "https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/nia_studio_wide.jpg",
+    // Opening background: wide studio shot with paintings
+    bg: "https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/nia_ep2_studio_wide.jpg",
     // Background shifts at exchange 3 (near a painting) and exchange 6 (warmer/personal)
     bgBeats: [
-      { after: 3, bg: "https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/nia_studio_blue.jpg" },
-      { after: 6, bg: "https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/nia_studio_warm.jpg" },
+      { after: 3, bg: "https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/nia_ep2_studio_blue.jpg" },
+      { after: 6, bg: "https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/nia_ep2_studio_warm.jpg" },
     ],
     coldOpen: true,
     unlockKey: 'ozmeva_art_studio_ep1_complete',
