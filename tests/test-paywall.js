@@ -102,11 +102,14 @@
   if (cardCount > 0) {
     console.log('[TEST] Clicking first .nf-card...');
     await page.locator('.nf-card').first().click();
-    // Dismiss practice-focus-modal if it appeared (test user has no lessons — only Free Practice shown)
+    // Dismiss practice-focus-modal if it appeared. #pfm-free is the Free Practice
+    // button in BOTH the zero-lesson and returning-user modal variants (same id,
+    // same click handler wired unconditionally in showPracticeFocusModal()) —
+    // one selector covers whichever variant actually renders.
     try {
-      await page.waitForSelector('#practice-focus-modal button', { timeout: 2000 });
+      await page.waitForSelector('#practice-focus-modal #pfm-free', { timeout: 2000 });
       console.log('[TEST] Practice focus modal appeared — selecting Free Practice');
-      await page.locator('#practice-focus-modal button[data-focus="free"]').click();
+      await page.locator('#practice-focus-modal #pfm-free').click();
     } catch (_) { /* modal not shown — ok */ }
   } else {
     console.log('[TEST] No .nf-card found — dispatching scenarioSelect change as fallback');
