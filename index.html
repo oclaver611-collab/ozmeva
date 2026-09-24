@@ -132,6 +132,15 @@ window._ekTrack = function(event, data) {
     z-index:2 !important;
     margin:0 !important;
   }
+  /* Portrait card layout for scenarios with a real photo location background
+     (.photo-bg, set only when bg is an image, not the character's own video)
+     -- leaves the location visible instead of the avatar filling the frame. */
+  .frame.has-bg.photo-bg #media{
+    width:50% !important;
+    height:75% !important;
+    border-radius:16px !important;
+    box-shadow:0 12px 32px rgba(0,0,0,0.45) !important;
+  }
   /* Ryan orb stays centered too */
   .frame.has-bg #ryan-orb{
     position:absolute !important;

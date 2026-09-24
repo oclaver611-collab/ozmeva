@@ -1287,7 +1287,7 @@ function setSceneBackground(key, urlOverride = null) {
   if (!frameEl) return;
   const old=frameEl.querySelector('.scene-bg');
   if (old) { try{if(old.tagName==='VIDEO'){old.pause();old.src='';}}catch{} old.remove(); }
-  if (!bgUrl) { frameEl.classList.remove('has-bg'); return; }
+  if (!bgUrl) { frameEl.classList.remove('has-bg', 'photo-bg'); return; }
   const isVideo=/\.mp4$/i.test(bgUrl);
   const bgEl=document.createElement(isVideo?'video':'img');
   bgEl.className='scene-bg';
@@ -1305,6 +1305,7 @@ function setSceneBackground(key, urlOverride = null) {
   bgEl.src=bgUrl;
   frameEl.insertBefore(bgEl, frameEl.firstChild);
   frameEl.classList.add('has-bg');
+  frameEl.classList.toggle('photo-bg', !isVideo);
   els.sceneBg=bgEl;
   if (isVideo) { bgEl.load(); bgEl.play().catch(()=>{}); }
 }
@@ -2657,7 +2658,7 @@ async function runCoachFeedback(mySession) {
   // Tear down scene-bg video so character loop doesn't continue behind feedback
   const _bg = els.stageFrame && els.stageFrame.querySelector('.scene-bg');
   if (_bg) { try { if (_bg.tagName === 'VIDEO') { _bg.pause(); _bg.src = ''; } } catch {} _bg.remove(); }
-  if (els.stageFrame) els.stageFrame.classList.remove('has-bg');
+  if (els.stageFrame) els.stageFrame.classList.remove('has-bg', 'photo-bg');
   ryanOrbSetState('speaking');
   const sc=SCENARIOS[currentScenarioKey]||{};
 
