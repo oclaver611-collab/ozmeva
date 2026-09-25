@@ -58,6 +58,18 @@ const SCENARIO_CHARACTER_MAP = {
   airport_gate:         'kaia',
 };
 
+// Cross-episode continuity — if this scenario declares unlockAfter (the
+// prerequisite episode), surface that episode's recorded bestMoment as
+// context for the character API. Generic: works for any episode chain,
+// not just ep1->ep2 (which it replaces the hardcoded version of).
+function getEpisodeCallback(scenarioKey) {
+  const sc = SCENARIOS[scenarioKey];
+  if (!sc || !sc.unlockAfter) return null;
+  const prevSc = SCENARIOS[sc.unlockAfter] || {};
+  const momentKey = prevSc.momentKey || `ozmeva_${sc.unlockAfter}_moment`;
+  return localStorage.getItem(momentKey) || null;
+}
+
 function getCharacterDisplayName(id) {
   const set = AVATAR_SETS.find(s => s.id === id);
   if (set) return set.label;
@@ -1664,9 +1676,7 @@ async function streamCharacterAndSpeak(userSaid, mySession, onTextReady = null) 
         lesson4Complete: localStorage.getItem('ozmeva_lesson4_complete') === 'true',
         practiceFocus: localStorage.getItem('ozmeva_practice_focus') || 'free',
         voiceInput: _lastInputMode === 'voice',
-        episodeCallback: currentScenarioKey === 'art_studio_ep2'
-          ? (localStorage.getItem('ozmeva_art_studio_ep1_moment') || null)
-          : null,
+        episodeCallback: getEpisodeCallback(currentScenarioKey),
       }),
       signal: controller.signal,
     });
@@ -1774,9 +1784,7 @@ async function getCharacterResponseFallback(userSaid) {
         lesson4Complete: localStorage.getItem('ozmeva_lesson4_complete') === 'true',
         practiceFocus: localStorage.getItem('ozmeva_practice_focus') || 'free',
         voiceInput: _lastInputMode === 'voice',
-        episodeCallback: currentScenarioKey === 'art_studio_ep2'
-          ? (localStorage.getItem('ozmeva_art_studio_ep1_moment') || null)
-          : null,
+        episodeCallback: getEpisodeCallback(currentScenarioKey),
       }),
       signal: controller.signal,
     });
@@ -2917,10 +2925,24 @@ function showFeedbackCard(f) {
   if (!f.wouldSheDateHim || f.wouldSheDateHim === '---') f.wouldSheDateHim = 'Maybe — show more genuine curiosity next time.';
   // Record this session in progress history
   if (f.score >= 1 && f.score <= 10) Progress.recordSession(f.score, currentScenarioKey, currentCharacterId);
-  // Episode 1 completion — unlock art_studio_ep2
-  if (currentScenarioKey === 'art_studio' && f.score >= 1) {
-    localStorage.setItem('ozmeva_art_studio_ep1_complete', 'true');
-    localStorage.setItem('ozmeva_art_studio_ep1_moment', f.bestMoment || '');
+  // Episode completion gate — generic for any scenario, not just art_studio.
+  // milestoneOutcome (Yes/Partially) gates episodes that declare a milestone;
+  // falls back to score >= 1 for scenarios without one (unchanged legacy behavior).
+  // Key names default to a generic pattern, but a scenario can override via
+  // completionKey/momentKey to preserve an existing key already used in production
+  // (see art_studio's comment in scenarios.js).
+  {
+    const _sc = SCENARIOS[currentScenarioKey] || {};
+    const _gateOk = f.milestoneOutcome ? /^(yes|partially)/i.test(f.milestoneOutcome) : (f.score >= 1);
+    if (_gateOk) {
+      const completionKey = _sc.completionKey || `ozmeva_${currentScenarioKey}_complete`;
+      const momentKey = _sc.momentKey || `ozmeva_${currentScenarioKey}_moment`;
+      localStorage.setItem(completionKey, 'true');
+      localStorage.setItem(momentKey, f.bestMoment || '');
+      // Refresh the practice-tab card grid so a newly-unlocked next episode
+      // shows unlocked immediately, without requiring a manual page reload.
+      if (typeof window.refreshScenarioCards === 'function') window.refreshScenarioCards();
+    }
   }
   // Lesson 1 certification tracking
   if (f.lesson1Check && window.LessonPlayer) {

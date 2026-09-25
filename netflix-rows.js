@@ -297,4 +297,9 @@
   } else {
     init();
   }
+
+  // Exposed so other modules (e.g. player.js after an episode's unlock flag
+  // changes) can refresh the card grid without a full page reload.
+  // renderNetflixLayout() already removes/rebuilds .nf-container, so this is safe.
+  window.refreshScenarioCards = renderNetflixLayout;
 })();

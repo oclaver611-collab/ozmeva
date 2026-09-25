@@ -23,6 +23,7 @@ module.exports = async function handler(req, res) {
     lesson2Complete = false,
     practiceFocus = null,
     voiceInput = false,
+    episodeCallback = null,
   } = req.body || {};
 
   const history = rawHistory.slice(-16);
@@ -2701,7 +2702,10 @@ CRITICAL RULES — APPLY TO EVERY RESPONSE:
 
   // ── Combine layers ───────────────────────────────────────────────────────────
   const character = CHARACTERS[characterId] || CHARACTERS['sofia'];
-  const setting = SETTINGS[scenarioKey] || SETTINGS['beach'];
+  const rawSetting = SETTINGS[scenarioKey] || SETTINGS['beach'];
+  const setting = (episodeCallback && episodeCallback.trim())
+    ? rawSetting + `\nYou remember something he said last time: "${episodeCallback.trim().slice(0, 200)}"`
+    : rawSetting;
 
   // Detect if character already introduced herself in conversation history
   const charNames = {

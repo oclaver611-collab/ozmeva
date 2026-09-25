@@ -1297,6 +1297,12 @@
       { after: 6, bg: "https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/nia_studio_warm.jpg" },
     ],
     coldOpen: true,
+    // Legacy key names (already live on production, real users have these set) --
+    // preserved explicitly so the generalized unlock-gate in player.js doesn't
+    // start writing to a differently-named key and silently break ep2's unlockKey,
+    // which is hardcoded to this exact string.
+    completionKey: 'ozmeva_art_studio_ep1_complete',
+    momentKey: 'ozmeva_art_studio_ep1_moment',
     milestone: "Leave a genuinely good impression — enough that she'd want him back for the next open studios.",
     category: "dating",
     difficulty: 3,
