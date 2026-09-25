@@ -1376,6 +1376,12 @@
     episodeLabel: 'EP 3',
     goal: "Get her to agree to a specific second date — a named place and time.",
     milestone: "When she reveals the six-week timeline, don't make it about yourself — ask one real question about what it means to her.",
+    // Spoken by Ryan after the score, only when milestoneOutcome is Yes/Partially --
+    // plants a concrete unresolved thread rather than generic encouragement.
+    closingHook: "The way she looked at you before you left — that wasn't just polite.",
+    // Spoken instead of closingHook when milestoneOutcome is No -- direct and honest,
+    // not false hope.
+    closingHookMiss: "That one didn't land. She's not going to make this easy — go again and actually listen this time.",
     category: "dating",
     difficulty: 5,
     duration_min: 10,

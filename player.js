@@ -70,6 +70,14 @@ function getEpisodeCallback(scenarioKey) {
   return localStorage.getItem(momentKey) || null;
 }
 
+// Shared "did this session count as a win" gate — milestoneOutcome (Yes/Partially)
+// for scenarios that declare a milestone, falling back to score >= 1 for the ones
+// that don't (legacy behavior). Used for both the episode-unlock flag and the
+// closing-hook gate, so the two stay consistent by construction.
+function episodeGateOk(feedback) {
+  return feedback.milestoneOutcome ? /^(yes|partially)/i.test(feedback.milestoneOutcome) : (feedback.score >= 1);
+}
+
 function getCharacterDisplayName(id) {
   const set = AVATAR_SETS.find(s => s.id === id);
   if (set) return set.label;
@@ -2845,6 +2853,16 @@ async function runCoachFeedback(mySession) {
     await speak(encouragement, 'Ryan', () => { els.text.textContent = encouragement; });
   }
 
+  // Episode-specific closing hook — plants a concrete unresolved thread rather
+  // than generic encouragement. Only fires when the scenario declares one, and
+  // is gated the same way as the unlock flag: Yes/Partially gets the hook,
+  // No gets a direct honest line instead (not false hope).
+  if (mySession === session && sc.closingHook) {
+    await pause(700);
+    const hookLine = episodeGateOk(f) ? sc.closingHook : (sc.closingHookMiss || sc.closingHook);
+    await speak(hookLine, 'Ryan', () => { els.text.textContent = hookLine; });
+  }
+
   if(mySession!==session) return;
   showFeedbackCard(f);
 }
@@ -2934,7 +2952,7 @@ function showFeedbackCard(f) {
   // (see art_studio's comment in scenarios.js).
   {
     const _sc = SCENARIOS[currentScenarioKey] || {};
-    const _gateOk = f.milestoneOutcome ? /^(yes|partially)/i.test(f.milestoneOutcome) : (f.score >= 1);
+    const _gateOk = episodeGateOk(f);
     if (_gateOk) {
       const completionKey = _sc.completionKey || `ozmeva_${currentScenarioKey}_complete`;
       const momentKey = _sc.momentKey || `ozmeva_${currentScenarioKey}_moment`;
