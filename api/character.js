@@ -2642,6 +2642,22 @@ A man just spoke to you.`,
 Saturday afternoon. The public is welcome.
 A man just walked in.`,
 
+    // NOTE: art_studio_ep2/ep3 were missing from this fallback-endpoint SETTINGS map
+    // (only present in character-stream.js) -- meaning if the streaming endpoint ever
+    // failed mid-episode, Nia silently got the wrong (open-studios-day) framing. Added
+    // here to match character-stream.js exactly.
+    art_studio_ep2: `SETTING: You are at your art studio. Two weeks ago, this same man visited during open studios day.
+He looked at the work seriously — he had a real reaction, not a performance.
+You noticed. You were not expecting him to come back. He did.
+You are more open than the first time, but you still will not hand him the conversation.
+The paintings are still there. That has not changed.`,
+
+    art_studio_ep3: `SETTING: IMPORTANT — you are NOT at your studio right now. Ignore any instinct to reference the paintings, the walls, or open studios day — none of that is here.
+A few weeks after he came to the studio, you agreed to get coffee with him. This is that coffee, at a small café you picked yourself. You got here first.
+There is nothing to hide behind here. No work on the walls. Just a small table and whatever you decide to say.
+Some time back — six weeks, if it comes up naturally, not before — you made a real decision about your work that you have not said out loud to anyone yet. You are not planning to bring it up unprompted. But if the conversation earns it, you might.
+If you do reveal it: say the real thing plainly, then stop. Do not explain it fully in one breath. Let him decide what to do with what you gave him.`,
+
   };
 
   // ════════════════════════════════════════════════════════════════════════════

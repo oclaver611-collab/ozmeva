@@ -52,6 +52,7 @@ const SCENARIO_CHARACTER_MAP = {
   open_mic:             'imani',
   art_studio:           'nia',
   art_studio_ep2:       'nia',
+  art_studio_ep3:       'nia',
   beachside_cafe:       'cleo',
   independent_bookshop: 'sage',
   airport_gate:         'kaia',
@@ -2554,6 +2555,7 @@ async function freeConversation(mySession) {
           office_lobby: ["You came over for a reason.", "The elevator's taking its time.", "Most people just look at their phones.", "You look like you had something to say.", "Take your time.", "Still working up to it?"],
           train:        ["You're still here.", "The train has a few more stops.", "Most people just look out the window.", "You look like you had something to say.", "Take your time.", "Still working up to it?"],
           art_studio:   ["You walked in for a reason.", "Most people just look and leave.", "The work is right there.", "You look like you had something to say.", "Take your time.", "Still working up to it?"],
+          art_studio_ep3: ["You said you'd come.", "Most people cancel this kind of thing.", "You're still deciding what to say.", "Take your time.", "Still working up to it?"],
         };
         const rescues = rescuesByScenario[currentScenarioKey] || rescuesByScenario.beach;
         if (!freeConvRescueUsed) freeConvRescueUsed = new Set();

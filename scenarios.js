@@ -1333,6 +1333,8 @@
     ],
     coldOpen: true,
     unlockKey: 'ozmeva_art_studio_ep1_complete',
+    unlockAfter: 'art_studio',
+    episodeLabel: 'EP 2',
     milestone: "Get her number, or get her to agree to a specific plan to meet again — earned by listening, not performing.",
     category: "dating",
     difficulty: 4,
@@ -1353,6 +1355,40 @@
       { speaker:"Ryan", text:"Last time: engaging with the work was the test. That earned you access." },
       { speaker:"Ryan", text:"This time, the test is different — she wants to know if you actually listen, if you're curious about her without making it a pickup." },
       { speaker:"Ryan", text:"She's near the large painting you both stood in front of last time." },
+      { speaker:"Ryan", text:"What do you do?" }
+    ]
+  },
+
+  art_studio_ep3: {
+    title: "The Café",
+    thumb: "https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/nia_thumb.jpg",
+    // Background images not shot yet (street / café exterior / interior booth).
+    // Scenario runs full-bleed avatar video until bg/bgBeats/storyBeats are wired in Step 5.
+    coldOpen: true,
+    unlockKey: 'ozmeva_art_studio_ep2_complete',
+    unlockAfter: 'art_studio_ep2',
+    episodeLabel: 'EP 3',
+    goal: "Get her to agree to a specific second date — a named place and time.",
+    milestone: "When she reveals the six-week timeline, don't make it about yourself — ask one real question about what it means to her.",
+    category: "dating",
+    difficulty: 5,
+    duration_min: 10,
+    demo: [
+      { speaker:"Ryan",   text:"A few weeks after her studio. She said yes to coffee — this is that coffee." },
+      { speaker:"Ryan",   text:"No paintings to hide behind this time. Just a small table and whatever she decides to say." },
+      { speaker:"Ryan",   text:"Watch how Daniel lets her get there on her own timeline." },
+      { speaker:"Daniel", text:"You picked a good spot. Feels like somewhere you actually go, not somewhere you send people." },
+      { speaker:"Mary",   text:"Same table most Thursdays, six weeks now. It's become a whole thing." },
+      { speaker:"Daniel", text:"What made Thursdays the day?" },
+      { speaker:"Mary",   text:"Six weeks ago I told my gallery I wasn't renewing. This is where I came to sit with that." },
+      { speaker:"Ryan",   text:"He didn't make her decision about himself — he asked what six weeks of sitting with it actually felt like. That's the whole game right there." }
+    ],
+    practice: [
+      { speaker:"Ryan", text:"The café. A few weeks after her studio. She said yes to this." },
+      { speaker:"Ryan", text:"She picked the place. That's already more than she gave you last time." },
+      { speaker:"Ryan", text:"There's nothing to look at here except her. No paintings to fall back on." },
+      { speaker:"Ryan", text:"If she gives you a real number — weeks, months, whatever it is — don't make it about you. Ask what it's actually been like." },
+      { speaker:"Ryan", text:"She's at a small table by the window. She got here first." },
       { speaker:"Ryan", text:"What do you do?" }
     ]
   },

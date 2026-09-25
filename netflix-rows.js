@@ -75,6 +75,7 @@
     'darkpsych_lovebomb':   { name: 'Mia',      vibe: 'Intense, too fast' },
     'darkpsych_guilt':      { name: 'Carol',    vibe: 'Weaponizes family' },
     'art_studio_ep2':       { name: 'Nia',      vibe: 'More open. Still testing.' },
+    'art_studio_ep3':       { name: 'Nia',      vibe: 'Coffee. No paintings to hide behind.' },
   };
 
   // Skill trained per scenario
@@ -97,6 +98,7 @@
     'darkpsych_lovebomb':   'Slow down safely',
     'darkpsych_guilt':      'Hold boundaries with family',
     'art_studio_ep2':       'Listening under lower guard',
+    'art_studio_ep3':       'Staying curious about her, not about yourself',
   };
 
   function groupScenariosByCategory() {
@@ -134,6 +136,12 @@
     const isLocked = sc.unlockKey
       ? (localStorage.getItem(sc.unlockKey) !== 'true')
       : false;
+    // Derived from scenario data so this works for any episode chain, not just ep2 --
+    // previously hardcoded to "EP 2" / "Complete Open Studios Day", which would have
+    // shown wrong text on ep3's (or any future episode's) locked card.
+    const prevEpisode = sc.unlockAfter ? (window.SCENARIOS || {})[sc.unlockAfter] : null;
+    const lockBadgeText = sc.episodeLabel || 'LOCKED';
+    const lockMessageText = `Complete ${prevEpisode?.title || 'the previous episode'} to unlock`;
 
     const thumbUrl = sc.thumb || '';
     const thumbInner = thumbUrl
@@ -144,7 +152,7 @@
       <div class="nf-card-thumb-wrap">
         ${thumbInner}
         <div class="nf-card-thumb-overlay"></div>
-        ${isLocked ? '<div class="nf-card-new-badge" style="background:#555;color:#aaa">EP 2</div>' : ''}
+        ${isLocked ? `<div class="nf-card-new-badge" style="background:#555;color:#aaa">${lockBadgeText}</div>` : ''}
         ${!isLocked && isNew ? '<div class="nf-card-new-badge">NEW</div>' : ''}
         ${isLocked ? '<div style="position:absolute;inset:0;background:rgba(0,0,0,0.55);display:flex;align-items:center;justify-content:center;font-size:28px;">🔒</div>' : ''}
         <div class="nf-card-character">
@@ -154,7 +162,7 @@
       </div>
       <div class="nf-card-body">
         <div class="nf-card-title">${sc.title || key}</div>
-        ${isLocked ? '<div class="nf-card-skill" style="color:#888">Complete Open Studios Day to unlock</div>' : (skill ? `<div class="nf-card-skill">${skill}</div>` : '')}
+        ${isLocked ? `<div class="nf-card-skill" style="color:#888">${lockMessageText}</div>` : (skill ? `<div class="nf-card-skill">${skill}</div>` : '')}
         <div class="nf-card-stars">${difficultyStars(difficulty)}</div>
         <div class="nf-card-meta">
           <span class="nf-badge nf-badge-duration">⏱ ${duration} min</span>

@@ -70,6 +70,7 @@ module.exports = async function handler(req, res) {
     art_gallery: 'LEILA', yoga_studio: 'FATOU', airport: 'ELENA',
     office_lobby: 'MAYA', train: 'ERIKA', art_studio: 'NIA',
     art_studio_ep2: 'NIA',
+    art_studio_ep3: 'NIA',
   };
   const characterLabel = CHARACTER_NAME_MAP[scenarioKey] || 'HER';
 
@@ -234,6 +235,13 @@ module.exports = async function handler(req, res) {
       whatWorks: `Actually listening when she says something — not nodding and pivoting, but following a thread she opens. Asking one real question and staying with the answer. Saying something that shows he remembered something from the first meeting. Letting silences sit instead of filling them. Matching her pace rather than pushing the interaction forward.`,
       whatKills: `Asking three questions in a row. Talking about himself unprompted. Filling every silence with words. Pivoting away from something she said because he had something he wanted to say. Being eager in a way that feels like performance. Making the conversation about getting somewhere with her rather than being somewhere with her.`,
       missedOpportunityExamples: `If she said something personal and he acknowledged it with "cool" then moved on — he didn't follow the thread. If she went quiet and he rushed to fill it — she was giving him a moment to sit with her. If she mentioned something specific about the work and he didn't connect it to what he saw last time — missed the callback.`,
+    },
+    art_studio_ep3: {
+      name: 'Nia',
+      profile: `Nia is 23, visual artist. This is coffee — the plan they actually made last time, not an accident. There's no work to hide behind here, just a table and whatever she decides to say. She's been sitting with something for six weeks and hasn't said it out loud to anyone yet. Whether she says it to him depends entirely on whether he's the kind of person who makes it about himself or actually asks what it cost her.`,
+      whatWorks: `Staying with what she says instead of filling the space with himself. Asking what something actually felt like, not just what happened. Noticing she picked the place — that's not nothing. Letting a real disclosure sit for a second before responding.`,
+      whatKills: `Turning her six weeks into a story about him. Rushing past what she said to get to the next question. Performing concern instead of asking one real question. Trying to make the date-close happen before she's finished saying what she's saying.`,
+      missedOpportunityExamples: `If she named something specific about the six weeks and he pivoted to himself — free door, missed. If she went quiet after saying it and he rushed to fill it with a joke — wrong read. If she asked what he thought instead of what happened — she was testing whether he'd stay curious about her or retreat to being clever.`,
     },
     office_lobby: {
       name: 'Maya',
