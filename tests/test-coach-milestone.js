@@ -9,7 +9,15 @@
 // TEST M2: regression guard — 'beach' (no milestone field on that scenario)
 //   must behave exactly as before: no milestoneOutcome field, opener framing intact.
 //
-// Run against a preview deploy (milestone only exists on episode-pilot, not main):
+// TEST M3: art_studio_ep3-style transcript that reaches the concrete goal (named
+//   2nd date) AND respects the behavioral milestone (real question about her
+//   six weeks) -> expect milestoneOutcome "Yes".
+//
+// TEST M4: same concrete goal reached, but the milestone (behavioral bar) is
+//   violated (makes her six-week reveal about himself) -> expect "Partially",
+//   not "Yes" -- proves goal and milestone are weighed as separate axes.
+//
+// Run against a preview deploy (milestone/goal only exist on episode-pilot, not main):
 //   node tests/test-coach-milestone.js --base=https://<preview>.vercel.app
 
 const BASE = process.argv.find(a => a.startsWith('--base='))?.slice(7) || 'http://localhost:3000';
@@ -36,8 +44,35 @@ const CONV_BEACH = [
   { role: 'assistant', content: "Okay, that's fair. I can do that." },
 ];
 
-async function callCoach(conversation, { scenarioTitle, scenarioKey, milestone }, label) {
-  console.log(`\n[${label}] Calling /api/coach (scenarioKey=${scenarioKey}, milestone=${milestone ? 'yes' : 'none'})...`);
+const EP3_GOAL = "Get her to agree to a specific second date — a named place and time.";
+const EP3_MILESTONE = "When she reveals the six-week timeline, don't make it about yourself — ask one real question about what it means to her.";
+
+// TEST M3 — reaches the concrete goal AND respects the behavioral milestone
+const CONV_EP3_CLEAN_WIN = [
+  { role: 'user',      content: "You picked a good table." },
+  { role: 'assistant', content: "Same one most Thursdays, six weeks now." },
+  { role: 'user',      content: "What's it been like, sitting with whatever brought you here for six weeks?" },
+  { role: 'assistant', content: "Quieter than I expected. I told my gallery I wasn't renewing." },
+  { role: 'user',      content: "That's a real decision. What's underneath it for you?" },
+  { role: 'assistant', content: "I don't fully know yet. Still finding out." },
+  { role: 'user',      content: "Same table, next Thursday at 6, I'll bring the questions." },
+  { role: 'assistant', content: "Deal." },
+];
+
+// TEST M4 — reaches the SAME concrete goal but makes her reveal about himself
+const CONV_EP3_GOAL_BUT_SELFISH = [
+  { role: 'user',      content: "You picked a good table." },
+  { role: 'assistant', content: "Same one most Thursdays, six weeks now." },
+  { role: 'user',      content: "Six weeks, huh. That's exactly how long I've been going to this new gym actually." },
+  { role: 'assistant', content: "...okay." },
+  { role: 'user',      content: "Yeah I've really turned things around lately." },
+  { role: 'assistant', content: "Sure." },
+  { role: 'user',      content: "Same table, next Thursday at 6?" },
+  { role: 'assistant', content: "...Sure, fine." },
+];
+
+async function callCoach(conversation, { scenarioTitle, scenarioKey, milestone, goal }, label) {
+  console.log(`\n[${label}] Calling /api/coach (scenarioKey=${scenarioKey}, milestone=${milestone ? 'yes' : 'none'}, goal=${goal ? 'yes' : 'none'})...`);
   const res = await fetch(`${BASE}/api/coach`, {
     method: 'POST',
     // x-dev-key bypasses the server-side session-limit gate (checkRateLimit ->
@@ -49,6 +84,7 @@ async function callCoach(conversation, { scenarioTitle, scenarioKey, milestone }
       scenarioTitle,
       scenarioKey,
       milestone: milestone || null,
+      goal: goal || null,
       opener: conversation.find(m => m.role === 'user')?.content || '',
       lesson1Complete: false,
       lesson2Complete: false,
@@ -118,6 +154,26 @@ async function run() {
   const m2NoMilestoneOutcome = fb.milestoneOutcome === undefined;
   console.log(`\n[TEST-M2] milestoneOutcome absent (no milestone scenario): ${m2NoMilestoneOutcome ? '✅' : '❌'}`);
   if (!m2NoMilestoneOutcome) allPass = false;
+
+  // ── TEST M3 — goal reached AND milestone respected -> Yes ──────────────────
+  const fm3 = await callCoach(CONV_EP3_CLEAN_WIN, {
+    scenarioTitle: 'The Café', scenarioKey: 'art_studio_ep3', milestone: EP3_MILESTONE, goal: EP3_GOAL,
+  }, 'TEST-M3');
+  if (!fm3) { console.error('[TEST-M3] FAIL — no response'); process.exit(1); }
+  console.log(`\n[TEST-M3] milestoneOutcome: ${fm3.milestoneOutcome}`);
+  const m3Ok = /^yes/i.test((fm3.milestoneOutcome || '').trim());
+  console.log(`[TEST-M3] clean win -> Yes: ${m3Ok ? '✅' : '❌'}`);
+  if (!m3Ok) allPass = false;
+
+  // ── TEST M4 — goal reached but milestone violated -> Partially (not Yes) ───
+  const fm4 = await callCoach(CONV_EP3_GOAL_BUT_SELFISH, {
+    scenarioTitle: 'The Café', scenarioKey: 'art_studio_ep3', milestone: EP3_MILESTONE, goal: EP3_GOAL,
+  }, 'TEST-M4');
+  if (!fm4) { console.error('[TEST-M4] FAIL — no response'); process.exit(1); }
+  console.log(`\n[TEST-M4] milestoneOutcome: ${fm4.milestoneOutcome}`);
+  const m4Ok = /^partially/i.test((fm4.milestoneOutcome || '').trim());
+  console.log(`[TEST-M4] goal reached but bar violated -> Partially (not Yes): ${m4Ok ? '✅' : '❌'}`);
+  if (!m4Ok) allPass = false;
 
   // ── SUMMARY ───────────────────────────────────────────────────────────────
   console.log('\n══════════════════════════════════════════════════════════════');

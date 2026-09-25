@@ -2684,6 +2684,7 @@ async function runCoachFeedback(mySession) {
     scenarioTitle: sc.title || 'Dating scenario',
     scenarioKey: currentScenarioKey || '',
     milestone: sc.milestone || null,
+    goal: sc.goal || null,
     opener: firstUserOpener || '',
     lesson1Complete: localStorage.getItem('ozmeva_lesson1_complete') === 'true',
     lesson2Complete: localStorage.getItem('ozmeva_lesson2_complete') === 'true',

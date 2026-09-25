@@ -8,8 +8,12 @@ module.exports = async function handler(req, res) {
   const rl = await checkRateLimit(req, res);
   if (!rl.allowed) return;
 
-  const { conversation, scenarioTitle, scenarioKey, opener, milestone: _milestone = null, lesson1Complete: _l1 = false, lesson2Complete: _l2 = false, lesson3Complete: _l3 = false, lesson4Complete: _l4 = false, lesson5Complete: _l5 = false, practiceFocus = null, characterId = 'sofia' } = req.body || {};
+  const { conversation, scenarioTitle, scenarioKey, opener, milestone: _milestone = null, goal: _goal = null, lesson1Complete: _l1 = false, lesson2Complete: _l2 = false, lesson3Complete: _l3 = false, lesson4Complete: _l4 = false, lesson5Complete: _l5 = false, practiceFocus = null, characterId = 'sofia' } = req.body || {};
   const milestone = (_milestone || '').trim() || null;
+  // goal is the concrete, checkable target (what should happen); milestone is the
+  // behavioral bar (how he should get there). goal is optional even when milestone
+  // is present -- ep1/ep2 only have milestone today, so this must degrade cleanly.
+  const goal = (_goal || '').trim() || null;
   // practiceFocus overrides raw lesson flags when present
   const lesson1Complete = practiceFocus ? (practiceFocus === 'lesson1' || practiceFocus === 'both' || practiceFocus === 'all') : _l1;
   const lesson2Complete = practiceFocus ? (practiceFocus === 'lesson2' || practiceFocus === 'both' || practiceFocus === 'all') : _l2;
@@ -268,8 +272,17 @@ module.exports = async function handler(req, res) {
   // Milestone framing — for episodes that aren't a first meeting (reunions, sequels),
   // judging the first line as a pickup "opener" is wrong. When the scenario declares a
   // milestone, part1/openerBreakdown get reframed around it instead of opener mechanics.
+  //
+  // goal (optional, concrete/checkable target) vs milestone (behavioral bar, how he
+  // should get there) are separate axes. Where the milestone-only prompt text below
+  // references "this session's goal", that historically meant milestone's content --
+  // primaryTarget preserves that exact meaning when goal is absent (ep1/ep2 today,
+  // byte-identical prompt text, zero risk), and switches to goal (the concrete thing)
+  // once a scenario declares one, with milestone demoted to a behavioral qualifier.
+  const primaryTarget = goal || milestone;
+
   const part1Schema = milestone
-    ? `"part1": "<THE OPENING MOMENT. Minimum 150 characters. Three sentences. ALWAYS begin with a positive: quote ONE specific line the user said anywhere in the conversation that showed real listening, curiosity, or presence, and say in one sentence why it worked. Second sentence: quote how he opened THIS conversation (HIM_1) verbatim inside quotes, and say what it signaled about whether he remembered or respected where things left off — do NOT judge it as a pickup opener and do NOT 'name the move' like a first-meeting approach. Third sentence: the one thing to sharpen to get closer to this session's goal: ${milestone} Never start part1 with a negative or a critique. The user must hear what to keep doing before hearing what to fix. Example structure: 'When you said [quote from the conversation], that landed — it showed you were actually listening, not just picking up where a script left off. You opened with [HIM_1 quote], which [what it signaled]. Next time, [one specific thing to sharpen toward the goal].'>"`
+    ? `"part1": "<THE OPENING MOMENT. Minimum 150 characters. Three sentences. ALWAYS begin with a positive: quote ONE specific line the user said anywhere in the conversation that showed real listening, curiosity, or presence, and say in one sentence why it worked. Second sentence: quote how he opened THIS conversation (HIM_1) verbatim inside quotes, and say what it signaled about whether he remembered or respected where things left off — do NOT judge it as a pickup opener and do NOT 'name the move' like a first-meeting approach. Third sentence: the one thing to sharpen to get closer to this session's goal: ${primaryTarget} Never start part1 with a negative or a critique. The user must hear what to keep doing before hearing what to fix. Example structure: 'When you said [quote from the conversation], that landed — it showed you were actually listening, not just picking up where a script left off. You opened with [HIM_1 quote], which [what it signaled]. Next time, [one specific thing to sharpen toward the goal].'>"`
     : `"part1": "<THE OPENER. Minimum 150 characters. Three sentences. ALWAYS begin with a positive: quote ONE specific line the user said anywhere in the conversation that showed curiosity, humor, or confidence, and say in one sentence why it worked. Second sentence: quote their opening line (HIM_1) verbatim inside quotes, name the move in 5 words or fewer, and say how it landed with ${girlName}. Third sentence: the one thing to sharpen next time. Never start part1 with a negative or a critique. The user must hear what to keep doing before hearing what to fix. Example structure: 'When you said [quote from the conversation], that landed — it showed you were paying attention to her, not just running a move. Your opener, [HIM_1 quote], was [name the move] — with ${girlName} that [how it landed]. Next time, [one specific thing to sharpen].'>"`;
 
   const openerBreakdownSchema = milestone
@@ -277,19 +290,21 @@ module.exports = async function handler(req, res) {
     : `"openerBreakdown": "<One sentence on why his opening line (HIM_1 in the transcript) worked or didn't with ${girlName}. Quote it. No banned words.>"`;
 
   const milestoneOutcomeSchema = milestone
-    ? `,\n  "milestoneOutcome": "<'Yes', 'Partially', or 'No' — did he reach this session's actual goal: ${milestone} One sentence citing specific evidence from the transcript, not a vibe check.>"`
+    ? (goal
+        ? `,\n  "milestoneOutcome": "<'Yes', 'Partially', or 'No'. Two things to weigh: (1) the CONCRETE goal — did he actually reach it: ${goal} (2) the BEHAVIORAL bar — did he get there the right way: ${milestone} 'Yes' = reached the concrete goal AND met the behavioral bar. 'Partially' = reached the concrete goal but violated the behavioral bar, OR showed the right behavior but didn't fully reach the concrete goal. 'No' = neither. One sentence citing specific evidence from the transcript, not a vibe check.>"`
+        : `,\n  "milestoneOutcome": "<'Yes', 'Partially', or 'No' — did he reach this session's actual goal: ${milestone} One sentence citing specific evidence from the transcript, not a vibe check.>"`)
     : '';
 
   const scoreFloorRule = milestone
-    ? `SCORE FLOOR RULE: If the user showed genuine listening or presence at any point (following a thread she opened, referencing something specific from earlier, not just performing) AND made any real attempt toward this session's goal (${milestone}) — minimum score is 5. It takes multiple critical failures across most skills to score below 4.`
+    ? `SCORE FLOOR RULE: If the user showed genuine listening or presence at any point (following a thread she opened, referencing something specific from earlier, not just performing) AND made any real attempt toward this session's goal (${primaryTarget}) — minimum score is 5. It takes multiple critical failures across most skills to score below 4.`
     : `SCORE FLOOR RULE: If the user opened with something specific they noticed (anything that references the scene, what she's doing, or her environment) AND attempted a close at any point — minimum score is 5. It takes multiple critical failures across most skills to score below 4.`;
 
   const milestoneSection = milestone ? `
 
 THIS SESSION'S GOAL — READ THIS CAREFULLY:
 This is not a first-meeting scenario. He has already met ${girlName} before, or this conversation is a continuation of an established thread. Do NOT evaluate his first message as a pickup "opener" — do not name it as a move, do not judge it by first-meeting standards. The actual target for this session is:
-"${milestone}"
-Judge the conversation primarily on whether he made real progress toward that target, using WHAT WORKS / WHAT KILLS above (already written for this specific episode) as your guide for what progress looks like. Fill milestoneOutcome based on concrete evidence from the transcript, not a general impression.` : '';
+"${primaryTarget}"
+${goal ? `That is the concrete, checkable target. Separately, HOW he gets there matters too: "${milestone}" A session that reaches the concrete goal by ignoring that behavioral bar is not a clean win — reflect that in milestoneOutcome ('Partially', not 'Yes').\n` : ''}Judge the conversation primarily on whether he made real progress toward that target, using WHAT WORKS / WHAT KILLS above (already written for this specific episode) as your guide for what progress looks like. Fill milestoneOutcome based on concrete evidence from the transcript, not a general impression.` : '';
 
   const openerReminder = milestone
     ? 'REMINDER: this is not a first-meeting scenario — do not judge HIM_1 as a pickup opener. part1 should reflect what he opened with this time in light of the history between them, oriented toward this session\'s goal, not opener mechanics.'
