@@ -1368,13 +1368,17 @@
   art_studio_ep3: {
     title: "The Café",
     thumb: "https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/nia_thumb.jpg",
-    // Background images not shot yet (street / café exterior / interior booth).
-    // Scenario runs full-bleed avatar video until bg/bgBeats/storyBeats get real URLs.
-    // storyBeats mechanism itself IS wired and verified (see player.js's cue handler +
-    // character-stream.js's SIX_WEEK_REVEAL tag) -- timelineReveal is intentionally
-    // null so nothing fires until a real interior-booth photo is uploaded, same
-    // deferral pattern as bg/bgBeats.
-    storyBeats: { timelineReveal: null },
+    // Opening background: café exterior / street
+    bg: "https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/nia_ep3_cafe_wide.jpg",
+    // Closing background shift at exchange 8 (warmer/settled) -- count-based,
+    // same mechanism as ep1/ep2's bgBeats.
+    bgBeats: [
+      { after: 8, bg: "https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/nia_ep3_cafe_warm.jpg" },
+    ],
+    // Content-triggered (not count-based): fires when Nia organically reveals the
+    // six-week timeline -- see player.js's cue handler + character-stream.js's
+    // SIX_WEEK_REVEAL tag (Step 5).
+    storyBeats: { timelineReveal: "https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/nia_ep3_cafe_booth.jpg" },
     coldOpen: true,
     unlockKey: 'ozmeva_art_studio_ep2_complete',
     unlockAfter: 'art_studio_ep2',
