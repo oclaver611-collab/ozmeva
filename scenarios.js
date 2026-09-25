@@ -1369,7 +1369,12 @@
     title: "The Café",
     thumb: "https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/nia_thumb.jpg",
     // Background images not shot yet (street / café exterior / interior booth).
-    // Scenario runs full-bleed avatar video until bg/bgBeats/storyBeats are wired in Step 5.
+    // Scenario runs full-bleed avatar video until bg/bgBeats/storyBeats get real URLs.
+    // storyBeats mechanism itself IS wired and verified (see player.js's cue handler +
+    // character-stream.js's SIX_WEEK_REVEAL tag) -- timelineReveal is intentionally
+    // null so nothing fires until a real interior-booth photo is uploaded, same
+    // deferral pattern as bg/bgBeats.
+    storyBeats: { timelineReveal: null },
     coldOpen: true,
     unlockKey: 'ozmeva_art_studio_ep2_complete',
     unlockAfter: 'art_studio_ep2',

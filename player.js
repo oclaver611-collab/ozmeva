@@ -1717,13 +1717,18 @@ async function streamCharacterAndSpeak(userSaid, mySession, onTextReady = null) 
         try {
           const payload = JSON.parse(line.slice(6));
           if (payload.error) { console.warn('Stream error:', payload.error); break; }
-          // TRACE cue arrives as a dedicated event before sentence events.
-          // Server extracted it from the leading parenthetical, already third-person.
-          // Client-side check guards against the server accidentally sending a cue
-          // in a non-lesson5 context.
+          // Cue arrives as a dedicated event before sentence events, extracted
+          // server-side from the leading parenthetical. Two independent consumers:
+          // TRACE (lesson5 stage directions, shown as a UI overlay) and
+          // art_studio_ep3's SIX_WEEK_REVEAL story-beat tag (triggers a content-
+          // driven background change instead of the usual exchange-count one).
           if (payload.cue && localStorage.getItem('ozmeva_practice_focus') === 'lesson5') {
             TraceCue.show(payload.cue);
             streamedCue = payload.cue;
+          }
+          if (payload.cue === 'SIX_WEEK_REVEAL' && currentScenarioKey === 'art_studio_ep3') {
+            const _sc = SCENARIOS[currentScenarioKey];
+            if (_sc?.storyBeats?.timelineReveal) setSceneBackground(currentScenarioKey, _sc.storyBeats.timelineReveal);
           }
           if (payload.sentence) {
             const s = payload.sentence;

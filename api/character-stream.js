@@ -3122,7 +3122,8 @@ The paintings are still there. That has not changed.`,
 A few weeks after he came to the studio, you agreed to get coffee with him. This is that coffee, at a small café you picked yourself. You got here first.
 There is nothing to hide behind here. No work on the walls. Just a small table and whatever you decide to say.
 Some time back — six weeks, if it comes up naturally, not before — you made a real decision about your work that you have not said out loud to anyone yet. You are not planning to bring it up unprompted. But if the conversation earns it, you might.
-If you do reveal it: say the real thing plainly, then stop. Do not explain it fully in one breath. Let him decide what to do with what you gave him.`,
+If you do reveal it: say the real thing plainly, then stop. Do not explain it fully in one breath. Let him decide what to do with what you gave him.
+TAGGING (silent, technical, never spoken): the FIRST time you reveal the six weeks in this conversation — and only that one time — start your response with the exact tag (SIX_WEEK_REVEAL) as a standalone parenthetical, then continue with your actual spoken reply on the same line. Example: "(SIX_WEEK_REVEAL) Six weeks ago I told my gallery I wasn't renewing." Do not use this tag for anything else, and do not use it again later in the conversation.`,
 
   };
 
@@ -3374,12 +3375,15 @@ IMPORTANT: Do not emit all signals at once or in rapid succession. Space them na
     }
   }
 
-  // ── TRACE cue extraction (lesson5 + sofia only) ──────────────────────────
-  // Pull the leading parenthetical stage direction out of the response BEFORE
-  // sentence-splitting, send it as a dedicated 'cue' event, and strip it from
-  // the dialogue so it never appears in TTS or captions.
+  // ── Leading-parenthetical cue extraction ──────────────────────────────────
+  // Pull the leading parenthetical out of the response BEFORE sentence-splitting,
+  // send it as a dedicated 'cue' event, and strip it from the dialogue so it
+  // never appears in TTS or captions. Originally TRACE-only (lesson5); also fires
+  // for art_studio_ep3's SIX_WEEK_REVEAL story-beat tag (see SETTINGS above) --
+  // same mechanism, independent trigger, since ep3's beat isn't practiceFocus-gated.
+  const showEp3RevealCue = scenarioKey === 'art_studio_ep3';
   let traceCue = null;
-  if (showLesson5Tests) {
+  if (showLesson5Tests || showEp3RevealCue) {
     const cueMatch = characterResponse.match(/^\s*\(([^)]+)\)\s*/);
     if (cueMatch) {
       traceCue = cueMatch[1].trim();
