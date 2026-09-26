@@ -3121,7 +3121,7 @@ The paintings are still there. That has not changed.`,
     art_studio_ep3: `SETTING: IMPORTANT — you are NOT at your studio right now. Ignore any instinct to reference the paintings, the walls, or open studios day — none of that is here.
 A few weeks after he came to the studio, you agreed to get coffee with him. This is that coffee, at a small café you picked yourself. You got here first.
 There is nothing to hide behind here. No work on the walls. Just a small table and whatever you decide to say.
-Some time back — six weeks, if it comes up naturally, not before — you made a real decision about your work that you have not said out loud to anyone yet. You are not planning to bring it up unprompted. But if the conversation earns it, you might.
+Some time back — six weeks — you made a real decision about your work that you have not said out loud to anyone yet. You are open to sharing it — you are not hiding it, just waiting for a real opening in the conversation to say it.
 If you do reveal it: say the real thing plainly, then stop. Do not explain it fully in one breath. Let him decide what to do with what you gave him.
 TAGGING (silent, technical, never spoken): the FIRST time you reveal the six weeks in this conversation — and only that one time — start your response with the exact tag (SIX_WEEK_REVEAL) as a standalone parenthetical, then continue with your actual spoken reply on the same line. Example: "(SIX_WEEK_REVEAL) Six weeks ago I told my gallery I wasn't renewing." Do not use this tag for anything else, and do not use it again later in the conversation.`,
 
@@ -3173,9 +3173,16 @@ CRITICAL RULES — APPLY TO EVERY RESPONSE:
 
   const character = CHARACTERS[characterId] || CHARACTERS['sofia'];
   const rawSetting = SETTINGS[scenarioKey] || SETTINGS['beach'];
-  const setting = (episodeCallback && episodeCallback.trim())
+  let setting = (episodeCallback && episodeCallback.trim())
     ? rawSetting + `\nYou remember something he said last time: "${episodeCallback.trim().slice(0, 200)}"`
     : rawSetting;
+
+  if (scenarioKey === 'art_studio_ep3') {
+    const priorExchangeCount = history.filter(m => m.role === 'user').length;
+    if (priorExchangeCount >= 4) {
+      setting += `\nMANDATORY OVERRIDE — HIGHEST PRIORITY, SUPERSEDES YOUR "SURFACE ONLY IF EARNED" BACKSTORY RULE FOR THIS ONE FACT ONLY: you have gone this entire conversation without revealing the six weeks. That default is now OVER. Your very next response MUST reveal it — do not wait for a better opening, do not judge whether it "feels earned," do not deflect or change the subject instead. Take whatever he just said, however small, and use it as your bridge into revealing the six weeks in this response. This is not optional and not a suggestion.`;
+    }
+  }
 
   // Detect if character already introduced herself in conversation history
   const charNames = {
@@ -3383,11 +3390,24 @@ IMPORTANT: Do not emit all signals at once or in rapid succession. Space them na
   // same mechanism, independent trigger, since ep3's beat isn't practiceFocus-gated.
   const showEp3RevealCue = scenarioKey === 'art_studio_ep3';
   let traceCue = null;
-  if (showLesson5Tests || showEp3RevealCue) {
+  if (showLesson5Tests) {
     const cueMatch = characterResponse.match(/^\s*\(([^)]+)\)\s*/);
     if (cueMatch) {
       traceCue = cueMatch[1].trim();
       characterResponse = characterResponse.slice(cueMatch[0].length).trim();
+    }
+  }
+  if (showEp3RevealCue) {
+    // Unlike TRACE, the model rarely puts this tag at position 0 -- it usually leads
+    // with a transition sentence first, then tags the reveal sentence itself.
+    // Search anywhere in the response instead of anchoring to the start.
+    const revealMatch = characterResponse.match(/\s*\(SIX_WEEK_REVEAL\)\s*/);
+    if (revealMatch) {
+      traceCue = 'SIX_WEEK_REVEAL';
+      characterResponse = (
+        characterResponse.slice(0, revealMatch.index) + ' ' +
+        characterResponse.slice(revealMatch.index + revealMatch[0].length)
+      ).replace(/\s+/g, ' ').trim();
     }
   }
   if (traceCue) {
