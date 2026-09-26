@@ -1371,8 +1371,12 @@
 
   art_studio_ep3: {
     title: "The Café",
-    // TEMP: shortened for pilot testing, revert before merging to main
-    testDurationMs: 2 * 60 * 1000,
+    // TEMP: shortened for pilot testing, revert before merging to main.
+    // Kept longer than ep1/ep2's 2min -- 2min was too short for the
+    // content-triggered SIX_WEEK_REVEAL beat to fire naturally in a real
+    // test session; 5min gives it more room while still being much
+    // shorter than the real 7min session for faster testing cycles.
+    testDurationMs: 5 * 60 * 1000,
     thumb: "https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/nia_thumb.jpg",
     // Opening background: café exterior / street
     bg: "https://pub-8dcb197cb8474bcfb3ef344b733745ca.r2.dev/nia_ep3_cafe_wide.jpg",
