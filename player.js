@@ -2496,7 +2496,12 @@ async function freeConversation(mySession) {
   const _coachActive = isCoachMode();
   if (mySession !== session) return;
   const sc = SCENARIOS[currentScenarioKey] || {};
-  const FREE_MS = 7 * 60 * 1000, NUDGE_MS = 5 * 60 * 1000;
+  // TEMP: sc.testDurationMs lets a scenario override the default 7-min session
+  // length for pilot testing (see scenarios.js) -- revert before merging to main.
+  // Undefined for every scenario except art_studio/ep2/ep3, so default behavior
+  // is byte-for-byte unchanged everywhere else.
+  const FREE_MS = sc.testDurationMs || (7 * 60 * 1000);
+  const NUDGE_MS = sc.testDurationMs ? Math.max(30 * 1000, sc.testDurationMs - 30 * 1000) : (5 * 60 * 1000);
   const start = Date.now();
   let nudged = false;
   resetConversation();
