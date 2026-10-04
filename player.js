@@ -3735,6 +3735,14 @@ function launchHeroV6() {
       .ek-h6-ticker-chip{font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:#8A8F98;
         border:1px solid rgba(242,239,233,.08);border-radius:100px;padding:8px 16px;white-space:nowrap;}
       @keyframes ek-h6-scroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+      .ek-h6-movie-banner{display:flex;align-items:center;justify-content:center;gap:14px;
+        padding:10px 20px;background:rgba(217,160,84,.12);
+        border-bottom:1px solid rgba(217,160,84,.35);}
+      .ek-h6-movie-banner span{font-size:14px;line-height:1.35;color:#F2EFE9;}
+      .ek-h6-movie-banner b{color:#D9A054;font-weight:600;}
+      .ek-h6-movie-btn{flex-shrink:0;background:#D9A054;color:#1a1508;text-decoration:none;
+        font-size:13px;font-weight:700;padding:8px 16px;border-radius:100px;white-space:nowrap;}
+      .ek-h6-movie-btn:focus-visible{outline:2px solid #F2EFE9;outline-offset:2px;}
       @media(max-width:880px){
         .ek-h6-hero{grid-template-columns:1fr;padding-top:36px;gap:36px;}
         .ek-h6-h1{font-size:34px;}
@@ -3801,6 +3809,10 @@ function launchHeroV6() {
     .map(t => `<span class="ek-h6-ticker-chip">${t}</span>`).join('');
 
   overlay.innerHTML = `
+    <div class="ek-h6-movie-banner" id="ek-movie-banner">
+      <span><b>NEW:</b> Play the interactive movie. Episode 1 is free.</span>
+      <a class="ek-h6-movie-btn" id="ek-movie-banner-btn" href="https://play.ozmeva.com/?utm_source=ozmeva_banner">Play now</a>
+    </div>
     <nav class="ek-h6-nav">
       <div class="ek-h6-brand">Ozmeva</div>
       <div class="ek-h6-navlinks">

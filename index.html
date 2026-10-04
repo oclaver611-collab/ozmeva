@@ -388,6 +388,12 @@ window._ekTrack = function(event, data) {
   <!-- Streak badge — populated by Progress.refreshStreakBadge() -->
   <span id="ek-streak-badge" style="display:none;position:fixed;top:10px;right:10px;z-index:9990;align-items:center;gap:5px;background:#1e1a0e;border:1px solid #7a5500;border-radius:999px;padding:5px 12px;font-size:13px;font-weight:700;color:#ffb300;cursor:pointer" title="View progress"></span>
 
+  <!-- Interactive-movie promo (smaller). Shown to signed-in users only: the landing overlay carries its own banner. -->
+  <div id="ek-movie-strip" style="display:none;align-items:center;justify-content:center;gap:12px;padding:6px 12px;background:rgba(255,179,0,.10);border-bottom:1px solid rgba(255,179,0,.35);font-size:12px;color:#e9ecf1">
+    <span><b style="color:#ffb300">NEW:</b> Play the interactive movie. Episode 1 is free.</span>
+    <a href="https://play.ozmeva.com/?utm_source=ozmeva_banner" style="flex-shrink:0;background:#ffb300;color:#1a1508;text-decoration:none;font-weight:700;font-size:12px;padding:4px 12px;border-radius:999px;white-space:nowrap">Play now</a>
+  </div>
+
   <!-- LEARN / PRACTICE Tabs (auth UI lives here as right-side flex child — avoids fixed-position overlap) -->
   <div class="ek-tabs">
     <button class="ek-tab" id="ek-tab-learn">LEARN</button>
@@ -401,6 +407,17 @@ window._ekTrack = function(event, data) {
       </div>
     </div>
   </div>
+
+  <script>
+  (function(){
+    var strip = document.getElementById('ek-movie-strip');
+    var ind = document.getElementById('ek-auth-indicator');
+    if (!strip || !ind) return;
+    function sync(){ strip.style.display = (ind.style.display === 'flex') ? 'flex' : 'none'; }
+    new MutationObserver(sync).observe(ind, { attributes: true, attributeFilter: ['style'] });
+    sync();
+  })();
+  </script>
 
   <!-- LEARN tab content — lesson cards filled dynamically by lesson-player.js -->
   <div id="ek-learn-tab" style="display:none;">
@@ -618,12 +635,12 @@ window._ekTrack = function(event, data) {
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 
   <!-- Auth + progress sync — must load before lesson-player.js -->
-  <script src="auth.js?v=2cc76c1"></script>
+  <script src="auth.js?v=5c8f8fb"></script>
 
-  <script src="kokoro-speech.js?v=2cc76c1"></script>
-  <script src="player.js?v=2cc76c1"></script>
-  <script src="netflix-rows.js?v=2cc76c1"></script>
-  <script src="transcript.js?v=2cc76c1"></script>
-  <script src="lesson-player.js?v=2cc76c1"></script>
+  <script src="kokoro-speech.js?v=5c8f8fb"></script>
+  <script src="player.js?v=5c8f8fb"></script>
+  <script src="netflix-rows.js?v=5c8f8fb"></script>
+  <script src="transcript.js?v=5c8f8fb"></script>
+  <script src="lesson-player.js?v=5c8f8fb"></script>
 </body>
 </html>
